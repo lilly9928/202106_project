@@ -37,7 +37,10 @@ function LoginScreen({navigation}) {
           <TouchableOpacity
                         style={styles.btn}
                         activeOpacity={0.5}
-                        onPress={() => navigation.navigate('MainTab')}>
+                        onPress={() =>
+                        navigation.navigate('MainTab')
+                      //  {alert('You tapped the button!');}
+                        }>
             <Text style={(styles.Text, {color: 'white'})}>로그인</Text>
           </TouchableOpacity>
         </View>

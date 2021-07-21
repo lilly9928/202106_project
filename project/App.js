@@ -83,7 +83,8 @@ const App: () => React$Node = () => {
                name="Home"
                component={HomeScreen}
              />
-            <Stack.Screen name="MainTab" component={MainTabScreen} />
+            <Stack.Screen name="MainTab" component={MainTabScreen}
+             options={{headerShown: false}}/>
 
       </Stack.Navigator>
     </NavigationContainer>
