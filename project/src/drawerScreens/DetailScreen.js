@@ -15,35 +15,15 @@ import {
   TextInput,
 } from 'react-native';
 
-function LoginScreen({navigation}) {
+function DetailScreen({navigation}) {
   return (
     <View style={styles.container}>
       <View style={styles.topArea}>
         <View style={styles.titleArea}>
-      <Text style={(styles.Text, {color: 'black'})}>Logo</Text>
+      <Text style={(styles.Text, {color: 'black'})}>DetailScreen</Text>
         </View>
       </View>
-
-      <View style={styles.formArea}>
-       <Text style={styles.Text}>아이디(이메일)</Text>
-        <TextInput style={styles.textFormTop} placeholder={'이메일을 입력해주세요.'} />
-        <Text style={styles.TextValidation}>유효하지 않은 아이디입니다.</Text>
-         <Text style={styles.Text}>비밀번호</Text>
-        <TextInput style={styles.textFormBottom} placeholder={'비밀번호를 입력해주세요.'} />
-        <Text style={styles.TextValidation}>유효하지 않은 비밀번호입니다.</Text>
-      </View>
-      <View style={{flex: 0.68}}>
-        <View style={styles.btnArea}>
-          <TouchableOpacity
-                        style={styles.btn}
-                        activeOpacity={0.5}
-                        onPress={() => navigation.navigate('MainTab')}>
-            <Text style={(styles.Text, {color: 'white'})}>로그인</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-      <View style={{flex: 3}} />
-    </View>
+     </View>
   );
 }
 
@@ -119,4 +99,4 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
   },
 });
-export default LoginScreen;
+export default DetailScreen;
