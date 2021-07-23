@@ -22,37 +22,6 @@ const SettingStack = createStackNavigator();
 
 
 
-
-const HomeStackScreen = () => {
-  return (
-    <Stack.Navigator>
-      <HomeStack.Screen name="Home" component={HomeScreen} />
-      <HomeStack.Screen name="Search" component={HomeScreen} />
-      <HomeStack.Screen name="SearchResult" component={HomeScreen} />
-    </Stack.Navigator>
-  );
-};
-
-const SettingStackScreen = () => {
-  return (
-    <Stack.Navigator>
-       <HomeStack.Screen name="Home" component={HomeScreen} />
-       <HomeStack.Screen name="Search" component={HomeScreen} />
-       <HomeStack.Screen name="SearchResult" component={HomeScreen} />
-    </Stack.Navigator>
-  );
-};
-
-const TestStackScreen = () => {
-  return (
-    <Stack.Navigator>
-      <HomeStack.Screen name="Home" component={HomeScreen} />
-      <HomeStack.Screen name="Search" component={HomeScreen} />
-      <HomeStack.Screen name="SearchResult" component={HomeScreen} />
-    </Stack.Navigator>
-  );
-};
-
 const MainTabScreen = () => {
   return (
     <Tab.Navigator initialRouteName="HomeStack">

@@ -3,6 +3,21 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 const Tab = createBottomTabNavigator();
 
+const sports = [
+  {
+    label: 'Football',
+    value: 'football',
+  },
+  {
+    label: 'Baseball',
+    value: 'baseball',
+  },
+  {
+    label: 'Hockey',
+    value: 'hockey',
+  },
+];
+
 const MainTabScreen = ({navigation, route}) => {
   return (
     <Tab.Navigator
@@ -31,6 +46,26 @@ const MainTabScreen = ({navigation, route}) => {
       <Tab.Screen name="TestStack" component={TestStackScreen} />
       <Tab.Screen name="HomeStack" component={HomeStackScreen} />
       <Tab.Screen name="SettingStack" component={SettingStackScreen} />
+      <RNPickerSelect
+            placeholder={placeholder}
+            items={sports}
+            onValueChange={value => {
+              this.setState({
+                favSport0: value,
+              });
+            }}
+            onUpArrow={() => {
+              this.inputRefs.firstTextInput.focus();
+            }}
+            onDownArrow={() => {
+              this.inputRefs.favSport1.togglePicker();
+            }}
+            style={pickerSelectStyles}
+            value={this.state.favSport0}
+            ref={el => {
+              this.inputRefs.favSport0 = el;
+            }}
+          />
     </Tab.Navigator>
   );
 };

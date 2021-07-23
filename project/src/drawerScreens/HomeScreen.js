@@ -5,6 +5,7 @@ import {
 } from 'react-native-responsive-screen';
 
 import 'react-native-gesture-handler';
+import RNPickerSelect from 'react-native-picker-select';
 
 import {
   StyleSheet,
@@ -15,88 +16,130 @@ import {
   TextInput,
 } from 'react-native';
 
-function HomeScreen({navigation}) {
+function HomeScreen({ navigation }) {
   return (
     <View style={styles.container}>
-      <View style={styles.topArea}>
-        <View style={styles.titleArea}>
-      <Text style={(styles.Text, {color: 'black'})}>Home</Text>
+      <View style={[styles.headContainer, { backgroundColor: "#FF3366" }]}></View>
+      <View style={styles.topContainer}>
+        <View style={styles.Box}>
+          <View style={styles.topBox}>
+            <Text style={styles.Boxtitle}>오늘의 수익</Text>
+            <Text style={styles.Boxsubtitle}>날짜</Text>
+          </View>
+          <View style={styles.middleBox}>
+          <Text style={styles.middleText}>오늘의 수익</Text>
+          </View>
+          <View style={styles.bottomBox}>
+            <View style={styles.bottomRow}>
+            <Text style={styles.bottomText}>오늘의 수익</Text>
+          <Text style={styles.bottomText}>오늘의 수익</Text>
+            </View>
+            <View style={styles.bottomRow}>
+            <Text style={styles.bottomText}>오늘의 수익</Text>
+          <Text style={styles.bottomText}>오늘의 수익</Text>
+            </View>
+         
+          </View>
         </View>
       </View>
-     </View>
+      <View style={styles.middleContainer}>
+        <View style={styles.Box}>
+          <View style={styles.topBox}>
+            <Text style={styles.Boxtitle}>시간대별 수익 그래프</Text>
+            <Text style={styles.Boxsubtitle}>그래프 클릭 금액</Text>
+          </View>
+        </View>
+      </View>
+      <View style={styles.bottomContainer} >
+        <View style={styles.Box}>
+
+        </View>
+      </View>
+      <View style={[styles.tailContainer, { backgroundColor: "#FF3366" }]}>
+
+      </View>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1, //전체의 공간을 차지한다는 의미
-    flexDirection: 'column',
-    backgroundColor: 'white',
-    paddingLeft: wp(7),
-    paddingRight: wp(7),
+    flex: 1,
+    flexDirection: "column",
+  },
+  headContainer: {
+    flex: 0.30,
+  },
+  topContainer: {
+    flex: 0.8,
+    //backgroundColor: "#FF3366",
+    padding: '1%'
+  },
+  middleContainer: {
+    flex: 1,
+    // backgroundColor: "#000",
+    padding: '1%'
+  },
+  bottomContainer: {
+    flex: 0.4,
+    //backgroundColor: "#000",
+    padding: '1%'
+  },
+  tailContainer: {
+    flex: 0.4,
+    backgroundColor: "#000",
+  },
+  Box: {
+    borderColor: "#000",
+    //width:"100%",
+    height: "100%",
+    borderWidth: 2,
+    margin: 'auto'
 
   },
-  topArea: {
-    flex: 1,
-    paddingTop: wp(20),
+  Boxtitle: {
+    fontSize: wp('5%'),
+    paddingLeft: wp('1%'),
+    paddingBottom: wp('3%'),
+    paddingTop: wp('1%'),
+    fontWeight: "bold"
   },
-  titleArea: {
-    flex: 0.7,
+  Boxsubtitle: {
+    fontSize: wp('3%'),
+    paddingRight:wp('1%'),
+    paddingBottom: wp('3%'),
+    paddingTop:  wp('2%'),
+
+  },
+  topBox: {
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  middleBox:{
     justifyContent: 'center',
+    alignItems: 'center',
+  },
+  middleText:{
+    fontSize: wp('6%'),
+    paddingLeft: wp(1),
+    paddingBottom: wp(5),
+    paddingTop: wp(1),
+    fontWeight: "bold"
+  },
+  bottomBox:{
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  bottomText:{
+    fontSize: wp('3%'),
+    paddingLeft: wp(2),
     paddingTop: wp(1),
   },
-  TextArea: {
-    flex: 0.3,
-    justifyContent: 'center',
-    backgroundColor: 'white',
-  },
-  Text: {
-    fontSize: wp('4%'),
-    paddingBottom: wp(2),
-    paddingTop: wp(2),
-  },
-  TextValidation: {
-    fontSize: wp('4%'),
-    color: 'red',
-    paddingTop: wp(2),
-  },
-
-  formArea: {
-    justifyContent: 'center',
-    paddingTop: wp(20),
-    flex: 1.5,
-  },
-  textFormTop: {
-    borderWidth: 2,
-    borderColor: 'black',
-    width: '100%',
-    height: hp(6),
-    paddingLeft: 10,
-    paddingRight: 10,
-  },
-  textFormBottom: {
-    borderWidth: 2,
-    borderColor: 'black',
-    width: '100%',
-    height: hp(6),
-    paddingLeft: 10,
-    paddingRight: 10,
-  },
-  btnArea: {
-    height: hp(8),
-    // backgroundColor: 'orange',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingBottom: hp(1.5),
-     marginTop: hp(10),
-  },
-  btn: {
-    flex: 1,
-    width: '100%',
-    borderRadius: 7,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'black',
-  },
+  bottomRow:{
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width:"50%"
+  }
 });
 export default HomeScreen;
