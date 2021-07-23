@@ -5,7 +5,9 @@ import {
 } from 'react-native-responsive-screen';
 
 import 'react-native-gesture-handler';
-import RNPickerSelect from 'react-native-picker-select';
+//import RNPickerSelect from 'react-native-picker-select';
+//import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+
 
 import {
   StyleSheet,
@@ -14,11 +16,13 @@ import {
   Image,
   TouchableOpacity,
   TextInput,
+  SafeAreaView
 } from 'react-native';
 
 function HomeScreen({ navigation }) {
+  
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={[styles.headContainer, { backgroundColor: "#FF3366" }]}></View>
       <View style={styles.topContainer}>
         <View style={styles.Box}>
@@ -48,6 +52,11 @@ function HomeScreen({ navigation }) {
             <Text style={styles.Boxtitle}>시간대별 수익 그래프</Text>
             <Text style={styles.Boxsubtitle}>그래프 클릭 금액</Text>
           </View>
+          {/* <ResponsiveContainer width="100%" height="100%">
+        <BarChart width={150} height={40} data={data}>
+          <Bar dataKey="uv" fill="#8884d8" />
+        </BarChart>
+      </ResponsiveContainer> */}
         </View>
       </View>
       <View style={styles.bottomContainer} >
@@ -58,7 +67,7 @@ function HomeScreen({ navigation }) {
       <View style={[styles.tailContainer, { backgroundColor: "#FF3366" }]}>
 
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
