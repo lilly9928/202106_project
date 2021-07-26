@@ -14,7 +14,7 @@ import {
   TouchableOpacity,
   TextInput,
   SafeAreaView,
-  ScrollView
+  ScrollView,
 } from 'react-native';
 
 function ReportScreen({ navigation }) {
