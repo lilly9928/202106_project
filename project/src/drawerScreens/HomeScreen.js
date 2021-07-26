@@ -53,6 +53,7 @@ import {BarChart, Grid} from 'react-native-svg-charts'
   );
   return (
     <SafeAreaView style={styles.container}>
+      {/* <headContainer></headContainer> */}
       <View style={styles.headContainer}></View>
       <View style={styles.topContainer}>
         <View style={styles.Box}>
@@ -65,11 +66,11 @@ import {BarChart, Grid} from 'react-native-svg-charts'
           </View>
           <View style={styles.bottomBox}>
             <View style={styles.bottomRow}>
-            <Text style={styles.bottomText}>오늘의 수익</Text>
+            <Text style={styles.bottomText}>현재까지 수익</Text>
           <Text style={styles.bottomText}>오늘의 수익</Text>
             </View>
             <View style={styles.bottomRow}>
-            <Text style={styles.bottomText}>오늘의 수익</Text>
+            <Text style={styles.bottomText}>남은 시간 예측 수익</Text>
           <Text style={styles.bottomText}>오늘의 수익</Text>
             </View>
          
@@ -100,7 +101,9 @@ import {BarChart, Grid} from 'react-native-svg-charts'
       </View>
       <View style={styles.bottomContainer} >
         <View style={styles.Box}>
-
+       <Text style={styles.bottomText}><View style={[styles.colorBox,{backgroundColor: '#FFBF00'}]}/>실제 수익: 실제 측정된 발전 수익 데이터입니다.</Text>
+        <Text style={styles.bottomText}><View style={[styles.colorBox,{backgroundColor: '#00BFFF'}]}/>예측 수익: 현재 시간 이후의 예측 발전 수익 데이터입니다.</Text>
+        <Text style={styles.bottomText}><View style={[styles.colorBox,{backgroundColor: '#BE81F7'}]}/>클릭한 그래프: 그래프를 클릭하시면 우측 상단에서 수익 값을 확인하실 수 있습니다.</Text>
         </View>
       </View>
       <View style={styles.tailContainer}>
@@ -130,7 +133,7 @@ const styles = StyleSheet.create({
     padding: '1%'
   },
   bottomContainer: {
-    flex: 0.4,
+    flex: 0.5,
     //backgroundColor: "#000",
     padding: '1%'
   },
@@ -188,6 +191,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     width:"50%"
+  },
+  colorBox:{
+    width:10,
+    height:10,
+    backgroundColor: "#000"
+
   }
 });
 export default HomeScreen;

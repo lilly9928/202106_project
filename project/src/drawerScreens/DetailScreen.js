@@ -6,6 +6,7 @@ import {
 
 import 'react-native-gesture-handler';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import {BarChart, Grid} from 'react-native-svg-charts'
 
 import {
   StyleSheet,
@@ -48,10 +49,50 @@ Number.prototype.zf = function(len){return this.toString().zf(len);};
 
 
 function DetailScreen({navigation}) {
-  const [date, setDate] = useState(new Date());
-  const [mode, setMode] = useState('date');
-  const [show, setShow] = useState(false);
-  const [selectedDate, setselectedDate] = useState(date.format("yyyy/MM/dd"));
+
+ // class DetailScreen extends React.PureComponent {
+    // state = {
+    //   selectItem: null,
+    //   selectValue:null,
+    // };
+ 
+   // render() {
+      const data = [1000, 3000, 4000, 9500, 8500, 2000, 7000,1000,2000,4000,1000, 3000, 4000, 9500, 8500, 2000, 7000,1000,2000,4000,7000,1000,2000,4000];
+     // const date = new Date();
+     const [selectItem, setselectItem] = useState(null);
+     const [selectValue, setselectValue] = useState(null);
+     const [mode, setMode] = useState('date');
+     const [show, setShow] = useState(false);
+     const [date, setDate] = useState(new Date());
+     const [selectedDate, setselectedDate] = useState(new Date().format("yyyy/MM/dd"));
+  const newData = data.map(
+    (item, index) => ({
+      y: item,
+      svg: {
+        onPressIn: () => {
+        //  setdataLabel(index);
+        setselectItem(index);
+        setselectValue(item+'원');
+          // this.setState({
+          //   selectItem: index,
+          //   selectValue:item+'원'
+          // })
+        },
+        onPressOut: () => {
+          setselectItem(null);
+          // this.setState({
+          //   selectItem: null,
+          // })
+        },
+        // fill: this.state.selectItem === index ? '#BE81F7' :selectedDate.getHours() < index ? '#FFBF00' : '#00BFFF',
+        fill: selectItem === index ? '#BE81F7' :date.getHours() < index ? '#FFBF00' : '#00BFFF',
+      }
+    })
+  );
+  // const [date, setDate] = useState(new Date());
+  // const [mode, setMode] = useState('date');
+  // const [show, setShow] = useState(false);
+  // const [selectedDate, setselectedDate] = useState(date.format("yyyy/MM/dd"));
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -72,7 +113,7 @@ function DetailScreen({navigation}) {
   return (
     <SafeAreaView style={styles.container}>
     {/* <ScrollView> */}
-    <View style={[styles.headContainer, { backgroundColor: "#FF3366" }]}></View>
+    <View style={styles.headContainer}></View>
     <View style={styles.topContainer}>
     <TouchableOpacity style={styles.topBtn}>
     <Text style={(styles.topBtnText)}> 전 </Text>
@@ -84,10 +125,36 @@ function DetailScreen({navigation}) {
     <Text style={(styles.topBtnText)}> 후 </Text>
           </TouchableOpacity>
       </View> 
-    <View style={styles.middleContainer}>
-      
-    </View>
-    <View style={[styles.quarterHeight, { backgroundColor: "#CCC" }]} />
+      <View style={styles.middleContainer}>
+        <View style={styles.Box}>
+          <View style={styles.topBox}>
+            <Text style={styles.Boxtitle}>발전량 그래프</Text>
+            <Text style={styles.Boxsubtitle}>{selectValue}</Text>
+          </View>
+          <View style={{flex: 1, height: 150}}>
+        <BarChart
+          style={{flex: 1, marginTop: 30}}
+          data={newData}
+          // svg={{fill: this.state.color,}}
+          yAccessor={({item}) => item.y}
+          contentInset={{top: 10, bottom: 10}}
+          spacingInner={0.35}
+          spacingOuter={0.3}
+          gridMin={1}
+        >
+          {/*<Grid direction={Grid.Direction.VERTICAL}/>*/}
+        </BarChart>
+      </View>
+        </View>
+      </View>
+      <View style={styles.bottomContainer} >
+        <View style={styles.Box}>
+       <Text style={styles.bottomText}><View style={[styles.colorBox,{backgroundColor: '#FFBF00'}]}/>실제 발전량: 실제 측정된 발전 발전량 데이터입니다.</Text>
+        <Text style={styles.bottomText}><View style={[styles.colorBox,{backgroundColor: '#00BFFF'}]}/>예측 발전량: 현재 시간 이후의 예측 발전량 데이터입니다.</Text>
+        <Text style={styles.bottomText}><View style={[styles.colorBox,{backgroundColor: '#BE81F7'}]}/>클릭한 그래프: 그래프를 클릭하시면 우측 상단에서 발전량 값을 확인하실 수 있습니다.</Text>
+        </View>
+      </View>
+    <View style={styles.tailContainer} />
     {/* </ScrollView> */}
     {show && (
         <DateTimePicker
@@ -103,6 +170,7 @@ function DetailScreen({navigation}) {
 
   );
 }
+  //}
 
 const styles = StyleSheet.create({
   container: {
@@ -122,11 +190,12 @@ const styles = StyleSheet.create({
   }, 
    middleContainer: {
     flex: 1,
+    padding: '1%'
    // backgroundColor: "#000",
   },
-  quarterHeight: {
+  tailContainer: {
     flex: 0.4,
-    backgroundColor: "#000",
+  //  backgroundColor: "#000",
   },
   scrollView: {
     backgroundColor: 'pink',
@@ -145,6 +214,57 @@ const styles = StyleSheet.create({
   topBtnText:{
     color:'#ffffff',
   
-  }
+  },
+  Box: {
+    borderColor: "#000",
+    //width:"100%",
+    height: "100%",
+    borderWidth: 2,
+    margin: 'auto'
+
+  },
+  colorBox:{
+    width:10,
+    height:10,
+   
+  },  
+  bottomContainer: {
+    flex: 0.5,
+    padding: '1%'
+  },
+  bottomBox:{
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  bottomText:{
+    fontSize: wp('3%'),
+    paddingLeft: wp(2),
+    paddingTop: wp(1),
+  },
+  bottomRow:{
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width:"50%"
+  },
+  Boxtitle: {
+    fontSize: wp('5%'),
+    paddingLeft: wp('1%'),
+    paddingBottom: wp('3%'),
+    paddingTop: wp('1%'),
+    fontWeight: "bold"
+  },
+  topBox: {
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  Boxsubtitle: {
+    fontSize: wp('3%'),
+    paddingRight:wp('1%'),
+    paddingBottom: wp('3%'),
+    paddingTop:  wp('2%'),
+
+  },
+
 });
 export default DetailScreen;
