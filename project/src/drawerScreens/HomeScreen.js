@@ -1,12 +1,10 @@
-import React from 'react';
+
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-
+import React, { useState } from 'react';
 import 'react-native-gesture-handler';
-//import RNPickerSelect from 'react-native-picker-select';
-//import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 
 import {
@@ -19,11 +17,43 @@ import {
   SafeAreaView
 } from 'react-native';
 
-function HomeScreen({ navigation }) {
-  
+import {BarChart, Grid} from 'react-native-svg-charts'
+
+
+// function HomeScreen({ navigation }) {
+
+  class HomeScreen extends React.PureComponent {
+    state = {
+      selectItem: null,
+      selectValue:null,
+    };
+ 
+    render() {
+      const data = [1000, 3000, 4000, 9500, 8500, 2000, 7000,1000,2000,4000,1000, 3000, 4000, 9500, 8500, 2000, 7000,1000,2000,4000,7000,1000,2000,4000];
+      const date = new Date();
+  const newData = data.map(
+    (item, index) => ({
+      y: item,
+      svg: {
+        onPressIn: () => {
+        //  setdataLabel(index);
+          this.setState({
+            selectItem: index,
+            selectValue:item+'원'
+          })
+        },
+        onPressOut: () => {
+          this.setState({
+            selectItem: null,
+          })
+        },
+        fill: this.state.selectItem === index ? '#BE81F7' :date.getHours() < index ? '#FFBF00' : '#00BFFF',
+      }
+    })
+  );
   return (
     <SafeAreaView style={styles.container}>
-      <View style={[styles.headContainer, { backgroundColor: "#FF3366" }]}></View>
+      <View style={styles.headContainer}></View>
       <View style={styles.topContainer}>
         <View style={styles.Box}>
           <View style={styles.topBox}>
@@ -50,13 +80,22 @@ function HomeScreen({ navigation }) {
         <View style={styles.Box}>
           <View style={styles.topBox}>
             <Text style={styles.Boxtitle}>시간대별 수익 그래프</Text>
-            <Text style={styles.Boxsubtitle}>그래프 클릭 금액</Text>
+            <Text style={styles.Boxsubtitle}>{this.state.selectValue}</Text>
           </View>
-          {/* <ResponsiveContainer width="100%" height="100%">
-        <BarChart width={150} height={40} data={data}>
-          <Bar dataKey="uv" fill="#8884d8" />
+          <View style={{flex: 1, height: 150}}>
+        <BarChart
+          style={{flex: 1, marginTop: 30}}
+          data={newData}
+          // svg={{fill: this.state.color,}}
+          yAccessor={({item}) => item.y}
+          contentInset={{top: 10, bottom: 10}}
+          spacingInner={0.35}
+          spacingOuter={0.3}
+          gridMin={1}
+        >
+          {/*<Grid direction={Grid.Direction.VERTICAL}/>*/}
         </BarChart>
-      </ResponsiveContainer> */}
+      </View>
         </View>
       </View>
       <View style={styles.bottomContainer} >
@@ -64,12 +103,13 @@ function HomeScreen({ navigation }) {
 
         </View>
       </View>
-      <View style={[styles.tailContainer, { backgroundColor: "#FF3366" }]}>
+      <View style={styles.tailContainer}>
 
       </View>
     </SafeAreaView>
   );
 }
+  }
 
 const styles = StyleSheet.create({
   container: {
@@ -96,7 +136,6 @@ const styles = StyleSheet.create({
   },
   tailContainer: {
     flex: 0.4,
-    backgroundColor: "#000",
   },
   Box: {
     borderColor: "#000",
