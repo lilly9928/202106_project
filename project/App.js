@@ -1,16 +1,18 @@
-import React , { useState }from 'react';
-import {SafeAreaView, StyleSheet,View,TouchableOpacity,Text} from 'react-native';
+import React, { useState } from 'react';
+import { SafeAreaView, StyleSheet, View, TouchableOpacity, Text } from 'react-native';
 import LoginScreen from './src/LoginScreen';
 import SplashScreen from './src/SplashScreen';
 import HomeScreen from './src/drawerScreens/HomeScreen';
 import SettingScreen from './src/drawerScreens/SettingScreen';
 import ReportScreen from './src/drawerScreens/ReportScreen';
 import DetailScreen from './src/drawerScreens/DetailScreen';
+import SelectUser from './src/SelectUser';
+import Perference from './src/Perference';
 
 
 import 'react-native-gesture-handler';
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
@@ -20,8 +22,19 @@ const Tab = createBottomTabNavigator();
 const TestStack = createStackNavigator();
 const HomeStack = createStackNavigator();
 const SettingStack = createStackNavigator();
-import {Picker} from '@react-native-picker/picker';
+import SelectDropdown from 'react-native-select-dropdown'
 
+const Auth = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Login"
+        component={LoginScreen}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
+  );
+};
 
 const MainTabScreen = () => {
   return (
@@ -33,59 +46,52 @@ const MainTabScreen = () => {
     </Tab.Navigator>
   );
 };
+//const App = ({ navigation }) => {
+
+//function App({ navigation }) =>{
 const App: () => React$Node = () => {
-  const [selectedValue, setSelectedValue] = useState("java");
+  const User = ["test1@", "test2@", "test3@", "test4@"]
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator initialRouteName="SplashScreen">
         <Stack.Screen
-          name="Login"
-          component={LoginScreen}
-          options={{headerShown: false}}
+          name="Splash"
+          component={SplashScreen}
+          options={{ headerShown: false }}
         />
 
-         <Stack.Screen
-                  name="Splash"
-                  component={SplashScreen}
-                  options={{headerShown: false}}
-                />
+        <Stack.Screen
+          name="Auth"
+          component={Auth}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="SelectUser"
+          component={SelectUser}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen name="MainTab" component={MainTabScreen}
+          options={{
+            headerLeft: () => {
+              return null;
+            },
+            headerTitle: () => (
+              <SelectDropdown
+                data={User}
+                onSelect={(selectedItem, index) => {
+                  console.log(selectedItem, index)
+                }}
+                defaultButtonText={Perference.get()}
+                buttonStyle={styles.dropdown1BtnStyle}
+                 />
+            ),
 
-             <Stack.Screen
-               name="Home"
-               component={HomeScreen}
-             />
-            <Stack.Screen name="MainTab" component={MainTabScreen}
-              options={{
-                headerLeft: () => {
-                  return null;
-                },
-                headerTitle:() => (
-                //   <View style={styles.container}>
-                //   <Picker
-                //   selectedValue={selectedValue}
-                //   style={{ height: 10, width: 150 }}
-                //   onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
-                // >
-                //   <Picker.Item label="사용자1" value="test1@" />
-                //   <Picker.Item label="사용자2" value="test2@" />
-                //   <Picker.Item label="사용자3" value="test3@" />
-                //   <Picker.Item label="사용자4" value="test4@" />
-                //   <Picker.Item label="사용자5" value="test5@" />
-                // </Picker>
-                // </View>
-               <TouchableOpacity
-                //style={styles.btn}
-                activeOpacity={0.5}
-                //onPress={handleSubmitPress}
-              >
-                <Text style={(styles.Text, { color: '#000000' })}>사용자</Text>
-              </TouchableOpacity>
-                ),
-               
-              }}/>
+          }} />
 
       </Stack.Navigator>
     </NavigationContainer>
+
+
 
   );
 };
@@ -95,7 +101,12 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 0,
     alignItems: "center"
-  }
+  },
+  dropdown1BtnStyle: {
+   
+    backgroundColor: "#FFF",
+
+  },
 });
 
 export default App;

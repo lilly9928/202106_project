@@ -5,6 +5,7 @@ import {
 } from 'react-native-responsive-screen';
 
 import 'react-native-gesture-handler';
+import Perference from './Perference';
 
 import React, { useState, createRef } from 'react';
 import {
@@ -19,9 +20,8 @@ import {
 
 //import AsyncStorage from '@react-native-community/async-storage';
 
-//import Loader from './Components/Loader';
-
 const LoginScreen = ({ navigation }) => {
+
   //임시User데이터
   const Userdata = [
     {
@@ -90,6 +90,7 @@ const LoginScreen = ({ navigation }) => {
     for (var i = 0; i < Userdata.length; i++) {
       if (Userdata[i].id == userEmail) {
         if (Userdata[i].password == userPassword) {
+          Perference.set(userEmail);
           navigation.navigate('MainTab');
           return;
         }
