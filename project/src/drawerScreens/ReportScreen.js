@@ -1,10 +1,13 @@
-import React from 'react';
+import React , { useState }from 'react';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
 import 'react-native-gesture-handler';
+import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
+import { ClipPath, Defs, Rect, Line, } from 'react-native-svg'
+import { LineChart, Path } from 'react-native-svg-charts'
 
 import {
   StyleSheet,
@@ -18,13 +21,85 @@ import {
 } from 'react-native';
 
 function ReportScreen({ navigation }) {
+
+  const data = [1000, 2000, 3000, 4000, 5000, 4000, 2000, 8000, 9000, 10000, 11000, 12000];
+  const HeadTable= ['일시', '수익', '누적 수익', '살제 누적 수익'];
+  const DataTable= [
+    ['1', '2', '3', '4'],
+    ['a', 'b', 'c', 'd'],
+    ['1', '2', '3', '4'],
+    ['a', 'b', 'c', 'd'],
+    ['1', '2', '3', '4']
+  ];
+  const date = new Date();
+  const dataDate = date.getFullYear()+'.'+date.getMonth()+'.'+date.getDate()+'.'+date.getHours()+':'+date.getMinutes()+'기준'
+  const indexToClipFrom = date.getMonth();
+
+  const Clips = ({ x, width }) => (
+      <Defs key={ 'clips' }>
+          <ClipPath id="clip-path-1">
+              <Rect x={ '0' } y={ '0' } width={ x(indexToClipFrom) } height={ '100%' }/>
+          </ClipPath>
+          <ClipPath id={ 'clip-path-2' }>
+              <Rect x={ x(indexToClipFrom) } y={ '0' } width={ width - x(indexToClipFrom) } height={ '100%' }/>
+          </ClipPath>
+      </Defs>
+  )
+  const DashedLine = ({ line }) => (
+    <Path
+        key={ 'line-1' }
+        d={ line }
+        stroke={ 'rgb(134, 65, 244)' }
+        strokeWidth={ 2 }
+        fill={ 'none' }
+        strokeDasharray={ [ 4, 4 ] }
+        clipPath={ 'url(#clip-path-2)' }
+    />
+)
+const HorizontalLine = (({ y }) => (
+  <Line
+      key={ 'zero-axis' }
+      x1={ '0%' }
+      x2={ '100%' }
+      y1={ y(10000) }
+      y2={ y(10000) }
+      stroke={ 'grey' }
+      strokeDasharray={ [ 4, 8 ] }
+      strokeWidth={ 2 }
+  />
+))
+
+const Vertical = (({ x }) => (
+  <Line
+      key={ 'zero-axis' }
+      x1={ x(10000) }
+      x2={ x(10000) }
+      y1={ '0%' }
+      y2={'100%' }
+      stroke={ 'grey' }
+      strokeDasharray={ [ 4, 8 ] }
+      strokeWidth={ 2 }
+  />
+))
+const Shadow = ({ line }) => (
+    <Path
+        y={ 3 }
+        key={ 'shadow-1' }
+        d={ line }
+        stroke={ 'rgba(134, 65, 244, 0.2)' }
+        strokeWidth={ 5 }
+        fill={ 'none' }
+    />
+)
+
   return (
     <SafeAreaView style={styles.container}>
+      <ScrollView>
       <View style={styles.topContainer}>
         <View style={styles.Box}>
           <View style={styles.topBox}>
             <Text style={styles.Boxtitle}>이번달 예상 수익</Text>
-            <Text style={styles.Boxsubtitle}>날짜</Text>
+            <Text style={styles.Boxsubtitle}>{dataDate}</Text>
           </View>
           <View style={styles.middleBox}>
             <Text style={styles.middlePriceText}>111111원</Text>
@@ -43,7 +118,7 @@ function ReportScreen({ navigation }) {
         <View style={styles.Box}>
           <View style={styles.topBox}>
             <Text style={styles.Boxtitle}>현재까지 누적 수익</Text>
-            <Text style={styles.Boxsubtitle}>날짜</Text>
+            <Text style={styles.Boxsubtitle}>{dataDate}</Text>
           </View>
           <View style={styles.middleBox}>
             <Text style={styles.middlePriceText}>111111원</Text>
@@ -64,13 +139,44 @@ function ReportScreen({ navigation }) {
           <Text style={styles.middleConText}>현재~~~</Text>
         </View>
         <View style={styles.Box}>
+          <View style={styles.topBox}>
+            <Text style={styles.Boxtitle}>손익분기점 그래프</Text>
           </View>
+          <View style={{ flex: 1 }}>
+          <LineChart
+                style={{ height: 200 }}
+                data={ data }
+                contentInset={{ top: 20, bottom: 20 }}
+                svg={{
+                    stroke: 'rgb(134, 65, 244)',
+                    strokeWidth: 2,
+                    clipPath: 'url(#clip-path-1)',
+                }}
+            >
+              <Vertical/>
+                <HorizontalLine/>
+                <Clips/>
+                <Shadow/>
+                <DashedLine/>
+            </LineChart>
+          </View>
+        </View>
+      </View>
+      <View style={styles.bottomContainer} >
+        <View style={styles.Box}>
+          <Text style={styles.bottomText}><View style={[styles.colorBox, { backgroundColor: '#00BFFF' }]} />실제 발전량: 실제 측정된 발전 발전량 데이터입니다.</Text>
+          <Text style={styles.bottomText}><View style={[styles.colorBox, { backgroundColor: '#FFBF00' }]} />예측 발전량: 현재 시간 이후의 예측 발전량 데이터입니다.</Text>
+          <Text style={styles.bottomText}><View style={[styles.colorBox, { backgroundColor: '#BE81F7' }]} />클릭한 그래프: 그래프를 클릭하시면 우측 상단에서 발전량 값을 확인하실 수 있습니다.</Text>
+        </View>
       </View>
       <View style={styles.bottomContainer}>
-      <View style={styles.Box}>
-        
-          </View>
+      <Table borderStyle={{borderWidth: 1, borderColor: '#000000'}}>
+          <Row data={HeadTable} style={styles.HeadStyle} textStyle={styles.TableText}/>
+          <Rows data={DataTable} textStyle={styles.TableText}/>
+        </Table>
       </View>
+      </ScrollView>
+
     </SafeAreaView>
   );
 }
@@ -79,6 +185,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
+     backgroundColor: "#fff",
   },
   Center:{
     justifyContent: 'center',
@@ -89,17 +196,18 @@ const styles = StyleSheet.create({
   },
   topContainer: {
     flex: 0.8,
-    //backgroundColor: "#CCC",
+    backgroundColor: "#fff",
     padding: '1%'
   },
   middleContainer: {
     flex: 1,
-    padding: '1%'
-    // backgroundColor: "#000",
+    padding: '1%',
+    backgroundColor: "#fff",
+    marginBottom:'10%'
   },
   bottomContainer: {
     flex: 0.4,
-    //backgroundColor: "#000",
+    backgroundColor: "#fff",
     padding: '1%'
   },
   tailContainer: {
@@ -110,7 +218,7 @@ const styles = StyleSheet.create({
     borderColor: "#000",
     //width:"100%",
     height: "100%",
-    borderWidth: 2,
+    borderWidth: 1,
     margin: 'auto'
 
   },
@@ -146,6 +254,20 @@ const styles = StyleSheet.create({
   },
   middleConText: {
 
-  }
+  },
+  bottomContainer: {
+    flex: 0.5,
+    padding: '1%'
+  },
+  bottomText: {
+    fontSize: wp('3%'),
+    paddingLeft: wp(2),
+    paddingTop: wp(1),
+  },
+  colorBox: {
+    width: 10,
+    height: 10,
+
+  },
 });
 export default ReportScreen;

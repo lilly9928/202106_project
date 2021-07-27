@@ -1,102 +1,92 @@
-import React, { useState } from 'react'
-import { Text, View } from 'react-native'
-import SelectBox from 'react-native-multi-selectbox'
-import { xorBy } from 'lodash'
+import React from 'react'
+import { LineChart, Grid } from 'react-native-svg-charts'
+import * as shape from 'd3-shape'
+import { Circle, G, Line, Rect, Text } from 'react-native-svg'
 
-// Options data must contain 'item' & 'id' keys
+class ExtrasExample extends React.PureComponent {
 
-const K_OPTIONS = [
-  {
-    item: 'Juventus',
-    id: 'JUVE',
-  },
-  {
-    item: 'Real Madrid',
-    id: 'RM',
-  },
-  {
-    item: 'Barcelona',
-    id: 'BR',
-  },
-  {
-    item: 'PSG',
-    id: 'PSG',
-  },
-  {
-    item: 'FC Bayern Munich',
-    id: 'FBM',
-  },
-  {
-    item: 'Manchester United FC',
-    id: 'MUN',
-  },
-  {
-    item: 'Manchester City FC',
-    id: 'MCI',
-  },
-  {
-    item: 'Everton FC',
-    id: 'EVE',
-  },
-  {
-    item: 'Tottenham Hotspur FC',
-    id: 'TOT',
-  },
-  {
-    item: 'Chelsea FC',
-    id: 'CHE',
-  },
-  {
-    item: 'Liverpool FC',
-    id: 'LIV',
-  },
-  {
-    item: 'Arsenal FC',
-    id: 'ARS',
-  },
+    render() {
 
-  {
-    item: 'Leicester City FC',
-    id: 'LEI',
-  },
-]
+        const data = [ 50, 10, 40, 95, -4, -24, 85, 91, 35, 53, -53, 24, 50, -20, -80 ]
 
-function App() {
-  const [selectedTeam, setSelectedTeam] = useState({})
-  const [selectedTeams, setSelectedTeams] = useState([])
-  return (
-    <View style={{ margin: 30 }}>
-      <View style={{ width: '100%', alignItems: 'center' }}>
-        <Text style={{ fontSize: 30, paddingBottom: 20 }}>Demos</Text>
-      </View>
-      <Text style={{ fontSize: 20, paddingBottom: 10 }}>Select Demo</Text>
-      <SelectBox
-        label="Select single"
-        options={K_OPTIONS}
-        value={selectedTeam}
-        onChange={onChange()}
-        hideInputFilter={false}
-      />
-      <View style={{ height: 40 }} />
-      <Text style={{ fontSize: 20, paddingBottom: 10 }}>MultiSelect Demo</Text>
-      <SelectBox
-        label="Select multiple"
-        options={K_OPTIONS}
-        selectedValues={selectedTeams}
-        onMultiSelect={onMultiChange()}
-        onTapClose={onMultiChange()}
-        isMulti
-      />
-    </View>
-  )
+        /**
+         * Both below functions should preferably be their own React Components
+         */
 
-  function onMultiChange() {
-    return (item) => setSelectedTeams(xorBy(selectedTeams, [item], 'id'))
-  }
+        const HorizontalLine = (({ y }) => (
+            <Line
+                key={ 'zero-axis' }
+                x1={ '0%' }
+                x2={ '100%' }
+                y1={ y(50) }
+                y2={ y(50) }
+                stroke={ 'grey' }
+                strokeDasharray={ [ 4, 8 ] }
+                strokeWidth={ 2 }
+            />
+        ))
 
-  function onChange() {
-    return (val) => setSelectedTeam(val)
-  }
+        const Tooltip = ({ x, y }) => (
+            <G
+                x={ x(5) - (75 / 2) }
+                key={ 'tooltip' }
+                onPress={ () => console.log('tooltip clicked') }
+            >
+                <G y={ 50 }>
+                    <Rect
+                        height={ 40 }
+                        width={ 75 }
+                        stroke={ 'grey' }
+                        fill={ 'white' }
+                        ry={ 10 }
+                        rx={ 10 }
+                    />
+                    <Text
+                        x={ 75 / 2 }
+                        dy={ 20 }
+                        alignmentBaseline={ 'middle' }
+                        textAnchor={ 'middle' }
+                        stroke={ 'rgb(134, 65, 244)' }
+                    >
+                        { `${data[5]}ºC` }
+                    </Text>
+                </G>
+                <G x={ 75 / 2 }>
+                    <Line
+                        y1={ 50 + 40 }
+                        y2={ y(data[ 5 ]) }
+                        stroke={ 'grey' }
+                        strokeWidth={ 2 }
+                    />
+                    <Circle
+                        cy={ y(data[ 5 ]) }
+                        r={ 6 }
+                        stroke={ 'rgb(134, 65, 244)' }
+                        strokeWidth={ 2 }
+                        fill={ 'white' }
+                    />
+                </G>
+            </G>
+        )
+
+        return (
+            <LineChart
+                style={{ height: 200 }}
+                data={ data }
+                svg={{
+                    stroke: 'rgb(134, 65, 244)',
+                    strokeWidth: 2,
+                }}
+                contentInset={{ top: 20, bottom: 20 }}
+                curve={ shape.curveLinear }
+            >
+                <Grid/>
+                <HorizontalLine/>
+                <Tooltip/>
+            </LineChart>
+        )
+    }
+
 }
 
-export default App
+export default ExtrasExample

@@ -6,7 +6,6 @@ import HomeScreen from './src/drawerScreens/HomeScreen';
 import SettingScreen from './src/drawerScreens/SettingScreen';
 import ReportScreen from './src/drawerScreens/ReportScreen';
 import DetailScreen from './src/drawerScreens/DetailScreen';
-import SelectUser from './src/SelectUser';
 import Perference from './src/Perference';
 
 
@@ -65,11 +64,7 @@ const App: () => React$Node = () => {
           component={Auth}
           options={{ headerShown: false }}
         />
-        <Stack.Screen
-          name="SelectUser"
-          component={SelectUser}
-          options={{ headerShown: false }}
-        />
+
         <Stack.Screen name="MainTab" component={MainTabScreen}
           options={{
             headerLeft: () => {
