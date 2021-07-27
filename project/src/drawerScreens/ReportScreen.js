@@ -49,10 +49,10 @@ function ReportScreen({ navigation }) {
     <Path
         key={ 'line-1' }
         d={ line }
-        stroke={ 'rgb(134, 65, 244)' }
+        stroke={ '#FFBF00' }
         strokeWidth={ 2 }
         fill={ 'none' }
-        strokeDasharray={ [ 4, 4 ] }
+        //strokeDasharray={ [ 4, 4 ] }
         clipPath={ 'url(#clip-path-2)' }
     />
 )
@@ -63,34 +63,11 @@ const HorizontalLine = (({ y }) => (
       x2={ '100%' }
       y1={ y(10000) }
       y2={ y(10000) }
-      stroke={ 'grey' }
-      strokeDasharray={ [ 4, 8 ] }
+      stroke={ 'gray' }
+     // strokeDasharray={ [ 4, 8 ] }
       strokeWidth={ 2 }
   />
 ))
-
-const Vertical = (({ x }) => (
-  <Line
-      key={ 'zero-axis' }
-      x1={ x(10000) }
-      x2={ x(10000) }
-      y1={ '0%' }
-      y2={'100%' }
-      stroke={ 'grey' }
-      strokeDasharray={ [ 4, 8 ] }
-      strokeWidth={ 2 }
-  />
-))
-const Shadow = ({ line }) => (
-    <Path
-        y={ 3 }
-        key={ 'shadow-1' }
-        d={ line }
-        stroke={ 'rgba(134, 65, 244, 0.2)' }
-        strokeWidth={ 5 }
-        fill={ 'none' }
-    />
-)
 
   return (
     <SafeAreaView style={styles.container}>
@@ -136,7 +113,7 @@ const Shadow = ({ line }) => (
       </View>
       <View style={styles.middleContainer}>
         <View style={styles.Center}>
-          <Text style={styles.middleConText}>현재~~~</Text>
+          <Text style={styles.middleConText}>개월 후(*년 *월) 손익 분기점에 도달할 것으로 예상됩니다</Text>
         </View>
         <View style={styles.Box}>
           <View style={styles.topBox}>
@@ -148,25 +125,24 @@ const Shadow = ({ line }) => (
                 data={ data }
                 contentInset={{ top: 20, bottom: 20 }}
                 svg={{
-                    stroke: 'rgb(134, 65, 244)',
+                    stroke: '#00BFFF',
                     strokeWidth: 2,
                     clipPath: 'url(#clip-path-1)',
                 }}
             >
-              <Vertical/>
                 <HorizontalLine/>
                 <Clips/>
-                <Shadow/>
                 <DashedLine/>
             </LineChart>
           </View>
         </View>
       </View>
       <View style={styles.bottomContainer} >
-        <View style={styles.Box}>
-          <Text style={styles.bottomText}><View style={[styles.colorBox, { backgroundColor: '#00BFFF' }]} />실제 발전량: 실제 측정된 발전 발전량 데이터입니다.</Text>
-          <Text style={styles.bottomText}><View style={[styles.colorBox, { backgroundColor: '#FFBF00' }]} />예측 발전량: 현재 시간 이후의 예측 발전량 데이터입니다.</Text>
-          <Text style={styles.bottomText}><View style={[styles.colorBox, { backgroundColor: '#BE81F7' }]} />클릭한 그래프: 그래프를 클릭하시면 우측 상단에서 발전량 값을 확인하실 수 있습니다.</Text>
+        <View style={styles.HorizontalBox}>
+          <Text style={styles.bottomText}><View style={[styles.colorBox, { backgroundColor: 'gray' }]} />투자 원금</Text>
+          <Text style={styles.bottomText}><View style={[styles.colorBox, { backgroundColor: '#00BFFF' }]} />누적 수익(실축)</Text>
+          <Text style={styles.bottomText}><View style={[styles.colorBox, { backgroundColor: '#FFBF00' }]} />누적 수익(예측)</Text>
+          <Text style={styles.bottomText}><View style={[styles.colorBox, { backgroundColor: '#BE81F7' }]} />손익분기점</Text>
         </View>
       </View>
       <View style={styles.bottomContainer}>
@@ -222,6 +198,13 @@ const styles = StyleSheet.create({
     margin: 'auto'
 
   },
+  HorizontalBox:{
+    borderColor: "#000",
+    height: "100%",
+    borderWidth: 1,
+    margin: 'auto',
+    flexDirection: 'row',
+  },
   Boxtitle: {
     fontSize: wp('5%'),
     paddingLeft: wp('1%'),
@@ -253,7 +236,8 @@ const styles = StyleSheet.create({
     paddingLeft: wp('1%'),
   },
   middleConText: {
-
+    paddingBottom: wp('3%'),
+    paddingTop: wp('2%'),
   },
   bottomContainer: {
     flex: 0.5,
