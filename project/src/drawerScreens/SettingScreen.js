@@ -1,54 +1,102 @@
-import React, {useState} from 'react';
-import {View, Button, Platform,StyleSheet} from 'react-native';
-import DateTimePicker from '@react-native-community/datetimepicker';
+import React, { useState } from 'react'
+import { Text, View } from 'react-native'
+import SelectBox from 'react-native-multi-selectbox'
+import { xorBy } from 'lodash'
 
+// Options data must contain 'item' & 'id' keys
 
-function SettingScreen({navigation}) {
+const K_OPTIONS = [
+  {
+    item: 'Juventus',
+    id: 'JUVE',
+  },
+  {
+    item: 'Real Madrid',
+    id: 'RM',
+  },
+  {
+    item: 'Barcelona',
+    id: 'BR',
+  },
+  {
+    item: 'PSG',
+    id: 'PSG',
+  },
+  {
+    item: 'FC Bayern Munich',
+    id: 'FBM',
+  },
+  {
+    item: 'Manchester United FC',
+    id: 'MUN',
+  },
+  {
+    item: 'Manchester City FC',
+    id: 'MCI',
+  },
+  {
+    item: 'Everton FC',
+    id: 'EVE',
+  },
+  {
+    item: 'Tottenham Hotspur FC',
+    id: 'TOT',
+  },
+  {
+    item: 'Chelsea FC',
+    id: 'CHE',
+  },
+  {
+    item: 'Liverpool FC',
+    id: 'LIV',
+  },
+  {
+    item: 'Arsenal FC',
+    id: 'ARS',
+  },
 
-  const [date, setDate] = useState(new Date(1598051730000));
-  const [mode, setMode] = useState('date');
-  const [show, setShow] = useState(false);
+  {
+    item: 'Leicester City FC',
+    id: 'LEI',
+  },
+]
 
-  const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate || date;
-    setShow(Platform.OS === 'ios');
-    setDate(currentDate);
-  };
-
-  const showMode = (currentMode) => {
-    setShow(true);
-    setMode(currentMode);
-  };
-
-  const showDatepicker = () => {
-    showMode('date');
-  };
-
-  const showTimepicker = () => {
-    showMode('time');
-  };
-
+function App() {
+  const [selectedTeam, setSelectedTeam] = useState({})
+  const [selectedTeams, setSelectedTeams] = useState([])
   return (
-    <View>
-      <View>
-        <Button onPress={showDatepicker} title="Show date picker!" />
+    <View style={{ margin: 30 }}>
+      <View style={{ width: '100%', alignItems: 'center' }}>
+        <Text style={{ fontSize: 30, paddingBottom: 20 }}>Demos</Text>
       </View>
-      <View>
-        <Button onPress={showTimepicker} title="Show time picker!" />
-      </View>
-      {show && (
-        <DateTimePicker
-          testID="dateTimePicker"
-          value={date}
-          mode={mode}
-          is24Hour={true}
-          display="default"
-          onChange={onChange}
-        />
-      )}
+      <Text style={{ fontSize: 20, paddingBottom: 10 }}>Select Demo</Text>
+      <SelectBox
+        label="Select single"
+        options={K_OPTIONS}
+        value={selectedTeam}
+        onChange={onChange()}
+        hideInputFilter={false}
+      />
+      <View style={{ height: 40 }} />
+      <Text style={{ fontSize: 20, paddingBottom: 10 }}>MultiSelect Demo</Text>
+      <SelectBox
+        label="Select multiple"
+        options={K_OPTIONS}
+        selectedValues={selectedTeams}
+        onMultiSelect={onMultiChange()}
+        onTapClose={onMultiChange()}
+        isMulti
+      />
     </View>
-  );
+  )
+
+  function onMultiChange() {
+    return (item) => setSelectedTeams(xorBy(selectedTeams, [item], 'id'))
+  }
+
+  function onChange() {
+    return (val) => setSelectedTeam(val)
+  }
 }
 
-
-export default SettingScreen;
+export default App

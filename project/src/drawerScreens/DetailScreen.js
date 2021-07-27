@@ -113,7 +113,7 @@ function DetailScreen({navigation}) {
   return (
     <SafeAreaView style={styles.container}>
     {/* <ScrollView> */}
-    <View style={styles.headContainer}></View>
+    {/* <View style={styles.headContainer}></View> */}
     <View style={styles.topContainer}>
     <TouchableOpacity style={styles.topBtn}>
     <Text style={(styles.topBtnText)}> 전 </Text>
@@ -169,6 +169,7 @@ function DetailScreen({navigation}) {
   </SafeAreaView>
 
   );
+
 }
   //}
 

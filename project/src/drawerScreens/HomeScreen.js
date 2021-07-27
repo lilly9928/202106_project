@@ -54,7 +54,7 @@ import {BarChart, Grid} from 'react-native-svg-charts'
   return (
     <SafeAreaView style={styles.container}>
       {/* <headContainer></headContainer> */}
-      <View style={styles.headContainer}></View>
+      {/* <View style={styles.headContainer}></View> */}
       <View style={styles.topContainer}>
         <View style={styles.Box}>
           <View style={styles.topBox}>

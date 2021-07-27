@@ -20,7 +20,6 @@ import {
 function ReportScreen({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
-      <View style={[styles.headContainer, { backgroundColor: "#FF3366" }]}></View>
       <View style={styles.topContainer}>
         <View style={styles.Box}>
           <View style={styles.topBox}>
