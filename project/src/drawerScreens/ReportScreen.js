@@ -61,13 +61,26 @@ const HorizontalLine = (({ y }) => (
       key={ 'zero-axis' }
       x1={ '0%' }
       x2={ '100%' }
-      y1={ y(10000) }
-      y2={ y(10000) }
+      y1={ y(5000) }
+      y2={ y(5000) }
       stroke={ 'gray' }
      // strokeDasharray={ [ 4, 8 ] }
       strokeWidth={ 2 }
   />
 ))
+
+const VerticalLine = (({ x }) => (
+  <Line
+      key={ 'zero-axis' }
+      x1={ x(6.5) }
+      x2={ x(6.5)}
+      y1={ "0%" }
+      y2={ "100%" }
+      stroke={ '#BE81F7' }
+      strokeWidth={ 2 }
+  />
+))
+
 
   return (
     <SafeAreaView style={styles.container}>
@@ -130,6 +143,7 @@ const HorizontalLine = (({ y }) => (
                     clipPath: 'url(#clip-path-1)',
                 }}
             >
+              <VerticalLine/>
                 <HorizontalLine/>
                 <Clips/>
                 <DashedLine/>
