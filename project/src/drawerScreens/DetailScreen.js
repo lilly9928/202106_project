@@ -20,6 +20,7 @@ import {
   SafeAreaView,
   Button,
 } from 'react-native';
+import { set } from 'lodash';
 
 Date.prototype.format = function (f) {
   if (!this.valueOf()) return " ";
@@ -66,11 +67,9 @@ function DetailScreen({ navigation }) {
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
   const [date, setDate] = useState(new Date());
-  const [buttonName, setButtonName] = useState('일');
-  const [selectedYear, setselectedYear] = useState(new Date().format("yyyy"));
-  const [selectedMonth, setselectedMonth] = useState(new Date().format("MM"));
-  const [selectedDate, setselectedDate] = useState(new Date().format("dd"));
-  const [selectedDay, setselectedDay] = useState(selectedYear + '.' + selectedMonth + '.' + selectedDate);
+  const [buttonName, setButtonName] = useState(0);
+  const [selectedDay, setselectedDay] = useState(date.format('yyyy/MM/dd'));
+  const today = new Date();
   const newData = data.map(
     (item, index) => ({
       y: item,
@@ -82,11 +81,38 @@ function DetailScreen({ navigation }) {
         onPressOut: () => {
           setselectItem(null);
         },
-        fill: selectItem === index ? '#BE81F7' : date.getHours() < index ? '#FFBF00' : '#00BFFF',
+        fill: fill(selectItem,index)
+        //selectItem === index ? '#BE81F7' : date < today ? '#00BFFF' : date.getHours() < index ? '#FFBF00' :date > today ? '#FFBF00': '#00BFFF',
+        //날짜데이터 색상변경 
       }
     })
   );
 
+  function fill(selectItem,index){
+    var color;
+    if(selectItem===index){
+      color='#BE81F7';
+    }
+    else if(date.format('yyyy/MM/dd')== today.format('yyyy/MM/dd')){
+      if(today.getHours() < index){
+        color = '#FFBF00';
+      }
+      else{
+        color = '#00BFFF';
+      }
+      return color;
+    }
+    else if(date < today){
+     color= '#00BFFF';
+    }
+    else if(date > today){
+      color = '#FFBF00';
+    }
+    else{
+      color = '#00BFFF';
+    }
+    return color;
+  };
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -108,63 +134,93 @@ function DetailScreen({ navigation }) {
   const showDatepicker = () => {
     showMode('date');
   };
+  
 
-  // const changeDate = (text) => {
-  //   if (text != '전' && text != '후') {
-  //     setButtonName(text)
-  //     switch (text) {
-  //       case '일':
-  //         return setselectedDay(selectedYear + '.' + selectedMonth + '.' + selectedDate);
-  //       case '주':
-  //         return setselectedDay(selectedYear + '.' + selectedMonth + '.' + selectedDate);
-  //       case '월':
-  //         return setselectedDay(selectedYear + '.' + selectedMonth);
-  //       case '년':
-  //         return setselectedDay(selectedYear);
-  //     }
-  //   }else{
-  //     if(text=='전'){
-  //       switch (buttonName) {
-  //         case '일':
-  //           return alert(setDate(date.getDate()+1).toLocalString());
-  //         case '주':
-  //           return setselectedDay(selectedYear + '.' + selectedMonth + '.' + selectedDate);
-  //         case '월':
-  //           return setselectedDay(selectedYear + '.' + selectedMonth);
-  //         case '년':
-  //           return setselectedDay(selectedYear);
-  //       }
-  //     }
-  //   }
-  // };
+  // function Back(){
+  const Back = () => {
+    var temp = new Date(date.getFullYear(),date.getMonth(),date.getDate());
+    switch(buttonName)
+    {
+      case 0:
+        temp.setDate(temp.getDate()-1);
+        break;
+      case 1:
+        temp.setDate(temp.getDate()-7);
+        break;
+      case 2:
+        var datetemp = temp.getDate();
+        temp.setMonth(temp.getMonth()-1);
+        if(datetemp!=temp.getDate())
+        {
+          console.log("error!");
+          temp = new Date(temp.getFullYear(),temp.getMonth(),-1);
+          temp.setDate(temp.getDate()+1);
+        }
+        break;
+      case 3:
+        temp.setFullYear(temp.getFullYear()-1);
+        break;
+    }
+    setDate(temp)
+    setselectedDay(temp.format("yyyy/MM/dd"));
+    
+  };
+  const Next = () => {
+    var temp = new Date(date.getFullYear(),date.getMonth(),date.getDate());
+    switch(buttonName)
+    {
+      case 0:
+        temp.setDate(temp.getDate()+1);
+        break;
+      case 1:
+        temp.setDate(temp.getDate()+7);
+        break;
+      case 2:
+        var datetemp = temp.getDate();
+        temp.setMonth(temp.getMonth()+1);
+        if(datetemp!=temp.getDate())
+        {
+          console.log("error!");
+          temp = new Date(temp.getFullYear(),temp.getMonth(),-1);
+          temp.setDate(temp.getDate()+1);
+        }
+        break;
+      case 3:
+        temp.setFullYear(temp.getFullYear()+1);
+        break;
+    }
+    setDate(temp)
+    setselectedDay(temp.format("yyyy/MM/dd"));
+  };
+
 
 
   return (
     <SafeAreaView style={styles.container}>
          <ScrollView>
       <View style={styles.topContainer}>
-        <TouchableOpacity style={styles.topBtn}>
+        <TouchableOpacity style={styles.topBtn} onPress={Back}>
           <Text style={(styles.topBtnText)}> 전 </Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.topBtn} onPress={showDatepicker}>
           <Text style={[{ color: "#000" }]}> {selectedDay} </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.topBtn} >
+        <TouchableOpacity style={styles.topBtn}  onPress={Next}>
           <Text style={(styles.topBtnText)}> 후 </Text>
         </TouchableOpacity>
       </View>
       <View style={styles.middleContainer}>
       <View style={styles.topBox}>
-            <TouchableOpacity style={styles.topBtn} >
+            <TouchableOpacity style={styles.topBtn}  onPress={()=>setButtonName(0)}>
               <Text style={(styles.topBtnText)}> 일 </Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.topBtn} >
+            <TouchableOpacity style={styles.topBtn} onPress={()=>setButtonName(1)}>
               <Text style={(styles.topBtnText)}> 주 </Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.topBtn}>
+            <TouchableOpacity style={styles.topBtn} onPress={()=>setButtonName(2)}>
               <Text style={(styles.topBtnText)}> 월 </Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.topBtn}>
+            <TouchableOpacity style={styles.topBtn} onPress={()=>setButtonName(3)}>
               <Text style={(styles.topBtnText)}> 년 </Text>
             </TouchableOpacity>
           </View>

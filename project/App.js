@@ -4,6 +4,8 @@ import LoginScreen from './src/LoginScreen';
 import SplashScreen from './src/SplashScreen';
 import HomeScreen from './src/drawerScreens/HomeScreen';
 import SettingScreen from './src/drawerScreens/SettingScreen';
+import SettingScreen1 from './src/drawerScreens/SettingScreen1';
+import SettingScreen2 from './src/drawerScreens/SettingScreen2';
 import ReportScreen from './src/drawerScreens/ReportScreen';
 import DetailScreen from './src/drawerScreens/DetailScreen';
 import Perference from './src/Perference';
@@ -45,10 +47,10 @@ const MainTabScreen = () => {
     </Tab.Navigator>
   );
 };
-//const App = ({ navigation }) => {
+const App = ({ navigation }) => {
 
-//function App({ navigation }) =>{
-const App: () => React$Node = () => {
+// function App({ navigation }) =>{
+// const App: () => React$Node = () => {
   const User = ["test1@", "test2@", "test3@", "test4@"]
   return (
     <NavigationContainer>
@@ -56,6 +58,27 @@ const App: () => React$Node = () => {
         <Stack.Screen
           name="Splash"
           component={SplashScreen}
+          options={{ headerShown: false }}
+        />
+
+      <Stack.Screen
+          name="Setting"
+          component={SettingScreen}
+        />
+
+      <Stack.Screen
+          name="Setting1"
+          component={SettingScreen1}
+        />
+
+<Stack.Screen
+          name="Setting2"
+          component={SettingScreen2}
+        />
+
+<Stack.Screen
+          name="Login"
+          component={LoginScreen}
           options={{ headerShown: false }}
         />
 

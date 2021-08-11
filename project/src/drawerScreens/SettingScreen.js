@@ -7,11 +7,13 @@ import React, { useState } from 'react';
 import 'react-native-gesture-handler';
 
 
+
 import {
   StyleSheet,
   View,
   Text,
-  SafeAreaView
+  SafeAreaView,
+  TouchableOpacity
 } from 'react-native';
 
 
@@ -19,9 +21,40 @@ import {
 function SettingScreen({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
-     <View></View>
-     <View></View>
-     <View></View>
+     <View style={styles.bottomLine}>
+       <Text style={styles.Text}>계정:사용자1 </Text>
+       </View>
+     <View style={styles.bottomLine}>
+     <TouchableOpacity
+            activeOpacity={0.5}
+            onPress={() => navigation.navigate('Setting1')}
+          >
+       <Text style={styles.Text}>태양광 설치 투자 금액</Text>
+       </TouchableOpacity>
+       </View>
+     <View style={styles.bottomLine}>
+     <TouchableOpacity
+            activeOpacity={0.5}
+            onPress={() => navigation.navigate('Setting2')}
+          >
+       <Text style={styles.Text}>시간대별 kW 당 발전 수익 설정</Text>
+       </TouchableOpacity>
+       </View>
+     <View style={styles.bottomLine}>
+       <Text style={styles.Text} >정보</Text>
+       <Text style={styles.TextEnd} >v1.0</Text>
+        </View>
+        <TouchableOpacity
+            style={styles.btn}
+            activeOpacity={0.5}
+            onPress={() => navigation.navigate('Login')}
+          >
+            <View style={styles.bottomText} >
+        <Text>
+            로그아웃
+            </Text>
+            </View>
+            </TouchableOpacity>
     </SafeAreaView>
   );
 }
@@ -32,84 +65,24 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     backgroundColor:"#fff"
   },
-  headContainer: {
-    flex: 0.30,
+  bottomLine:{
+    flexDirection: 'row',
   },
-  topContainer: {
-    flex: 0.8,
-    backgroundColor:"#fff",
-    padding: '1%',
-  },
-  middleContainer: {
-    flex: 1,
-    backgroundColor:"#fff",
-    padding: '1%'
-  },
-  bottomContainer: {
-    flex: 0.5,
-    backgroundColor:"#fff",
-    padding: '1%'
-  },
-  tailContainer: {
-    flex: 0.4,
-  },
-  Box: {
-    borderColor: "#000",
-    //width:"100%",
-    height: "100%",
-    borderWidth: 1,
-    margin: 'auto'
-
-  },
-  Boxtitle: {
+  Text: {
     fontSize: wp('5%'),
-    paddingLeft: wp('1%'),
-    paddingBottom: wp('3%'),
-    paddingTop: wp('1%'),
-    fontWeight: "bold"
-  },
-  Boxsubtitle: {
-    fontSize: wp('3%'),
-    paddingRight: wp('1%'),
-    paddingBottom: wp('3%'),
-    paddingTop: wp('2%'),
-
-  },
-  topBox: {
-    flexDirection: 'row',
-    justifyContent: 'space-between'
-  },
-  middleBox: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  middleText: {
-    fontSize: wp('6%'),
-    paddingLeft: wp(1),
     paddingBottom: wp(5),
-    paddingTop: wp(1),
-    fontWeight: "bold"
+    paddingTop: wp(5),
+    paddingLeft:wp(5)
   },
-  bottomBox: {
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
+  bottomText:{
+    alignItems:"center"
   },
-  bottomText: {
-    fontSize: wp('3%'),
-    paddingLeft: wp(2),
-    paddingTop: wp(1),
-  },
-  bottomRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: "50%"
-  },
-  colorBox: {
-    width: 10,
-    height: 10,
-    backgroundColor: "#000"
-
+  TextEnd:{
+    textAlign:"right",
+    fontSize: wp('5%'),
+    paddingBottom: wp(5),
+    paddingTop: wp(5),
+    paddingLeft:wp(5)
   }
 });
 export default SettingScreen;
