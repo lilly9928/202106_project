@@ -1,4 +1,4 @@
-var Data = new Array(24).fill(0);
+var Data = [1000, 3000, 4000, 9500, 8500, 2000, 7000, 1000, 2000, 4000, 1000, 3000, 4000, 9500, 8500, 2000, 7000, 1000, 2000, 4000, 7000, 1000, 2000, 4000];
 var Money = 0;
 var User
 
@@ -13,7 +13,7 @@ var object = {
         return Data
     },
     setData:function(item){
-        Data.add(item)
+        Data = item
     },
     getMoney:function(){
         return Money

@@ -22,27 +22,22 @@ import {
   function SettingScreen({ navigation }) {
 
      const [data, setData] = useState(Perference.getData());
-   // const data = Perference.getData();
-    const [Errortext, setErrortext] = useState('오류');
+
 
      const onlyNumber = (str,changeindex) => {
       var num =  str.replace(/[^0-9.]/g, "").replace(/(\.*)\./g, "$1");
-      setData((data) =>
-      data.map((item,index) => {
-        if (index === changeindex) {
-          return { ...item, str};
-        }
-        //return item[index];
-      })
-    );
-
+      var temp_data = [...data];
+      var temp_element = { ...temp_data[changeindex]};
+      temp_element = num;
+      temp_data[changeindex] = temp_element;
+      setData(temp_data);
     };
 
     const handleSubmitPress = () => {
-      if(!price){
+      if(!data){
         alert('저장에 실패했습니다.')
       }
-      Perference.setMoney(price);
+      Perference.setData(data);
       alert('저장되었습니다.');
       navigation.navigate('이전');
     };
@@ -69,7 +64,7 @@ import {
           underlineColorAndroid="#f000"
           blurOnSubmit={false}
           value={data[1].toString()}
-          onChangeText={(input) => onlyNumber(input)}
+          onChangeText={(input) => onlyNumber(input,1)}
         /></View>
         <View style={styles.formArea}><Text  style={styles.Text}>2~3H </Text>
        <TextInput
@@ -79,7 +74,7 @@ import {
           underlineColorAndroid="#f000"
           blurOnSubmit={false}
           value={data[2].toString()}
-          onChangeText={(input) => onlyNumber(input)}
+          onChangeText={(input) => onlyNumber(input,2)}
         /></View>
         <View style={styles.formArea}><Text  style={styles.Text}>3~4H </Text>
        <TextInput
@@ -89,7 +84,7 @@ import {
           underlineColorAndroid="#f000"
           blurOnSubmit={false}
           value={data[3].toString()}
-          onChangeText={(input) => onlyNumber(input)}
+          onChangeText={(input) => onlyNumber(input,3)}
         /></View>
         <View style={styles.formArea}><Text  style={styles.Text}>4~5H </Text>
        <TextInput
@@ -99,7 +94,7 @@ import {
           underlineColorAndroid="#f000"
           blurOnSubmit={false}
           value={data[4].toString()}
-          onChangeText={(input) => onlyNumber(input)}
+          onChangeText={(input) => onlyNumber(input,4)}
         /></View>
         <View style={styles.formArea}><Text  style={styles.Text}>5~6H </Text>
        <TextInput
@@ -109,7 +104,7 @@ import {
           underlineColorAndroid="#f000"
           blurOnSubmit={false}
           value={data[5].toString()}
-          onChangeText={(input) => onlyNumber(input)}
+          onChangeText={(input) => onlyNumber(input,5)}
         /></View>
         <View style={styles.formArea}><Text  style={styles.Text}>6~7H </Text>
        <TextInput
@@ -119,7 +114,7 @@ import {
           underlineColorAndroid="#f000"
           blurOnSubmit={false}
           value={data[6].toString()}
-          onChangeText={(input) => onlyNumber(input)}
+          onChangeText={(input) => onlyNumber(input,6)}
         /></View>
         <View style={styles.formArea}><Text  style={styles.Text}>7~8H </Text>
        <TextInput
@@ -129,7 +124,7 @@ import {
           underlineColorAndroid="#f000"
           blurOnSubmit={false}
           value={data[7].toString()}
-          onChangeText={(input) => onlyNumber(input)}
+          onChangeText={(input) => onlyNumber(input,7)}
         /></View>
         <View style={styles.formArea}><Text  style={styles.Text}>8~9H </Text>
        <TextInput
@@ -139,7 +134,7 @@ import {
           underlineColorAndroid="#f000"
           blurOnSubmit={false}
           value={data[8].toString()}
-          onChangeText={(input) => onlyNumber(input)}
+          onChangeText={(input) => onlyNumber(input,8)}
         /></View>
        <View style={styles.formArea}><Text  style={styles.Text}>9~10H </Text>
        <TextInput
@@ -149,7 +144,7 @@ import {
           underlineColorAndroid="#f000"
           blurOnSubmit={false}
           value={data[9].toString()}
-          onChangeText={(input) => onlyNumber(input)}
+          onChangeText={(input) => onlyNumber(input,9)}
         /></View>
         <View style={styles.formArea}><Text  style={styles.Text}>10~11H </Text>
        <TextInput
@@ -159,7 +154,7 @@ import {
           underlineColorAndroid="#f000"
           blurOnSubmit={false} 
           value={data[10].toString()}
-          onChangeText={(input) => onlyNumber(input)}
+          onChangeText={(input) => onlyNumber(input,10)}
         /></View>
         <View style={styles.formArea}><Text  style={styles.Text}>11~12H </Text>
        <TextInput
@@ -169,7 +164,7 @@ import {
           underlineColorAndroid="#f000"
           blurOnSubmit={false}
           value={data[11].toString()}
-          onChangeText={(input) => onlyNumber(input)}
+          onChangeText={(input) => onlyNumber(input,11)}
         /></View>
        <View style={styles.formArea}><Text  style={styles.Text}>12~13H </Text>
        <TextInput
@@ -179,7 +174,7 @@ import {
           underlineColorAndroid="#f000"
           blurOnSubmit={false}
           value={data[12].toString()}
-          onChangeText={(input) => onlyNumber(input)}
+          onChangeText={(input) => onlyNumber(input,12)}
         /></View>
         <View style={styles.formArea}><Text  style={styles.Text}>13~14H </Text>
        <TextInput
@@ -189,7 +184,7 @@ import {
           underlineColorAndroid="#f000"
           blurOnSubmit={false}
           value={data[13].toString()}
-          onChangeText={(input) => onlyNumber(input)}
+          onChangeText={(input) => onlyNumber(input,13)}
         /></View>
         <View style={styles.formArea}><Text  style={styles.Text}>14~15H </Text>
        <TextInput
@@ -199,7 +194,7 @@ import {
           underlineColorAndroid="#f000"
           blurOnSubmit={false}
           value={data[14].toString()}
-          onChangeText={(input) => onlyNumber(input)}
+          onChangeText={(input) => onlyNumber(input,14)}
         /></View>
         <View style={styles.formArea}><Text  style={styles.Text}>15~16H </Text>
        <TextInput
@@ -209,7 +204,7 @@ import {
           underlineColorAndroid="#f000"
           blurOnSubmit={false}
           value={data[15].toString()}
-          onChangeText={(input) => onlyNumber(input)}
+          onChangeText={(input) => onlyNumber(input,15)}
         /></View>
         <View style={styles.formArea}><Text  style={styles.Text}>16~17H </Text>
        <TextInput
@@ -219,7 +214,7 @@ import {
           underlineColorAndroid="#f000"
           blurOnSubmit={false}
           value={data[16].toString()}
-          onChangeText={(input) => onlyNumber(input)}
+          onChangeText={(input) => onlyNumber(input,16)}
         /></View>
         <View style={styles.formArea}><Text  style={styles.Text}>17~18H </Text>
        <TextInput
@@ -229,7 +224,7 @@ import {
           underlineColorAndroid="#f000"
           blurOnSubmit={false}
           value={data[17].toString()}
-          onChangeText={(input) => onlyNumber(input)}
+          onChangeText={(input) => onlyNumber(input,17)}
         /></View>
         <View style={styles.formArea}><Text  style={styles.Text}>18~19H </Text>
        <TextInput
@@ -239,7 +234,7 @@ import {
           underlineColorAndroid="#f000"
           blurOnSubmit={false}
           value={data[18].toString()}
-          onChangeText={(input) => onlyNumber(input)}
+          onChangeText={(input) => onlyNumber(input,18)}
         /></View>
         <View style={styles.formArea}><Text  style={styles.Text}>19~20H </Text>
        <TextInput
@@ -249,7 +244,7 @@ import {
           underlineColorAndroid="#f000"
           blurOnSubmit={false}
           value={data[19].toString()}
-          onChangeText={(input) => onlyNumber(input)}
+          onChangeText={(input) => onlyNumber(input,19)}
         /></View>
         <View style={styles.formArea}><Text  style={styles.Text}>20~21H </Text>
        <TextInput
@@ -259,7 +254,7 @@ import {
           underlineColorAndroid="#f000"
           blurOnSubmit={false}
           value={data[20].toString()}
-          onChangeText={(input) => onlyNumber(input)}
+          onChangeText={(input) => onlyNumber(input,20)}
         /></View>
         <View style={styles.formArea}><Text  style={styles.Text}>21~22H </Text>
        <TextInput
@@ -269,7 +264,7 @@ import {
           underlineColorAndroid="#f000"
           blurOnSubmit={false}
           value={data[21].toString()}
-          onChangeText={(input) => onlyNumber(input)}
+          onChangeText={(input) => onlyNumber(input,21)}
         /></View>
         <View style={styles.formArea}><Text  style={styles.Text}>22~23H </Text>
        <TextInput
@@ -279,7 +274,7 @@ import {
           underlineColorAndroid="#f000"
           blurOnSubmit={false}
           value={data[22].toString()}
-          onChangeText={(input) => onlyNumber(input)}
+          onChangeText={(input) => onlyNumber(input,22)}
         /></View>
         <View style={styles.formArea}><Text  style={styles.Text}>23~24H </Text>
        <TextInput
@@ -289,7 +284,7 @@ import {
           underlineColorAndroid="#f000"
           blurOnSubmit={false}
           value={data[23].toString()}
-          onChangeText={(input) => onlyNumber(input)}
+          onChangeText={(input) => onlyNumber(input,23)}
         /></View>
 
         <Text style={styles.hide} value={data}></Text>

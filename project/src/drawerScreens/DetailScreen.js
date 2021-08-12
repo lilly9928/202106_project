@@ -8,6 +8,7 @@ import 'react-native-gesture-handler';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { BarChart, Grid } from 'react-native-svg-charts'
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
+import Perference from '../Perference';
 
 import {
   StyleSheet,
@@ -21,6 +22,7 @@ import {
   Button,
 } from 'react-native';
 import { set } from 'lodash';
+import { parse } from 'react-native-svg';
 
 Date.prototype.format = function (f) {
   if (!this.valueOf()) return " ";
@@ -51,8 +53,7 @@ Number.prototype.zf = function (len) { return this.toString().zf(len); };
 
 
 function DetailScreen({ navigation }) {
-
-  const data = [1000, 3000, 4000, 9500, 8500, 2000, 7000, 1000, 2000, 4000, 1000, 3000, 4000, 9500, 8500, 2000, 7000, 1000, 2000, 4000, 7000, 1000, 2000, 4000];
+  const data = Perference.getData();
   const HeadTable= ['시간', '발전량', '수익', '누적수익'];
   const DataTable= [
     ['1', '2', '3', '4'],
@@ -72,7 +73,7 @@ function DetailScreen({ navigation }) {
   const today = new Date();
   const newData = data.map(
     (item, index) => ({
-      y: item,
+      y: parseInt(item),
       svg: {
         onPressIn: () => {
           setselectItem(index);
@@ -82,12 +83,10 @@ function DetailScreen({ navigation }) {
           setselectItem(null);
         },
         fill: fill(selectItem,index)
-        //selectItem === index ? '#BE81F7' : date < today ? '#00BFFF' : date.getHours() < index ? '#FFBF00' :date > today ? '#FFBF00': '#00BFFF',
         //날짜데이터 색상변경 
       }
     })
   );
-
   function fill(selectItem,index){
     var color;
     if(selectItem===index){
@@ -118,10 +117,6 @@ function DetailScreen({ navigation }) {
     const currentDate = selectedDate || date;
     setShow(Platform.OS === 'ios');
     setDate(currentDate);
-
-    // setselectedYear(currentDate.getFullYear());
-    // setselectedMonth(currentDate.getMonth());
-    // setselectedDate(currentDate.getDate());
     setselectedDay(currentDate.format("yyyy/MM/dd"));
   };
 
@@ -135,8 +130,6 @@ function DetailScreen({ navigation }) {
     showMode('date');
   };
   
-
-  // function Back(){
   const Back = () => {
     var temp = new Date(date.getFullYear(),date.getMonth(),date.getDate());
     switch(buttonName)
