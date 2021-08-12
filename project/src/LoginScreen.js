@@ -90,8 +90,8 @@ const LoginScreen = ({ navigation }) => {
     for (var i = 0; i < Userdata.length; i++) {
       if (Userdata[i].id == userEmail) {
         if (Userdata[i].password == userPassword) {
-          Perference.set(userEmail);
-          navigation.navigate('MainTab');
+          Perference.setUser(userEmail);
+          navigation.navigate('이전');
           return;
         }
         else {

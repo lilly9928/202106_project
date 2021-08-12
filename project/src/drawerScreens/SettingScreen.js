@@ -22,12 +22,17 @@ function SettingScreen({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
      <View style={styles.bottomLine}>
+     <TouchableOpacity
+            activeOpacity={0.5}
+            onPress={() => navigation.navigate('태양광 설치 투자 금액')}
+          >
        <Text style={styles.Text}>계정:사용자1 </Text>
+       </TouchableOpacity>
        </View>
      <View style={styles.bottomLine}>
      <TouchableOpacity
             activeOpacity={0.5}
-            onPress={() => navigation.navigate('Setting1')}
+            onPress={() => navigation.navigate('태양광 설치 투자 금액')}
           >
        <Text style={styles.Text}>태양광 설치 투자 금액</Text>
        </TouchableOpacity>
@@ -35,7 +40,7 @@ function SettingScreen({ navigation }) {
      <View style={styles.bottomLine}>
      <TouchableOpacity
             activeOpacity={0.5}
-            onPress={() => navigation.navigate('Setting2')}
+            onPress={() => navigation.navigate('시간대별 kW 당 발전 수익 설정')}
           >
        <Text style={styles.Text}>시간대별 kW 당 발전 수익 설정</Text>
        </TouchableOpacity>

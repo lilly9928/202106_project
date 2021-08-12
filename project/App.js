@@ -67,12 +67,12 @@ const App = ({ navigation }) => {
         />
 
       <Stack.Screen
-          name="Setting1"
+          name="태양광 설치 투자 금액"
           component={SettingScreen1}
         />
 
 <Stack.Screen
-          name="Setting2"
+          name="시간대별 kW 당 발전 수익 설정"
           component={SettingScreen2}
         />
 
@@ -88,7 +88,7 @@ const App = ({ navigation }) => {
           options={{ headerShown: false }}
         />
 
-        <Stack.Screen name="MainTab" component={MainTabScreen}
+        <Stack.Screen name="이전" component={MainTabScreen}
           options={{
             headerLeft: () => {
               return null;
@@ -99,7 +99,7 @@ const App = ({ navigation }) => {
                 onSelect={(selectedItem, index) => {
                   console.log(selectedItem, index)
                 }}
-                defaultButtonText={Perference.get()}
+                defaultButtonText={Perference.getUser()}
                 buttonStyle={styles.dropdown1BtnStyle}
                  />
             ),
