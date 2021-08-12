@@ -8,6 +8,8 @@ import 'react-native-gesture-handler';
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
 import { ClipPath, Defs, Rect, Line, } from 'react-native-svg'
 import { LineChart, Path } from 'react-native-svg-charts'
+import Perference from '../Perference';
+
 
 import {
   StyleSheet,
@@ -34,6 +36,7 @@ function ReportScreen({ navigation }) {
   const date = new Date();
   const dataDate = date.getFullYear()+'.'+date.getMonth()+'.'+date.getDate()+'.'+date.getHours()+':'+date.getMinutes()+'기준'
   const indexToClipFrom = date.getMonth();
+  const money = Perference.getMoney();
 
   const Clips = ({ x, width }) => (
       <Defs key={ 'clips' }>
@@ -61,8 +64,8 @@ const HorizontalLine = (({ y }) => (
       key={ 'zero-axis' }
       x1={ '0%' }
       x2={ '100%' }
-      y1={ y(5000) }
-      y2={ y(5000) }
+      y1={ y(money) }
+      y2={ y(money) }
       stroke={ 'gray' }
      // strokeDasharray={ [ 4, 8 ] }
       strokeWidth={ 2 }
@@ -83,6 +86,7 @@ const VerticalLine = (({ x }) => (
 
 
   return (
+    
     <SafeAreaView style={styles.container}>
       <ScrollView>
       <View style={styles.topContainer}>

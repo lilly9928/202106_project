@@ -39,7 +39,8 @@ import {
       }
       Perference.setData(data);
       alert('저장되었습니다.');
-      navigation.navigate('이전');
+      //navigation.navigate('이전');
+      navigation.reset({index: 0, routes: [{ name: '이전' }],});
     };
 
     return (
