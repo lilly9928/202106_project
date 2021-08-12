@@ -49,16 +49,16 @@ function HomeScreen({ navigation }) {
             <Text style={styles.Boxsubtitle}>{dataDate}</Text>
           </View>
           <View style={styles.middleBox}>
-            <Text style={styles.middleText}>오늘의 수익</Text>
+            <Text style={styles.middleText}>120000원</Text>
           </View>
           <View style={styles.bottomBox}>
             <View style={styles.bottomRow}>
               <Text style={styles.bottomText}>현재까지 수익</Text>
-              <Text style={styles.bottomText}>오늘의 수익</Text>
+              <Text style={styles.bottomText}>120000원</Text>
             </View>
             <View style={styles.bottomRow}>
               <Text style={styles.bottomText}>남은 시간 예측 수익</Text>
-              <Text style={styles.bottomText}>오늘의 수익</Text>
+              <Text style={styles.bottomText}>20000원</Text>
             </View>
 
           </View>
