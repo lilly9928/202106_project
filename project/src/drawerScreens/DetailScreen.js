@@ -55,28 +55,7 @@ Number.prototype.zf = function (len) { return this.toString().zf(len); };
 function DetailScreen({ navigation }) {
   const data = Perference.getData();
   const HeadTable= ['시간', '발전량', '수익', '누적수익'];
-  const DataTable= [
-    ['1h', '100kWh', '10000', '10000'],
-    ['2h', '50kWh', '5000', '15000'],
-    ['3h', '200kWh', '20000', '35000'],
-    ['4h', '140kWh', '14000', '49000'],
-    ['5h', '130kWh', '12000', '61000'],
-    ['6h', '100kWh', '10000', '10000'],
-    ['7h', '50kWh', '5000', '15000'],
-    ['8h', '200kWh', '20000', '35000'],
-    ['9h', '140kWh', '14000', '49000'],
-    ['10h', '130kWh', '12000', '61000'],
-    ['11h', '100kWh', '10000', '10000'],
-    ['12h', '50kWh', '5000', '15000'],
-    ['13h', '200kWh', '20000', '35000'],
-    ['14h', '140kWh', '14000', '49000'],
-    ['15h', '130kWh', '12000', '61000'],
-    ['16h', '100kWh', '10000', '10000'],
-    ['17h', '50kWh', '5000', '15000'],
-    ['18h', '200kWh', '20000', '35000'],
-    ['19h', '140kWh', '14000', '49000'],
-    ['20h', '130kWh', '12000', '61000'],
-  ];
+  const DataTable=Perference.getDataTable();
   // const date = new Date();
   const [selectItem, setselectItem] = useState(null);
   const [selectValue, setselectValue] = useState(null);

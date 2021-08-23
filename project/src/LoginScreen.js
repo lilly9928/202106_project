@@ -6,6 +6,7 @@ import {
 
 import 'react-native-gesture-handler';
 import Perference from './Perference';
+import axios from 'axios';
 
 import React, { useState, createRef } from 'react';
 import {
@@ -45,7 +46,6 @@ const LoginScreen = ({ navigation }) => {
       "password": "test5"
     }
   ];
-
   const [userEmail, setUserEmail] = useState('');
   const [userPassword, setUserPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -54,6 +54,42 @@ const LoginScreen = ({ navigation }) => {
 
   const passwordInputRef = createRef();
 
+  const Dashboard= () => {
+    fetch('http://localhost:8081/data/dashboard.json')
+      .then(res => res.json())
+      .then(res => {
+       Perference.setDashboard(res.data.realGraph.y.concat(res.data.predictedGraph.y))
+       Perference.setDashboardTotal(res.data.todayTotalRevenue)
+       Perference.setDashboardToday(res.data.todayRevenue)
+       Perference.setDashboardTodayPredicted(res.data.todayPredictedRevenue)
+       
+  })
+}
+const Detail= () => {
+  fetch('http://localhost:8081/data/detail.json')
+    .then(res => res.json())
+    .then(res => {
+     Perference.setData(res.data.realPowerGraph.y.concat(res.data.predictedPowerGraph.y))
+     Perference.setDataTable(res.data.table)
+    
+     
+})
+}
+const Report= () => {
+  fetch('http://localhost:8081/data/report.json')
+    .then(res => res.json())
+    .then(res => {
+     Perference.setReportMonthPredicted(res.predictedRevenue.predictedRevenueThisMonth)
+     Perference.setReportMonthAverage(res.predictedRevenue.compareMonthAverage)
+     Perference.setReportLastYearOfMonth(res.predictedRevenue.compareLastYearOfMonth)
+     Perference.setReportData(res.data.accumulatedRevenueGraph.realY.concat(res.data.accumulatedRevenueGraph.predictedY))
+     Perference.setReportDataTable(res.data.table)
+     Perference.setReportTotalRevenue(res.data.realRevenue.totalRevenue)
+     Perference.setReportActualRevenue(res.data.realRevenue.actualRevenue)
+     Perference.setMoney(res.data.realRevenue.userInvestment)
+     
+})
+}
   const validateEmail = (mail) => {
     if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail))
      {
@@ -91,7 +127,11 @@ const LoginScreen = ({ navigation }) => {
       if (Userdata[i].id == userEmail) {
         if (Userdata[i].password == userPassword) {
           Perference.setUser(userEmail);
-          navigation.navigate('이전');
+          Dashboard();
+          Detail();
+          Report();
+          //navigation.dispatch(CommonActions.navigate("이전")); 
+         navigation.navigate('이전');
           return;
         }
         else {

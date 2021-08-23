@@ -5,26 +5,55 @@ import {
 } from 'react-native-responsive-screen';
 import React, { useState } from 'react';
 import 'react-native-gesture-handler';
-
-
+import Perference from '../Perference';
 import {
   StyleSheet,
   View,
   Text,
-  SafeAreaView
+  SafeAreaView,
+  ScrollView
 } from 'react-native';
 
 import { BarChart, Grid } from 'react-native-svg-charts'
+import { RefreshControl } from 'react-native-web-refresh-control'
+
+function wait(timeout) {
+  return new Promise(resolve => {
+    setTimeout(resolve, timeout)
+  })
+}
+
+function shuffle(array) {
+  var currentIndex = array.length, temporaryValue, randomIndex;
+
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
+}
 
 
 function HomeScreen({ navigation }) {
 
   const [selectItem, setselectItem] = useState(null);
   const [selectValue, setselectValue] = useState(null);
+  const [refreshing, setRefreshing] = useState(false);
 
-  const data = [1000, 3000, 4000, 9500, 8500, 2000, 7000, 1000, 2000, 4000, 1000, 3000, 4000, 9500, 8500, 2000, 7000, 1000, 2000, 4000, 7000, 1000, 2000, 4000];
+
+  const data = Perference.getDashboard();
   const date = new Date();
   const dataDate = date.getFullYear()+'.'+date.getMonth()+'.'+date.getDate()+'.'+date.getHours()+':'+date.getMinutes()+'기준'
+
   const newData = data.map(
     (item, index) => ({
       y: item,
@@ -40,8 +69,26 @@ function HomeScreen({ navigation }) {
       }
     })
   );
+
+  React.useEffect(() => {
+    reloadLines()
+  }, [])
+
+  const reloadLines = React.useCallback(() => {
+    setRefreshing(true)
+
+    wait(2000).then(() => {
+      setRefreshing(false)
+      
+    })
+  }, [])
   return (
     <SafeAreaView style={styles.container}>
+      <ScrollView
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={reloadLines} />
+        }
+      >
       <View style={styles.topContainer}>
         <View style={styles.Box}>
           <View style={styles.topBox}>
@@ -49,16 +96,16 @@ function HomeScreen({ navigation }) {
             <Text style={styles.Boxsubtitle}>{dataDate}</Text>
           </View>
           <View style={styles.middleBox}>
-            <Text style={styles.middleText}>120000원</Text>
+            <Text style={styles.middleText}>{Perference.getDashboardTotal()+'원'}</Text>
           </View>
           <View style={styles.bottomBox}>
             <View style={styles.bottomRow}>
               <Text style={styles.bottomText}>현재까지 수익</Text>
-              <Text style={styles.bottomText}>120000원</Text>
+              <Text style={styles.bottomText}>{Perference.getDashboardToday()+'원'}</Text>
             </View>
             <View style={styles.bottomRow}>
               <Text style={styles.bottomText}>남은 시간 예측 수익</Text>
-              <Text style={styles.bottomText}>20000원</Text>
+              <Text style={styles.bottomText}>{Perference.getDashboardToday()+'원'}</Text>
             </View>
 
           </View>
@@ -70,7 +117,7 @@ function HomeScreen({ navigation }) {
             <Text style={styles.Boxtitle}>시간대별 수익 그래프</Text>
             <Text style={styles.Boxsubtitle}>{selectValue}</Text>
           </View>
-          <View style={{ flex: 1, height: 150 }}>
+          <View style={{ flex: 1, height: 200 }}>
             <BarChart
               style={{ flex: 1, marginTop: 30 }}
               data={newData}
@@ -96,6 +143,7 @@ function HomeScreen({ navigation }) {
       <View style={styles.tailContainer}>
 
       </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }

@@ -5,7 +5,7 @@ import {
 } from 'react-native-responsive-screen';
 import React, { useState } from 'react';
 import 'react-native-gesture-handler';
-
+import Perference from '../Perference';
 
 
 import {
@@ -26,7 +26,7 @@ function SettingScreen({ navigation }) {
             activeOpacity={0.5}
             onPress={() => navigation.navigate('태양광 설치 투자 금액')}
           >
-       <Text style={styles.Text}>계정:사용자1 </Text>
+       <Text style={styles.Text}>계정:{Perference.getUser()}</Text>
        </TouchableOpacity>
        </View>
      <View style={styles.bottomLine}>

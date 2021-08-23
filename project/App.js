@@ -49,9 +49,8 @@ const MainTabScreen = () => {
 };
 const App = ({ navigation }) => {
 
-// function App({ navigation }) =>{
-// const App: () => React$Node = () => {
   const User = ["test1@", "test2@", "test3@", "test4@"]
+
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="SplashScreen">

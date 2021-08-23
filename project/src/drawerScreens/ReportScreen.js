@@ -24,30 +24,11 @@ import {
 
 function ReportScreen({ navigation }) {
 
-  const data = [1000, 2000, 3000, 4000, 5000, 4000, 2000, 8000, 9000, 10000, 11000, 12000];
+  const data = Perference.getReportData();
   const HeadTable= ['일시', '수익', '누적 수익', '살제 누적 수익'];
-  const DataTable= [
-    ['1h', '100kWh', '10000', '10000'],
-    ['2h', '50kWh', '5000', '15000'],
-    ['3h', '200kWh', '20000', '35000'],
-    ['4h', '140kWh', '14000', '49000'],
-    ['5h', '130kWh', '12000', '61000'],
-    ['6h', '100kWh', '10000', '10000'],
-    ['7h', '50kWh', '5000', '15000'],
-    ['8h', '200kWh', '20000', '35000'],
-    ['9h', '140kWh', '14000', '49000'],
-    ['10h', '130kWh', '12000', '61000'],
-    ['11h', '100kWh', '10000', '10000'],
-    ['12h', '50kWh', '5000', '15000'],
-    ['13h', '200kWh', '20000', '35000'],
-    ['14h', '140kWh', '14000', '49000'],
-    ['15h', '130kWh', '12000', '61000'],
-    ['16h', '100kWh', '10000', '10000'],
-    ['17h', '50kWh', '5000', '15000'],
-    ['18h', '200kWh', '20000', '35000'],
-    ['19h', '140kWh', '14000', '49000'],
-    ['20h', '130kWh', '12000', '61000'],
-  ];
+  const DataTable= Perference.getReportDataTable();
+  console.log(DataTable);
+  console.log(data);
   const date = new Date();
   const dataDate = date.getFullYear()+'.'+date.getMonth()+'.'+date.getDate()+'.'+date.getHours()+':'+date.getMinutes()+'기준'
   const indexToClipFrom = date.getMonth();
@@ -111,14 +92,14 @@ const VerticalLine = (({ x }) => (
             <Text style={styles.Boxsubtitle}>{dataDate}</Text>
           </View>
           <View style={styles.middleBox}>
-            <Text style={styles.middlePriceText}>1200000원</Text>
+            <Text style={styles.middlePriceText}>{Perference.getReportMonthPredicted()+'원'}</Text>
             <View style={styles.insideMiddleBox}>
               <Text style={styles.middleText}>월 평균 비교: </Text>
               <Text style={styles.middleText}>작년 1월 비교: </Text>
             </View>
             <View style={styles.insideMiddleBox}>
-              <Text style={styles.middleText}>1200000원</Text>
-              <Text style={styles.middleText}>30000원</Text>
+              <Text style={styles.middleText}>{Perference.getReportMonthAverage()+'원'}</Text>
+              <Text style={styles.middleText}>{Perference.getReportLastYearOfMonth()+'원'}</Text>
             </View>
           </View>
         </View>
@@ -130,15 +111,15 @@ const VerticalLine = (({ x }) => (
             <Text style={styles.Boxsubtitle}>{dataDate}</Text>
           </View>
           <View style={styles.middleBox}>
-            <Text style={styles.middlePriceText}>200000원</Text>
+            <Text style={styles.middlePriceText}>{Perference.getReportTotalRevenue()+'원'}</Text>
             <View style={styles.insideMiddleBox}>
               <Text style={styles.middleText}>투자원금: </Text>
               <Text style={styles.middleText}>실제 누적 수익:</Text>
               <Text style={styles.middleText}>(투자 수익 - 원금)</Text>
             </View>
             <View style={styles.insideMiddleBox}>
-              <Text style={styles.middleText}> 2000000원</Text>
-              <Text style={styles.middleText}> 100000원</Text>
+              <Text style={styles.middleText}> {Perference.getMoney()+'원'}</Text>
+              <Text style={styles.middleText}> {Perference.getReportActualRevenue()+'원'}</Text>
             </View>
           </View>
         </View>

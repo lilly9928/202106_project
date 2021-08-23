@@ -1,6 +1,7 @@
 // Import React and Component
 import React, {useState, useEffect} from 'react';
 import {ActivityIndicator, View, StyleSheet, Image,Text} from 'react-native';
+import Perference from './Perference';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
