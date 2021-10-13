@@ -309,8 +309,8 @@ const styles = StyleSheet.create({
     width: "50%"
   },
   colorBox: {
-    width: 10,
-    height: 10,
+    width: 15,
+    height: 15,
     backgroundColor: "#000"
 
   },

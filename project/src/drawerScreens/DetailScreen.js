@@ -63,7 +63,7 @@ function DetailScreen({ navigation }) {
   const [show, setShow] = useState(false);
   const [date, setDate] = useState(new Date());
   const [buttonName, setButtonName] = useState(0);
-  const [selectedDay, setselectedDay] = useState(date.format('yyyy/MM/dd'));
+  const [selectedDay, setselectedDay] = useState(date.format('yyyy년MM월dd일'));
   const today = new Date();
   const newData = data.map(
     (item, index) => ({
@@ -84,25 +84,25 @@ function DetailScreen({ navigation }) {
   function fill(selectItem,index){
     var color;
     if(selectItem===index){
-      color='#BE81F7';
+      color='#000000';
     }
-    else if(date.format('yyyy/MM/dd')== today.format('yyyy/MM/dd')){
+    else if(date.format('yyyy년MM월dd일')== today.format('yyyy년MM월dd일')){
       if(today.getHours() < index){
         color = '#FFBF00';
       }
       else{
-        color = '#00BFFF';
+        color = '#385bff';
       }
       return color;
     }
     else if(date < today){
-     color= '#00BFFF';
+     color= '#385bff';
     }
     else if(date > today){
-      color = '#FFBF00';
+      color = '#ffb851';
     }
     else{
-      color = '#00BFFF';
+      color = '#385bff';
     }
     return color;
   };
@@ -111,7 +111,7 @@ function DetailScreen({ navigation }) {
     const currentDate = selectedDate || date;
     setShow(Platform.OS === 'ios');
     setDate(currentDate);
-    setselectedDay(currentDate.format("yyyy/MM/dd"));
+    setselectedDay(currentDate.format("yyyy년MM월dd일"));
   };
 
 
@@ -149,7 +149,7 @@ function DetailScreen({ navigation }) {
         break;
     }
     setDate(temp)
-    setselectedDay(temp.format("yyyy/MM/dd"));
+    setselectedDay(temp.format("yyyy년MM월dd일"));
     
   };
   const Next = () => {
@@ -177,7 +177,7 @@ function DetailScreen({ navigation }) {
         break;
     }
     setDate(temp)
-    setselectedDay(temp.format("yyyy/MM/dd"));
+    setselectedDay(temp.format("yyyy년MM월dd일"));
   };
 
 
@@ -185,62 +185,85 @@ function DetailScreen({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
          <ScrollView>
-      <View style={styles.topContainer}>
+      <View  style={styles.topContainer}>
+        <View style={styles.topDate}>
         <TouchableOpacity style={styles.topBtn} onPress={Back}>
-          <Text style={(styles.topBtnText)}> 전 </Text>
+          <Text style={(styles.topBtnText)}> &lt;</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.topBtn} onPress={showDatepicker}>
-          <Text style={[{ color: "#000" }]}> {selectedDay} </Text>
+          <Text style={[{ color: "#fff",fontSize:wp(5),fontWeight:"bold" }]}> {selectedDay} </Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.topBtn}  onPress={Next}>
-          <Text style={(styles.topBtnText)}> 후 </Text>
+          <Text style={(styles.topBtnText)}> &gt;</Text>
         </TouchableOpacity>
       </View>
-      <View style={styles.middleContainer}>
-      <View style={styles.topBox}>
-            <TouchableOpacity style={styles.topBtn}  onPress={()=>setButtonName(0)}>
-              <Text style={(styles.topBtnText)}> 일 </Text>
+        <View style={styles.topBox}>
+            <TouchableOpacity style={styles.topRoundBtn}  onPress={()=>setButtonName(0)}>
+              <Text style={(styles.topRoundBtnText)}> 일 </Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.topBtn} onPress={()=>setButtonName(1)}>
-              <Text style={(styles.topBtnText)}> 주 </Text>
+            <TouchableOpacity style={styles.topRoundBtn} onPress={()=>setButtonName(1)}>
+              <Text style={(styles.topRoundBtnText)}> 주 </Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.topBtn} onPress={()=>setButtonName(2)}>
-              <Text style={(styles.topBtnText)}> 월 </Text>
+            <TouchableOpacity style={styles.topRoundBtn} onPress={()=>setButtonName(2)}>
+              <Text style={(styles.topRoundBtnText)}> 월 </Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.topBtn} onPress={()=>setButtonName(3)}>
-              <Text style={(styles.topBtnText)}> 년 </Text>
+            <TouchableOpacity style={styles.topRoundBtn} onPress={()=>setButtonName(3)}>
+              <Text style={(styles.topRoundBtnText)}> 년 </Text>
             </TouchableOpacity>
           </View>
-        <View style={styles.Box}>
-          <View style={styles.topBox}>
+      </View>
+
+
+      <View style={styles.middleContainer}>
+      <View style={styles.middleBox}>
             <Text style={styles.Boxtitle}>발전량 그래프</Text>
             <Text style={styles.Boxsubtitle}>{selectValue}</Text>
           </View>
-          <View style={{ flex: 1, height: 150 }}>
+        <View style={styles.Box}>
+        <ScrollView horizontal={true}>
+          <View style={{ flex: 1, width:500,height: 200 }}>
             <BarChart
               style={{ flex: 1, marginTop: 30 }}
               data={newData}
-              // svg={{fill: this.state.color,}}
               yAccessor={({ item }) => item.y}
               contentInset={{ top: 10, bottom: 10 }}
               spacingInner={0.35}
               spacingOuter={0.3}
               gridMin={1}
             >
+              <Grid direction={Grid.Direction.HORIZONTAL}/>
             </BarChart>
+          </View>
+          </ScrollView>
+        </View>
+        <View style={styles.bottomContainer} >
+        <View style={styles.bottomBox}>
+          <View style={styles.bottomBoxRow}>
+          <View style={[styles.colorBox, { marginTop: wp(1),borderRadius:100,backgroundColor: "#385bff" }]} />
+            <View>
+              <Text style={styles.bottomText}>실제 발전량</Text>
+              <Text style={styles.bottomsubText}>실제 측정된</Text>
+              <Text style={styles.bottomsubText}>발전량 데이터</Text>
+            </View>
+            <View style={[styles.colorBox, { marginTop: wp(1),borderRadius:100,backgroundColor: '#FFBF00' }]} />
+            <View>
+              <Text style={styles.bottomText}>예측 발전량</Text>
+              <Text style={styles.bottomsubText}>현재 시간 이후의</Text>
+              <Text style={styles.bottomsubText}>예측 발전량 데이터</Text>
+            </View>
+          </View>
+
+          <View style={styles.bottomTextBox}>
+              <Text style={styles.bottomsubText}>그래프 클릭 시 구간 별 발전량을 확인할 수 있습니다.</Text>
           </View>
         </View>
       </View>
-      <View style={styles.bottomContainer} >
-        <View style={styles.Box}>
-          <Text style={styles.bottomText}><View style={[styles.colorBox, { backgroundColor: '#00BFFF' }]} />실제 발전량: 실제 측정된 발전 발전량 데이터입니다.</Text>
-          <Text style={styles.bottomText}><View style={[styles.colorBox, { backgroundColor: '#FFBF00' }]} />예측 발전량: 현재 시간 이후의 예측 발전량 데이터입니다.</Text>
-          <Text style={styles.bottomText}><View style={[styles.colorBox, { backgroundColor: '#BE81F7' }]} />클릭한 그래프: 그래프를 클릭하시면 우측 상단에서 발전량 값을 확인하실 수 있습니다.</Text>
-        </View>
       </View>
+
+
       <View style={styles.tailContainer} >
-        <Table borderStyle={{borderWidth: 1, borderColor: '#000000'}}>
-          <Row data={HeadTable} style={styles.HeadStyle} textStyle={styles.TableText}/>
+        <Table borderStyle={{borderWidth: 0}}>
+          <Row data={HeadTable} style={styles.HeadStyle} textStyle={styles.TableTitleText}/>
           <Rows data={DataTable} textStyle={styles.TableText}/>
         </Table>
       </View>
@@ -263,40 +286,67 @@ function DetailScreen({ navigation }) {
 //}
 
 const styles = StyleSheet.create({
+  HeadStyle:{
+    backgroundColor:'#ebebeb',
+    borderRadius:20,
+    paddingRight:wp(3),
+    paddingTop:wp(3),
+    paddingBottom:wp(3),
+  },
+  TableTitleText:{
+    color:'#000000',
+    fontSize:wp(5),
+    fontWeight:'bold',
+    textAlign:'center'
+  },
+  TableText:{
+    color:'#000000',
+    fontSize:wp(5),
+    alignItems:'center',
+    textAlign:'center',
+    paddingTop:wp(5)
+  },
   container: {
     flex: 1,
     flexDirection: "column",
-    backgroundColor: "#fff"
+    backgroundColor: "#f5f5f5"
   },
   headContainer: {
     flex: 0.30,
-    backgroundColor: "#fff",
+    backgroundColor: "#2e2e33",
     flexWrap:"wrap",
   },
   topContainer: {
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    backgroundColor: "#2e2e33",
+    position:"relative",
+    paddingBottom:hp(4),
+    borderBottomLeftRadius: 30,
+    borderBottomRightRadius:30,
+  },
+  topDate:{
     flex: 0.2,
-    //backgroundColor: "#CCC",
-    borderBottomColor: '#000',
-    borderBottomWidth: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    backgroundColor: "#fff",
+    backgroundColor: "#2e2e33",
     position:"relative",
     marginBottom:'5%'
-
   },
   middleContainer: {
     flex: 1,
-    padding: '1%',
     backgroundColor: "#fff",
     position:"relative",
-    marginBottom:'10%'
+    marginBottom:'10%',
+    borderBottomLeftRadius: 30,
+    borderBottomRightRadius:30,
   },
   tailContainer: {
     flex: 0.4,
     padding: '1%',
-    backgroundColor: "#fff",
-    marginBottom:'5%'
+    marginBottom:'5%',
+    paddingLeft: wp(5),
+    paddingRight: wp(5),
   },
   topBtn: {
    // borderColor: "#000",
@@ -310,39 +360,87 @@ const styles = StyleSheet.create({
     marginBottom: wp('1%'),
 
   },
+  bottomBoxRow:{
+    flexDirection: "row",
+    justifyContent: 'space-around',
+    padding:wp(5)
+  },
+  bottomTextBox:{
+    borderRadius: 8,
+    backgroundColor: "#ffffff",
+    alignItems:"center",
+    padding:wp(2),
+    width:"95%",
+    marginLeft:wp(2)
+
+  },
+  middleBox:{
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginLeft:wp(5),
+    marginRight:wp(5),
+    marginTop:wp(5)
+  },
+  topRoundBtn:{
+    borderRadius: 20,
+    backgroundColor: "#222225",
+    paddingLeft:wp(6),
+    paddingRight:wp(6),
+    paddingTop:wp(1),
+    paddingBottom:wp(1),
+  },
+  topRoundBtnText:{
+    fontSize:wp(4),
+    color:'#ffffff',
+
+  },
   topBtnText: {
-    color: '#000000',
+    color: '#ffffff',
+    fontSize:wp(6),
+    paddingLeft:wp(1),
+    paddingRight:wp(1)
 
   },
   Box: {
-    borderColor: "#000",
-    //width:"100%",
-    height: "100%",
-    borderWidth: 1,
-    margin: 'auto',
-    marginTop:'3%',
-    marginBottom:'5%'
+   
 
   },
   colorBox: {
-    width: 10,
-    height: 10,
+    width: 15,
+    height: 15,
+    backgroundColor: "#000"
 
   },
   bottomContainer: {
     flex: 0.5,
-    padding: '1%',
-    marginBottom:'5%'
+    paddingLeft: wp(3),
+    paddingRight: wp(3),
+    marginBottom:hp(3),
   },
   bottomBox: {
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
+    width:'100%',
+    flexDirection: "column",
+    backgroundColor:"#f5f5f5",
+    padding: '3%',
+    shadowColor: "rgba(0, 0, 0, 0.03)",
+    shadowOffset: {
+    width: 0,
+    height: 0
+    },
+  shadowRadius: 16,
+  shadowOpacity: 1,
+  borderRadius: 16,
+
   },
   bottomText: {
-    fontSize: wp('3%'),
-    paddingLeft: wp(2),
-    paddingTop: wp(1),
+    fontSize: wp(4),
+    fontWeight:'bold'
+
+  },
+  bottomsubText:{
+    color: "#909090",
+    fontWeight:'bold',
+    padding:wp(1)
   },
   bottomRow: {
     flexDirection: 'row',
@@ -350,7 +448,7 @@ const styles = StyleSheet.create({
     width: "50%"
   },
   Boxtitle: {
-    fontSize: wp('5%'),
+    fontSize: wp(4.5),
     paddingLeft: wp('1%'),
     paddingBottom: wp('3%'),
     paddingTop: wp('1%'),
@@ -358,13 +456,14 @@ const styles = StyleSheet.create({
   },
   topBox: {
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-around'
   },
   Boxsubtitle: {
-    fontSize: wp('3%'),
+    fontSize: wp(6),
     paddingRight: wp('1%'),
     paddingBottom: wp('3%'),
     paddingTop: wp('2%'),
+    fontWeight:"bold"
 
   },
 
