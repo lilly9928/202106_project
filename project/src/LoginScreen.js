@@ -7,7 +7,6 @@ import {
 import 'react-native-gesture-handler';
 import Perference from './Perference';
 import axios from 'axios';
-import Styled from "styled-components/native"
 
 import React, { useState, createRef } from 'react';
 import {
@@ -56,7 +55,7 @@ const LoginScreen = ({ navigation }) => {
   const passwordInputRef = createRef();
 
   const Dashboard= () => {
-    fetch('https://lilly9928.github.io/data/dashboard.json')
+    fetch('http://localhost:8081/data/dashboard.json')
       .then(res => res.json())
       .then(res => {
        Perference.setDashboard(res.data.realGraph.y.concat(res.data.predictedGraph.y))
@@ -67,7 +66,7 @@ const LoginScreen = ({ navigation }) => {
   })
 }
 const Detail= () => {
-  fetch('https://lilly9928.github.io/data/detail.json')
+  fetch('http://localhost:8081/data/detail.json')
     .then(res => res.json())
     .then(res => {
      Perference.setData(res.data.realPowerGraph.y.concat(res.data.predictedPowerGraph.y))
@@ -77,7 +76,7 @@ const Detail= () => {
 })
 }
 const Report= () => {
-  fetch('https://lilly9928.github.io/data/report.json')
+  fetch('http://localhost:8081/data/report.json')
     .then(res => res.json())
     .then(res => {
      Perference.setReportMonthPredicted(res.predictedRevenue.predictedRevenueThisMonth)
@@ -196,14 +195,6 @@ const Report= () => {
     </View>
   );
 };
-
-// const container = styled.View`
-// flex: 1, //전체의 공간을 차지한다는 의미
-// flexDirection: 'column',
-// backgroundColor: 'white',
-// paddingLeft: wp(7),
-// paddingRight: wp(7),
-// `;
 
 const styles = StyleSheet.create({
   container: {
