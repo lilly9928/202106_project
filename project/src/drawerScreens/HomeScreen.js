@@ -34,7 +34,8 @@ function HomeScreen({ navigation }) {
 
   const data = Perference.getDashboard();
   const date = new Date();
-  const dataDate = date.getFullYear()+'.'+date.getMonth()+'.'+date.getDate()+'.'+date.getHours()+':'+date.getMinutes()+'기준'
+  const dataDate = date.getHours()+':'+date.getMinutes()+'기준';
+  const dataDay = date.getMonth()+'월'+date.getDate()+'일';
 
   const newData = data.map(
     (item, index) => ({
@@ -47,7 +48,7 @@ function HomeScreen({ navigation }) {
         onPressOut: () => {
           setselectItem(null)
         },
-        fill: selectItem === index ? '#BE81F7' : date.getHours() < index ? '#FFBF00' : '#00BFFF',
+        fill: selectItem === index ? '#000000' : date.getHours() < index ? '#ffb851' : '#385bff',
       }
     })
   );
@@ -74,34 +75,35 @@ function HomeScreen({ navigation }) {
       <View style={styles.topContainer}>
         <View style={styles.Box}>
           <View style={styles.topBox}>
-            <Text style={styles.Boxtitle}>오늘의 수익</Text>
-            <Text style={styles.Boxsubtitle}>{dataDate}</Text>
+            <View>
+          <Text style={styles.Boxtitle}>{dataDay}의 수익</Text>
+          <Text style={styles.BoxtitleBig}>{Perference.getDashboardTotal()+'원'}</Text>
           </View>
+          <Text style={styles.BoxtitleSmall}>{dataDate}</Text>
+          </View>
+          <View style={styles.left}>
           <View style={styles.middleBox}>
             <Text style={styles.middleText}>{Perference.getDashboardTotal()+'원'}</Text>
+            <Text style={styles.middlesubText}>현재까지 수익</Text>
           </View>
-          <View style={styles.bottomBox}>
-            <View style={styles.bottomRow}>
-              <Text style={styles.bottomText}>현재까지 수익</Text>
-              <Text style={styles.bottomText}>{Perference.getDashboardToday()+'원'}</Text>
-            </View>
-            <View style={styles.bottomRow}>
-              <Text style={styles.bottomText}>남은 시간 예측 수익</Text>
-              <Text style={styles.bottomText}>{Perference.getDashboardToday()+'원'}</Text>
-            </View>
-
+          <View style={styles.middleBox}>
+          <Text style={styles.middleTextYellow}>{Perference.getDashboardToday()+'원'}</Text>
+            <Text style={styles.middlesubText}>잔여시간 예측</Text>
+          </View>
           </View>
         </View>
       </View>
+      <View style={styles.middle_topBox}>
+            <Text style={styles.middle_Boxtitle}>시간대별 수익 그래프</Text>
+            <Text style={styles.middle_Boxsubtitle}>{selectValue}</Text>
+          </View>
+      
       <View style={styles.middleContainer}>
         <View style={styles.Box}>
-          <View style={styles.topBox}>
-            <Text style={styles.Boxtitle}>시간대별 수익 그래프</Text>
-            <Text style={styles.Boxsubtitle}>{selectValue}</Text>
-          </View>
-          <View style={{ flex: 1, height: 200 }}>
+        <ScrollView horizontal={true}>
+          <View style={{  width:500,height: 200,backgroundColor:'#f5f5f5'}}>
             <BarChart
-              style={{ flex: 1, marginTop: 30 }}
+              style={{ flex: 1}}
               data={newData}
               // svg={{fill: this.state.color,}}
               yAccessor={({ item }) => item.y}
@@ -110,16 +112,32 @@ function HomeScreen({ navigation }) {
               spacingOuter={0.3}
               gridMin={1}
             >
-              {/*<Grid direction={Grid.Direction.VERTICAL}/>*/}
+              <Grid direction={Grid.Direction.HORIZONTAL}/>
             </BarChart>
           </View>
+          </ScrollView>
         </View>
       </View>
       <View style={styles.bottomContainer} >
-        <View style={styles.Box}>
-          <Text style={styles.bottomText}><View style={[styles.colorBox, { backgroundColor: '#00BFFF' }]} />실제 수익: 실제 측정된 발전 수익 데이터입니다.</Text>
-          <Text style={styles.bottomText}><View style={[styles.colorBox, { backgroundColor: '#FFBF00' }]} />예측 수익: 현재 시간 이후의 예측 발전 수익 데이터입니다.</Text>
-          <Text style={styles.bottomText}><View style={[styles.colorBox, { backgroundColor: '#BE81F7' }]} />클릭한 그래프: 그래프를 클릭하시면 우측 상단에서 수익 값을 확인하실 수 있습니다.</Text>
+        <View style={styles.bottomBox}>
+          <View style={styles.bottomBoxRow}>
+          <View style={[styles.colorBox, { marginTop: wp(1),borderRadius:100,backgroundColor: "#385bff" }]} />
+            <View>
+              <Text style={styles.bottomText}>실제 수익</Text>
+              <Text style={styles.bottomsubText}>실제 측정된</Text>
+              <Text style={styles.bottomsubText}>발전 수익 데이터</Text>
+            </View>
+            <View style={[styles.colorBox, { marginTop: wp(1),borderRadius:100,backgroundColor: '#FFBF00' }]} />
+            <View>
+              <Text style={styles.bottomText}>예측 수익</Text>
+              <Text style={styles.bottomsubText}>현재 시간 이후의</Text>
+              <Text style={styles.bottomsubText}>예측 발전 수익 데이터</Text>
+            </View>
+          </View>
+
+          <View style={styles.bottomTextBox}>
+              <Text style={styles.bottomsubText}>그래프 클릭 시 구간 별 수익을 확인할 수 있습니다.</Text>
+          </View>
         </View>
       </View>
       <View style={styles.tailContainer}>
@@ -134,76 +152,157 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
-    backgroundColor:"#fff"
+    backgroundColor:"#f5f5f5"
   },
   headContainer: {
     flex: 0.30,
   },
   topContainer: {
     flex: 0.8,
-    backgroundColor:"#fff",
     padding: '1%',
+    backgroundColor: "#2e2e33",
+    borderBottomLeftRadius: 30,
+    borderBottomRightRadius:30,
+
   },
   middleContainer: {
     flex: 1,
-    backgroundColor:"#fff",
+    backgroundColor:"#f5f5f5",
     padding: '1%'
   },
   bottomContainer: {
     flex: 0.5,
-    backgroundColor:"#fff",
-    padding: '1%'
+    paddingLeft: wp(3),
+    paddingRight: wp(3),
+    marginBottom:hp(3)
+  },
+  bottomBoxRow:{
+    flexDirection: "row",
+    justifyContent: 'space-around',
+    padding:wp(5)
   },
   tailContainer: {
     flex: 0.4,
   },
   Box: {
     borderColor: "#000",
-    //width:"100%",
     height: "100%",
-    borderWidth: 1,
-    margin: 'auto'
+    borderWidth: 0,
+    flexDirection: "row",
 
+  },
+  left:{
+    alignItems:'flex-end'
   },
   Boxtitle: {
     fontSize: wp('5%'),
     paddingLeft: wp('1%'),
     paddingBottom: wp('3%'),
     paddingTop: wp('1%'),
-    fontWeight: "bold"
+    color:"white"
+  },
+  BoxtitleBig:{
+    fontSize: wp(8),
+    paddingLeft: wp('1%'),
+    paddingBottom: wp('3%'),
+    paddingTop: wp('1%'),
+    fontWeight: "bold",
+    color:"white"
+  },
+  BoxtitleSmall:{
+    fontSize: wp(3),
+    justifyContent:'flex-end',
+    color: "#909090",
   },
   Boxsubtitle: {
     fontSize: wp('3%'),
     paddingRight: wp('1%'),
     paddingBottom: wp('3%'),
     paddingTop: wp('2%'),
+    color:"white"
 
   },
   topBox: {
-    flexDirection: 'row',
-    justifyContent: 'space-between'
+   justifyContent: 'space-between',
+    alignItems: 'flex-start',
+    width:'50%',
+    marginTop:wp(5),
+    marginLeft:wp(5),
+    marginBottom:wp(5)
+    
+  },
+  middle_topBox:{
+    backgroundColor: "#ffffff",
+    borderBottomLeftRadius: 30,
+    borderBottomRightRadius:30,
+    flexDirection: "row",
+    justifyContent: 'space-between',
+    padding:wp(5)
+    
+  },
+  middle_Boxtitle:{
+    color:'black',
+    fontSize:wp(4)
+  },
+  middle_Boxsubtitle:{
+    color:'#3943ff',
+    fontWeight:'bold',
+    fontSize:wp(6)
   },
   middleBox: {
     justifyContent: 'center',
     alignItems: 'center',
+    borderRadius: 20,
+    backgroundColor: "#222225",
+    width:wp(40),
+    marginTop:wp(5),
+    marginBottom:wp(5),
   },
   middleText: {
-    fontSize: wp('6%'),
-    paddingLeft: wp(1),
+    fontSize: wp(5),
+   // paddingLeft: wp(1),
+    paddingTop: wp(5),
+    fontWeight: "bold",
+    color: "#385bff"
+  },
+  middleTextYellow: {
+    fontSize: wp(5),
+   // paddingLeft: wp(1),
+    paddingTop: wp(5),
+    fontWeight: "bold",
+    color: "#ffb851"
+  },
+  middlesubText:{ 
+    fontSize: wp(3),
+    color: "#909090",
     paddingBottom: wp(5),
-    paddingTop: wp(1),
-    fontWeight: "bold"
+
   },
   bottomBox: {
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
+    width:'100%',
+    flexDirection: "column",
+    backgroundColor:"#fff",
+    padding: '3%',
+    shadowColor: "rgba(0, 0, 0, 0.03)",
+    shadowOffset: {
+    width: 0,
+    height: 0
+    },
+  shadowRadius: 16,
+  shadowOpacity: 1,
+  borderRadius: 16,
   },
   bottomText: {
-    fontSize: wp('3%'),
-    paddingLeft: wp(2),
-    paddingTop: wp(1),
+    fontSize: wp(4),
+    fontWeight:'bold'
+
   },
+  bottomsubText:{
+    color: "#909090",
+    fontWeight:'bold',
+    padding:wp(1)
+  },
+
   bottomRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -213,6 +312,15 @@ const styles = StyleSheet.create({
     width: 10,
     height: 10,
     backgroundColor: "#000"
+
+  },
+  bottomTextBox:{
+    borderRadius: 8,
+    backgroundColor: "#f5f5f5",
+    alignItems:"center",
+    padding:wp(2),
+    width:"95%",
+    marginLeft:wp(2)
 
   }
 });

@@ -17,10 +17,13 @@ import {
   Image,
   TouchableOpacity,
   TextInput,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  Dimensions
 } from 'react-native';
 
+import styled from 'styled-components/native'
 //import AsyncStorage from '@react-native-community/async-storage';
+var fullwidth = Dimensions.get('window').width;
 
 const LoginScreen = ({ navigation }) => {
 
@@ -56,7 +59,7 @@ const LoginScreen = ({ navigation }) => {
   const passwordInputRef = createRef();
 
   const Dashboard= () => {
-    fetch('https://lilly9928.github.io/data/dashboard.json')
+    fetch(`http://10.0.2.2:8081/data/dashboard.json`)
       .then(res => res.json())
       .then(res => {
        Perference.setDashboard(res.data.realGraph.y.concat(res.data.predictedGraph.y))
@@ -67,7 +70,7 @@ const LoginScreen = ({ navigation }) => {
   })
 }
 const Detail= () => {
-  fetch('https://lilly9928.github.io/data/detail.json')
+  fetch(`http://10.0.2.2:8081/data/detail.json`)
     .then(res => res.json())
     .then(res => {
      Perference.setData(res.data.realPowerGraph.y.concat(res.data.predictedPowerGraph.y))
@@ -77,7 +80,7 @@ const Detail= () => {
 })
 }
 const Report= () => {
-  fetch('https://lilly9928.github.io/data/report.json')
+  fetch(`http://10.0.2.2:8081/data/report.json`)
     .then(res => res.json())
     .then(res => {
      Perference.setReportMonthPredicted(res.predictedRevenue.predictedRevenueThisMonth)
@@ -147,17 +150,19 @@ const Report= () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.topArea}>
+     
+     <View style={styles.topArea}>
         <View style={styles.titleArea}>
-          <Text style={(styles.Text, { color: 'black' })}>Logo</Text>
+          <Text style={(styles.Text, { color: 'white' })}>탄소배출AI</Text>
         </View>
       </View>
 
       <View style={styles.formArea}>
-        <Text style={styles.Text}>아이디(이메일)</Text>
+        <View style={styles.inputArea}>
+        <Text style={styles.Text}>아이디</Text>
         <TextInput
           style={styles.textFormTop}
-          placeholder={'이메일을 입력해주세요.'}
+          placeholder={'이메일을 입력'}
           onChangeText={(userEmail) => setUserEmail(userEmail)}
           autoCapitalize="none"
           returnKeyType="next"
@@ -167,11 +172,12 @@ const Report= () => {
           underlineColorAndroid="#f000"
           blurOnSubmit={false}
         />
-        <Text style={styles.TextValidation}>{emailErrortext}</Text>
+        </View>
+        <View style={styles.inputArea}>
         <Text style={styles.Text}>비밀번호</Text>
         <TextInput
           style={styles.textFormBottom}
-          placeholder={'비밀번호를 입력해주세요.'}
+          placeholder={'입력하세요'}
           onChangeText={(userPassword) => setUserPassword(userPassword)}
           autoCapitalize="none"
           returnKeyType="next"
@@ -179,10 +185,12 @@ const Report= () => {
           blurOnSubmit={false}
           secureTextEntry={true} 
         />
+        <Text style={styles.TextValidation}>{emailErrortext}</Text>
         <Text style={styles.TextValidation}>{passwordErrortext}</Text>
       </View>
+      </View>
       <View style={{ flex: 0.68 }}>
-        {/* <View style={styles.btnArea}> */}
+        <View style={styles.btnArea}>
           <TouchableOpacity
             style={styles.btn}
             activeOpacity={0.5}
@@ -190,33 +198,36 @@ const Report= () => {
           >
             <Text style={(styles.Text, { color: 'white' })}>로그인</Text>
           </TouchableOpacity>
-        {/* </View> */}
+        </View>
       </View>
       <View style={{ flex: 3 }} />
     </View>
   );
 };
 
-// const container = styled.View`
-// flex: 1, //전체의 공간을 차지한다는 의미
-// flexDirection: 'column',
-// backgroundColor: 'white',
-// paddingLeft: wp(7),
-// paddingRight: wp(7),
-// `;
+// export const TopArea = styled.View`
+//     width: 720,
+//     height: 190,
+//     borderRadius: 48,
+//     backgroundColor: "#2e2e33"
+// `
 
 const styles = StyleSheet.create({
   container: {
     flex: 1, //전체의 공간을 차지한다는 의미
     flexDirection: 'column',
-    backgroundColor: 'white',
-    paddingLeft: wp(7),
-    paddingRight: wp(7),
+    backgroundColor: '#f5f5f5',
+   // paddingLeft: wp(7),
+   // paddingRight: wp(7),
 
   },
   topArea: {
     flex: 1,
+    width:fullwidth,
     paddingTop: wp(20),
+    borderBottomLeftRadius: 30,
+    borderBottomRightRadius:30,
+    backgroundColor: "#2e2e33"
   },
   titleArea: {
     flex: 0.7,
@@ -232,41 +243,61 @@ const styles = StyleSheet.create({
     fontSize: wp('4%'),
     paddingBottom: wp(5),
     paddingTop: wp(5),
+    color:'#909090',
+    paddingLeft:wp(3)
   },
   TextValidation: {
     fontSize: wp('4%'),
     color: 'red',
     paddingTop: wp(2),
   },
+  inputArea:{
+    flexDirection: "row",
+    backgroundColor:'#ffffff',
+    borderRadius:16,
+    width: '100%',
+    height: hp(10),
+    marginBottom:wp(5)
+  },
 
   formArea: {
     justifyContent: 'center',
     paddingTop: wp(20),
     flex: 5,
+    paddingLeft: wp(7),
+    paddingRight: wp(7),
   },
   textFormTop: {
-    borderWidth: 2,
-    borderColor: 'black',
-    width: '100%',
-    height: hp(6),
-    paddingLeft: 10,
+    width: '50%',
+    height: hp(10),
+    paddingLeft: 30,
     paddingRight: 10,
+    borderWidth:0,
+    backgroundColor:'#ffffff',
+    borderRadius:16,
+    color:'#909090',
+    fontSize: wp('4%'),
+
   },
   textFormBottom: {
-    borderWidth: 2,
-    borderColor: 'black',
-    width: '100%',
-    height: hp(6),
-    paddingLeft: 10,
+    width: '50%',
+    height: hp(10),
+    paddingLeft: 30,
     paddingRight: 10,
+    borderWidth:0,
+    backgroundColor:'#ffffff',
+    borderRadius:16,
+    color:'#909090',
+    fontSize: wp('4%'),
   },
   btnArea: {
-    height: hp(8),
+    height: hp(10),
     // backgroundColor: 'orange',
     justifyContent: 'center',
     alignItems: 'center',
     paddingBottom: hp(1.5),
-    marginTop: hp(10),
+    paddingLeft: wp(7),
+    paddingRight: wp(7),
   },
   btn: {
     flex: 1,
@@ -274,7 +305,7 @@ const styles = StyleSheet.create({
     borderRadius: 7,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'black',
+    backgroundColor: '#292929',
 
   },
 });

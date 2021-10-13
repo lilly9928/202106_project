@@ -16,17 +16,6 @@ var Data=[];
 var DataTable=[];
 var User
 
-componentDidMount = () => {
-    fetch('/data/dashboard.json')
-      .then(res => res.json())
-      .then(res => {
-        this.setState({
-          data: res.data
-        }, () => {
-          console.log("secondly: ", this.state.data)
-        })
-  })
-}
 var object = {
 
     getUser:function(){

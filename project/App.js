@@ -24,6 +24,7 @@ const TestStack = createStackNavigator();
 const HomeStack = createStackNavigator();
 const SettingStack = createStackNavigator();
 import SelectDropdown from 'react-native-select-dropdown'
+import { color } from 'react-native-reanimated';
 
 const Auth = () => {
   return (
@@ -39,7 +40,7 @@ const Auth = () => {
 
 const MainTabScreen = () => {
   return (
-    <Tab.Navigator initialRouteName="HomeStack">
+    <Tab.Navigator initialRouteName="HomeStack" >
       <HomeStack.Screen name="홈" component={HomeScreen} />
       <HomeStack.Screen name="상세" component={DetailScreen} />
       <HomeStack.Screen name="리포트" component={ReportScreen} />
@@ -102,7 +103,10 @@ const App = ({ navigation }) => {
                 buttonStyle={styles.dropdown1BtnStyle}
                  />
             ),
-
+            headerStyle: {
+              backgroundColor: '#2e2e33',
+              shadowColor:'transparent'
+            },
           }} />
 
       </Stack.Navigator>
@@ -120,8 +124,8 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   dropdown1BtnStyle: {
-   
-    backgroundColor: "#FFF",
+    backgroundColor: "#2e2e33",
+    color:"#ffffff"
 
   },
 });
