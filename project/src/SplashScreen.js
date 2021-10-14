@@ -23,7 +23,10 @@ const SplashScreen = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      <Text>splash</Text>
+      <Image
+            style={styles.logo}
+            source={require('./Image/splash.png')}
+          />
       <ActivityIndicator
         animating={animating}
         color="#6990F7"
@@ -41,10 +44,17 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'white',
+    backgroundColor: '#2e2e33',
   },
   activityIndicator: {
     alignItems: 'center',
     height: 80,
+  },
+  logo:{
+    width:wp(50),
+    resizeMode: 'contain',
+    marginBottom:hp(8),
+    marginLeft:wp(4)
+
   },
 });

@@ -44,7 +44,38 @@ const Auth = () => {
 
 const MainTabScreen = () => {
   return (
-    <Tab.Navigator initialRouteName="HomeStack" >
+    <Tab.Navigator initialRouteName="HomeStack"
+    screenOptions={({ route }) => ({
+      tabBarIcon: ({ focused, color, size }) => {
+        let iconName;
+        let style;
+        if (route.name === '홈') {
+          iconName = focused? require('./src/Image/home_circle.png'):  require('./src/Image/home.png');
+          style =focused? styles.bottomnav_icon_click_home:  styles.bottomnav_icon;
+        } else if (route.name === '설정') {
+          iconName = focused ?  require('./src/Image/setting_circle.png') :  require('./src/Image/setting.png');
+          style =focused? styles.bottomnav_icon_click:  styles.bottomnav_icon;
+        }else if (route.name === '상세') {
+          iconName = focused ?  require('./src/Image/detail_circle.png') :  require('./src/Image/detail.png');
+          style =focused? styles.bottomnav_icon_click:  styles.bottomnav_icon;
+        }else if (route.name === '리포트') {
+          iconName = focused ?  require('./src/Image/report_circle.png') :  require('./src/Image/report.png');
+          style =focused? styles.bottomnav_icon_click:  styles.bottomnav_icon;
+        }
+        return <Image style={style} source={iconName} />;
+      },
+    })}
+    tabBarOptions={{
+      activeTintColor: '#292929',
+      inactiveTintColor: '#909090',
+      style: {
+        backgroundColor: '#f5f5f5',
+        height:hp(10),
+        shadowColor:'transparent',
+        borderWidth:0
+      },
+    }}
+    >
       <HomeStack.Screen name="홈" component={HomeScreen} />
       <HomeStack.Screen name="상세" component={DetailScreen} />
       <HomeStack.Screen name="리포트" component={ReportScreen} />
@@ -168,6 +199,18 @@ const styles = StyleSheet.create({
   Header:{
     flexDirection:"row",
    justifyContent:"space-between"
+  },
+  bottomnav_icon:{
+    width:wp(5),
+    resizeMode: 'contain',
+  },
+  bottomnav_icon_click:{
+    width:wp(13),
+    resizeMode: 'contain',
+  },
+  bottomnav_icon_click_home:{
+    width:wp(10),
+    resizeMode: 'contain',
   }
 });
 
