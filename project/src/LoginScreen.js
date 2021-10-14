@@ -6,8 +6,6 @@ import {
 
 import 'react-native-gesture-handler';
 import Perference from './Perference';
-import axios from 'axios';
-import Styled from "styled-components/native"
 
 import React, { useState, createRef } from 'react';
 import {
@@ -22,44 +20,30 @@ import {
 } from 'react-native';
 
 import styled from 'styled-components/native'
-//import AsyncStorage from '@react-native-community/async-storage';
+
 var fullwidth = Dimensions.get('window').width;
 
 const LoginScreen = ({ navigation }) => {
 
-  // //임시User데이터
-  // const Userdata = [
-  //   {
-  //     "id": 'test1@',
-  //     "password": "test1"
-  //   },
-  //   {
-  //     "id": 'test2@',
-  //     "password": "test2"
-  //   },
-  //   {
-  //     "id": 'test3@',
-  //     "password": "test3"
-  //   },
-  //   {
-  //     "id": 'test4@',
-  //     "password": "test4"
-  //   },
-  //   {
-  //     "id": 'test5@',
-  //     "password": "test5"
-  //   }
-  // ];
   const [userEmail, setUserEmail] = useState('');
   const [userPassword, setUserPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [Errortext, setErrortext] = useState('');
-  const [passwordErrortext, setpasswordErrortext] = useState('');
-
+  //날짜 임의로 데이터가 있는 구간으로 변경
+  const Today = new Date(2020,6.1);
+  let TodayConvert=Today.toISOString().split('.')[0];
+  TodayConvert= TodayConvert.split('T')[0]+' '+TodayConvert.split('T')[1]
+ // alert(TodayConvert);
   const passwordInputRef = createRef();
 
+  const query = (params) => {
+    return Object.keys(params) .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(params[k])) .join('&');
+  }
+
   const Dashboard= () => {
-    fetch(`http://118.131.6.218:8000/dashboard?plantId_subId=plant1_1&timestamp=2020-06-01 07:00:00`)
+    let params = { "plantId_subId": userEmail, "timestamp": TodayConvert };
+    let url = 'http://118.131.6.218:8000/dashboard?'+query(params);
+    fetch(url)
       .then(res => res.json())
       .then(res => {
        Perference.setDashboard(res.realGraph.Y.concat(res.predictedGraph.Y))
@@ -70,21 +54,24 @@ const LoginScreen = ({ navigation }) => {
   })
 }
 const Detail= () => {
-  fetch(`http://118.131.6.218:8000/detail?plantId_subId=plant1_1&timestamp=2020-06-01 07:00:00&periodType=day`)
+  let params = { "plantId_subId": userEmail, "timestamp": TodayConvert,"periodType":"day" };
+  let url = 'http://118.131.6.218:8000/detail?'+query(params);
+  fetch(url)
     .then(res => res.json())
     .then(res => {
      Perference.setData(res.realPowerGraph.Y.concat(res.predictedPowerGraph.Y))
      Perference.setDataTable(res.revenueFromPowerList)
-     .catch(function(error) {
-      console.log('There has been a problem with your fetch operation: ' + error.message);
-       // ADD THIS THROW error
-        throw error;
-      }); 
+    //  .catch(function(error) {
+    //   console.log('There has been a problem with your fetch operation: ' + error.message);
+    //    // ADD THIS THROW error
+    //     throw error;
+    //   }); 
 })
 }
 const Report= () => {
-  fetch(`http://118.131.6.218:8000/report?plantId_subId=plant1_1&timestamp=2020-06-01 07:00:00`)
-    .then(res => res.json())
+  let params = { "plantId_subId": userEmail, "timestamp": TodayConvert };
+  let url = 'http://118.131.6.218:8000/detail?'+query(params);
+  fetch(url)
     .then(res => {
      Perference.setReportMonthPredicted(res.predictedRevenueThisMonth)
      Perference.setReportMonthAverage(res.compareMonthAverage)
