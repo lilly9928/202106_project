@@ -59,7 +59,7 @@ const LoginScreen = ({ navigation }) => {
   const passwordInputRef = createRef();
 
   const Dashboard= () => {
-    fetch(`http://10.0.2.2:8081/data/dashboard.json`)
+    fetch(`https://lilly9928.github.io/data/dashboard.json`)
       .then(res => res.json())
       .then(res => {
        Perference.setDashboard(res.data.realGraph.y.concat(res.data.predictedGraph.y))
@@ -70,17 +70,20 @@ const LoginScreen = ({ navigation }) => {
   })
 }
 const Detail= () => {
-  fetch(`http://10.0.2.2:8081/data/detail.json`)
+  fetch(`https://lilly9928.github.io/data/detail.json`)
     .then(res => res.json())
     .then(res => {
      Perference.setData(res.data.realPowerGraph.y.concat(res.data.predictedPowerGraph.y))
      Perference.setDataTable(res.data.table)
-    
-     
+     .catch(function(error) {
+      console.log('There has been a problem with your fetch operation: ' + error.message);
+       // ADD THIS THROW error
+        throw error;
+      }); 
 })
 }
 const Report= () => {
-  fetch(`http://10.0.2.2:8081/data/report.json`)
+  fetch(`https://lilly9928.github.io/data/report.json`)
     .then(res => res.json())
     .then(res => {
      Perference.setReportMonthPredicted(res.predictedRevenue.predictedRevenueThisMonth)
