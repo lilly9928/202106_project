@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { SafeAreaView, StyleSheet, View, TouchableOpacity, Text } from 'react-native';
+import { SafeAreaView, StyleSheet, View, TouchableOpacity, Text,Image } from 'react-native';
 import LoginScreen from './src/LoginScreen';
 import SplashScreen from './src/SplashScreen';
 import HomeScreen from './src/drawerScreens/HomeScreen';
@@ -10,6 +10,10 @@ import ReportScreen from './src/drawerScreens/ReportScreen';
 import DetailScreen from './src/drawerScreens/DetailScreen';
 import Perference from './src/Perference';
 
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 
 import 'react-native-gesture-handler';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
@@ -94,14 +98,27 @@ const App = ({ navigation }) => {
               return null;
             },
             headerTitle: () => (
-              <SelectDropdown
+              <View  style={styles.Header}>
+                 <Image
+                style={styles.logo}
+                source={require('./src/Image/logo.png')}
+                  />
+            <View style={{width:wp(28)}} />
+               <SelectDropdown
                 data={User}
                 onSelect={(selectedItem, index) => {
                   console.log(selectedItem, index)
                 }}
+                buttonTextAfterSelection={(selectedItem, index) => {
+                  return selectedItem.title;
+                }}
                 defaultButtonText={Perference.getUser()}
+                //defaultButtonText="김지나"
                 buttonStyle={styles.dropdown1BtnStyle}
-                 />
+                buttonTextStyle={styles.BtnTextStyle}
+                
+                 /> 
+                 </View>
             ),
             headerStyle: {
               backgroundColor: '#2e2e33',
@@ -124,10 +141,34 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   dropdown1BtnStyle: {
-    backgroundColor: "#2e2e33",
-    color:"#ffffff"
+    flex: 1,
+    height: 60,
+    backgroundColor: '#2e2e33',
+   // marginTop:hp(1) 
+  },
+  BtnTextStyle:{
+    color: "#c9c9c9", 
+    textAlign: "left",
+    borderRadius: 30,
+    borderWidth: 1,
+    borderColor: "#202023",
+    paddingLeft:wp(4),
+    paddingTop:wp(2),
+    paddingBottom:wp(1),
+    marginTop:wp(5.5),
+    marginLeft:wp(7)
+  },
+  logo:{
+    width:wp(30),
+    resizeMode: 'contain',
+   // marginTop:hp(3),
+    //marginLeft:wp(4)
 
   },
+  Header:{
+    flexDirection:"row",
+   justifyContent:"space-between"
+  }
 });
 
 export default App;

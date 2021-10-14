@@ -156,7 +156,10 @@ const Report= () => {
      
      <View style={styles.topArea}>
         <View style={styles.titleArea}>
-          <Text style={(styles.Text, { color: 'white' })}>탄소배출AI</Text>
+            <Image
+            style={styles.logo}
+            source={require('./Image/logo.png')}
+          />
         </View>
       </View>
 
@@ -222,6 +225,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#f5f5f5',
    // paddingLeft: wp(7),
    // paddingRight: wp(7),
+
+  },
+  logo:{
+    width:wp(40),
+    resizeMode: 'contain',
+    marginBottom:hp(8),
+    marginLeft:wp(4)
 
   },
   topArea: {
