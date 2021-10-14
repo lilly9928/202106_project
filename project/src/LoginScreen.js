@@ -27,54 +27,54 @@ var fullwidth = Dimensions.get('window').width;
 
 const LoginScreen = ({ navigation }) => {
 
-  //임시User데이터
-  const Userdata = [
-    {
-      "id": 'test1@',
-      "password": "test1"
-    },
-    {
-      "id": 'test2@',
-      "password": "test2"
-    },
-    {
-      "id": 'test3@',
-      "password": "test3"
-    },
-    {
-      "id": 'test4@',
-      "password": "test4"
-    },
-    {
-      "id": 'test5@',
-      "password": "test5"
-    }
-  ];
+  // //임시User데이터
+  // const Userdata = [
+  //   {
+  //     "id": 'test1@',
+  //     "password": "test1"
+  //   },
+  //   {
+  //     "id": 'test2@',
+  //     "password": "test2"
+  //   },
+  //   {
+  //     "id": 'test3@',
+  //     "password": "test3"
+  //   },
+  //   {
+  //     "id": 'test4@',
+  //     "password": "test4"
+  //   },
+  //   {
+  //     "id": 'test5@',
+  //     "password": "test5"
+  //   }
+  // ];
   const [userEmail, setUserEmail] = useState('');
   const [userPassword, setUserPassword] = useState('');
   const [loading, setLoading] = useState(false);
-  const [emailErrortext, setemailErrortext] = useState('');
+  const [Errortext, setErrortext] = useState('');
   const [passwordErrortext, setpasswordErrortext] = useState('');
 
   const passwordInputRef = createRef();
 
   const Dashboard= () => {
-    fetch(`https://lilly9928.github.io/data/dashboard.json`)
+    fetch(`http://118.131.6.218:8000/dashboard?plantId_subId=plant1_1&timestamp=2020-06-01 07:00:00`)
       .then(res => res.json())
       .then(res => {
-       Perference.setDashboard(res.data.realGraph.y.concat(res.data.predictedGraph.y))
-       Perference.setDashboardTotal(res.data.todayTotalRevenue)
-       Perference.setDashboardToday(res.data.todayRevenue)
-       Perference.setDashboardTodayPredicted(res.data.todayPredictedRevenue)
+       Perference.setDashboard(res.realGraph.Y.concat(res.predictedGraph.Y))
+       Perference.setDashboardTotal(res.todayTotalRevenue)
+       Perference.setDashboardToday(res.todayRevenue)
+       Perference.setDashboardTodayPredicted(res.todayPredictedRevenue)
        
   })
 }
 const Detail= () => {
-  fetch(`https://lilly9928.github.io/data/detail.json`)
+  fetch(`http://118.131.6.218:8000/detail?plantId_subId=plant1_1&timestamp=2020-06-01 07:00:00&periodType=day`)
     .then(res => res.json())
     .then(res => {
-     Perference.setData(res.data.realPowerGraph.y.concat(res.data.predictedPowerGraph.y))
-     Perference.setDataTable(res.data.table)
+     Perference.setData(res.realPowerGraph.Y.concat(res.predictedPowerGraph.Y))
+     Perference.setDataTable(res.revenueFromPowerList)
      .catch(function(error) {
       console.log('There has been a problem with your fetch operation: ' + error.message);
        // ADD THIS THROW error
@@ -83,17 +83,17 @@ const Detail= () => {
 })
 }
 const Report= () => {
-  fetch(`https://lilly9928.github.io/data/report.json`)
+  fetch(`http://118.131.6.218:8000/report?plantId_subId=plant1_1&timestamp=2020-06-01 07:00:00`)
     .then(res => res.json())
     .then(res => {
-     Perference.setReportMonthPredicted(res.predictedRevenue.predictedRevenueThisMonth)
-     Perference.setReportMonthAverage(res.predictedRevenue.compareMonthAverage)
-     Perference.setReportLastYearOfMonth(res.predictedRevenue.compareLastYearOfMonth)
-     Perference.setReportData(res.data.accumulatedRevenueGraph.realY.concat(res.data.accumulatedRevenueGraph.predictedY))
-     Perference.setReportDataTable(res.data.table)
-     Perference.setReportTotalRevenue(res.data.realRevenue.totalRevenue)
-     Perference.setReportActualRevenue(res.data.realRevenue.actualRevenue)
-     Perference.setMoney(res.data.realRevenue.userInvestment)
+     Perference.setReportMonthPredicted(res.predictedRevenueThisMonth)
+     Perference.setReportMonthAverage(res.compareMonthAverage)
+     Perference.setReportLastYearOfMonth(res.compareLastYearOfMonth)
+     Perference.setReportData(res.accumulatedRevenueGraph.Real_Y.concat(res.accumulatedRevenueGraph.pred_Y))
+     Perference.setReportDataTable(res.cumulativeRevenueList)
+     Perference.setReportTotalRevenue(res.totalRevenue)
+     Perference.setReportActualRevenue(res.actualRevenue)
+     Perference.setMoney(res.userInvestment)
      
 })
 }
@@ -102,7 +102,7 @@ const Report= () => {
      {
        return (true)
      }
-     setemailErrortext('이메일 형식이 아닙니다');
+     setErrortext('이메일 형식이 아닙니다');
        return (false)
    }
 
@@ -111,7 +111,7 @@ const Report= () => {
     if (pwformat.test(password)) {
        return (true)
      }
-     setpasswordErrortext('비밀번호 형식이 아닙니다');
+     setErrortext('비밀번호 형식이 아닙니다');
        return (false)
    }
 
@@ -119,38 +119,70 @@ const Report= () => {
   const handleSubmitPress = () => {
 
     if (!userEmail) {
-      alert('이메일을 입력해주세요');
+      setErrortext('이메일을 입력해주세요');
       return;
     }
     if (!userPassword) {
-      alert('비밀번호를 입력해주세요');
+      setErrortext('비밀번호를 입력해주세요');
       return;
     }
+    postData('http://118.131.6.218:8000/login', {id: userEmail , passwd:userPassword})
+    //.then(res => res.json())
+    .then(res => {
+          if(res.success){
+            Perference.setUser(userEmail);
+            Dashboard();
+            Detail();
+            Report();
+            navigation.navigate('이전');
+           return;
+          }
+          else{
+            setErrortext('아이디 비밀번호를 확인해주세요');
+          }
+        })
+
     //아이디 비밀번호 유효성 체크 (비밀번호는 api, 회원가입화면 개발 완료 후 주석 푸시면 됩니다)
-    validateEmail(userEmail);
+    //validateEmail(userEmail);
     //validatePassword(userPassword);
 
-    for (var i = 0; i < Userdata.length; i++) {
-      if (Userdata[i].id == userEmail) {
-        if (Userdata[i].password == userPassword) {
-          Perference.setUser(userEmail);
-          Dashboard();
-          Detail();
-          Report();
-          //navigation.dispatch(CommonActions.navigate("이전")); 
-         navigation.navigate('이전');
-          return;
-        }
-        else {
-          alert('아이디 또는 비밀번호가 틀립니다.');
-          return;
-        }
-      }
-    }
-    alert('아이디 또는 비밀번호가 틀립니다.');
+    // for (var i = 0; i < Userdata.length; i++) {
+    //   if (Userdata[i].id == userEmail) {
+    //     if (Userdata[i].password == userPassword) {
+    //       Perference.setUser(userEmail);
+    //       Dashboard();
+    //       Detail();
+    //       Report();
+    //       //navigation.dispatch(CommonActions.navigate("이전")); 
+    //      navigation.navigate('이전');
+    //       return;
+    //     }
+    //     else {
+    //       alert('아이디 또는 비밀번호가 틀립니다.');
+    //       return;
+    //     }
+    //   }
+    // }
+    // alert('아이디 또는 비밀번호가 틀립니다.');
 
   };
-
+  function postData(url = '', data = {}) {
+    // Default options are marked with *
+      return fetch(url, {
+          method: 'POST', // *GET, POST, PUT, DELETE, etc.
+          mode: 'cors', // no-cors, cors, *same-origin
+          cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+          credentials: 'same-origin', // include, *same-origin, omit
+          headers: {
+              'Content-Type': 'application/json',
+              // 'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          redirect: 'follow', // manual, *follow, error
+          referrer: 'no-referrer', // no-referrer, *client
+          body: JSON.stringify(data), // body data type must match "Content-Type" header
+      })
+      .then(response => response.json()); // parses JSON response into native JavaScript objects
+  }
   return (
     <View style={styles.container}>
      
@@ -191,11 +223,12 @@ const Report= () => {
           blurOnSubmit={false}
           secureTextEntry={true} 
         />
-        <Text style={styles.TextValidation}>{emailErrortext}</Text>
-        <Text style={styles.TextValidation}>{passwordErrortext}</Text>
+      </View>
+      <View style={styles.TextValidation}>
+      <Text style={styles.TextValidationText}>{Errortext}</Text>
       </View>
       </View>
-      <View style={{ flex: 0.68 }}>
+     
         <View style={styles.btnArea}>
           <TouchableOpacity
             style={styles.btn}
@@ -205,8 +238,8 @@ const Report= () => {
             <Text style={(styles.Text, { color: 'white' })}>로그인</Text>
           </TouchableOpacity>
         </View>
-      </View>
-      <View style={{ flex: 3 }} />
+    
+      <View style={{height:hp(20) }} />
     </View>
   );
 };
@@ -220,7 +253,7 @@ const Report= () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1, //전체의 공간을 차지한다는 의미
+   // flex: 1, //전체의 공간을 차지한다는 의미
     flexDirection: 'column',
     backgroundColor: '#f5f5f5',
    // paddingLeft: wp(7),
@@ -235,7 +268,7 @@ const styles = StyleSheet.create({
 
   },
   topArea: {
-    flex: 1,
+  //  flex: 1,
     width:fullwidth,
     paddingTop: wp(20),
     borderBottomLeftRadius: 30,
@@ -243,12 +276,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#2e2e33"
   },
   titleArea: {
-    flex: 0.7,
+   // flex: 0.7,
     justifyContent: 'center',
     paddingTop: wp(1),
+    height:hp(3)
   },
   TextArea: {
-    flex: 0.3,
+    //flex: 0.3,
     justifyContent: 'center',
     backgroundColor: 'white',
   },
@@ -260,9 +294,20 @@ const styles = StyleSheet.create({
     paddingLeft:wp(3)
   },
   TextValidation: {
-    fontSize: wp('4%'),
+   // paddingTop: wp(10),
+    borderWidth:1,
+    borderRadius:4,
+    backgroundColor:"#ffecec",
+    borderColor:"#ff0000",
+    justifyContent:"center",
+    height:hp(6),
+    marginBottom:hp(3)
+    
+  },
+  TextValidationText:{
+    fontSize: wp(4),
     color: 'red',
-    paddingTop: wp(2),
+    textAlign:"center",
   },
   inputArea:{
     flexDirection: "row",
@@ -276,7 +321,7 @@ const styles = StyleSheet.create({
   formArea: {
     justifyContent: 'center',
     paddingTop: wp(20),
-    flex: 5,
+    //flex: 5,
     paddingLeft: wp(7),
     paddingRight: wp(7),
   },
