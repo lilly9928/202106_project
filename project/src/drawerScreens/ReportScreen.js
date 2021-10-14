@@ -306,6 +306,7 @@ const styles = StyleSheet.create({
   insideMiddleBox: {
     flexDirection: 'row',
     justifyContent:'space-between',
+    width:wp(35)
   },
   insideMiddleBoxWrap:{
     marginTop:wp(7)
