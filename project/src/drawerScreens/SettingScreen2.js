@@ -44,9 +44,11 @@ import {
     };
 
     return (
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView >
            <ScrollView>
+           <View style={styles.roundHead}/>
        <View style={styles.container}>
+         <Text style={styles.title}>0~6H</Text>
        <View style={styles.formArea}><Text  style={styles.Text}>0~1H </Text>
        <TextInput
           style={styles.textFormBottom}
@@ -107,6 +109,7 @@ import {
           value={data[5].toString()}
           onChangeText={(input) => onlyNumber(input,5)}
         /></View>
+        <Text style={styles.title}>6~12H</Text>
         <View style={styles.formArea}><Text  style={styles.Text}>6~7H </Text>
        <TextInput
           style={styles.textFormBottom}
@@ -167,6 +170,7 @@ import {
           value={data[11].toString()}
           onChangeText={(input) => onlyNumber(input,11)}
         /></View>
+        <Text style={styles.title}>12~18H</Text>
        <View style={styles.formArea}><Text  style={styles.Text}>12~13H </Text>
        <TextInput
           style={styles.textFormBottom}
@@ -227,6 +231,7 @@ import {
           value={data[17].toString()}
           onChangeText={(input) => onlyNumber(input,17)}
         /></View>
+         <Text style={styles.title}>18~24H</Text>
         <View style={styles.formArea}><Text  style={styles.Text}>18~19H </Text>
        <TextInput
           style={styles.textFormBottom}
@@ -289,14 +294,14 @@ import {
         /></View>
 
         <Text style={styles.hide} value={data}></Text>
-        <TouchableOpacity
+          </View>
+          <TouchableOpacity
          style={styles.btn}
             activeOpacity={0.5}
             onPress={handleSubmitPress}
           >
             <Text style={styles.btnText}>저장</Text>
           </TouchableOpacity>
-          </View>
           </ScrollView>
       </SafeAreaView>
     );
@@ -309,17 +314,19 @@ import {
     container: {
       flex: 1,
       flexDirection: "column",
-      backgroundColor:"#fff"
+      backgroundColor:"#f5f5f5",
+      paddingLeft:wp(5),
+      paddingRight:wp(5),
     },
     textFormBottom: {
-        borderWidth: 2,
-        borderColor: 'black',
         width: '70%',
         height: hp(6),
-        marginRight:wp(2),
+        textAlign:"right",
+        fontSize:wp(5),
+        marginTop:wp(4),
       },
       Text: {
-        fontSize: wp('5%'),
+        fontSize: wp(5),
         paddingBottom: wp(5),
         paddingTop: wp(5),
         paddingRight:wp(5)
@@ -328,25 +335,41 @@ import {
         flexDirection: 'row',
         paddingTop: wp(2),
         paddingBottom:wp(2),
+        backgroundColor:"#ffffff",
+        borderRadius:20,
+        marginTop:wp(4),
+        paddingLeft:wp(4),
+        paddingRight:wp(4),
+        justifyContent:'space-around'
        // flex: 3,
       },
       btn: {
-        //flex: 1,
-        width: '80%',
-        marginLeft:'10%',
-        borderRadius: 7,
-        justifyContent: 'center',
+        width: '100%',
         alignItems: 'center',
-        backgroundColor: 'gray',
+        backgroundColor: '#292929',
     
       },
       btnText:{
         paddingBottom: wp(5),
         paddingTop: wp(5),
         paddingRight:wp(2),
-        paddingBottom:wp(5),
         color: 'white',
         fontSize:20
+      },
+      title:{
+        textAlign:"center",
+        fontSize:wp(5),
+        color:"#909090",
+        marginTop:wp(5),
+        marginBottom:wp(3),
+        paddingTop:wp(2)
+      },
+      roundHead:{
+        backgroundColor:"#2e2e33",
+        width:'100%',
+        borderBottomLeftRadius: 30,
+        borderBottomRightRadius:30,
+        height:wp(3)
       }
   });
   export default SettingScreen;

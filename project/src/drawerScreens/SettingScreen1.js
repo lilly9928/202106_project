@@ -39,7 +39,8 @@ import {
       navigation.reset({index: 0, routes: [{ name: '이전' }],});
     };
     return (
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView tyle={styles.containerWrap}>
+           <View style={styles.roundHead}/>
        <View style={styles.container}>
        <View  style={styles.formArea}>
            <Text   style={styles.Text}>금액</Text>
@@ -53,33 +54,34 @@ import {
           value={price.toString()}
           onChangeText={(input) => onlyNumber(input)}
         />
-        <Text style={styles.Text}>원</Text>
+        <Text style={styles.TextGray}>원</Text>
        </View>
-       <TouchableOpacity
+      </View>
+      <TouchableOpacity
          style={styles.btn}
             activeOpacity={0.5}
             onPress={handleSubmitPress}
           >
             <Text style={styles.btnText}>저장</Text>
           </TouchableOpacity>
-          </View>
       </SafeAreaView>
     );
   }
   
   const styles = StyleSheet.create({
     container: {
-      flex: 1,
+    //  flex: 1,
       flexDirection: "column",
-      backgroundColor:"#fff"
+      backgroundColor:"#f5f5f5",
+      paddingLeft:wp(5),
+      paddingRight:wp(5),
     },
     textFormBottom: {
-        borderWidth: 2,
-        borderColor: 'black',
-        width: '75%',
-        height: hp(6),
-        marginRight:wp(2),
-        textAlign : 'right'
+      width: '70%',
+      height: hp(6),
+      textAlign:"right",
+      fontSize:wp(5),
+      marginTop:wp(4),
       },
       Text: {
         fontSize: wp('5%'),
@@ -87,29 +89,46 @@ import {
         paddingTop: wp(5),
         paddingRight:wp(5)
       },
+      TextGray:{
+        fontSize: wp('5%'),
+        paddingBottom: wp(5),
+        paddingTop: wp(5),
+        paddingRight:wp(5),
+        color:'#909090'
+      },
       formArea: {
         flexDirection: 'row',
-        paddingTop: wp(10),
-        paddingBottom:wp(5),
+        paddingTop: wp(2),
+        paddingBottom:wp(2),
+        backgroundColor:"#ffffff",
+        borderRadius:20,
+        marginTop:wp(4),
+        paddingLeft:wp(4),
+        paddingRight:wp(4),
+        justifyContent:'space-around',
+        height:hp(13)
        // flex: 3,
       },
       btn: {
-        //flex: 1,
-        width: '80%',
-        marginLeft:'10%',
-        borderRadius: 7,
-        justifyContent: 'center',
+        width: '100%',
         alignItems: 'center',
-        backgroundColor: 'gray',
+        backgroundColor: '#292929',
+        marginTop:hp(62)
     
       },
       btnText:{
         paddingBottom: wp(5),
         paddingTop: wp(5),
         paddingRight:wp(2),
-        paddingBottom:wp(5),
         color: 'white',
         fontSize:20
+      },
+       roundHead:{
+        backgroundColor:"#2e2e33",
+        width:'100%',
+        borderBottomLeftRadius: 30,
+        borderBottomRightRadius:30,
+        height:wp(3)
       }
   });
   export default SettingScreen;

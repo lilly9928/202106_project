@@ -104,11 +104,32 @@ const App = ({ navigation }) => {
       <Stack.Screen
           name="태양광 설치 투자 금액"
           component={SettingScreen1}
+          options={{
+            headerTitleStyle: {
+            fontSize:wp(4),
+            color:'#909090'
+          },
+          headerStyle: {
+            backgroundColor: '#2e2e33',
+            shadowColor:'transparent'
+    
+          },
+          headerTintColor: '#fff',}}
         />
 
 <Stack.Screen
           name="시간대별 kW 당 발전 수익 설정"
           component={SettingScreen2}
+          options={{
+            headerTitleStyle: {
+            fontSize:wp(4),
+            color:'#909090'
+          },
+          headerStyle: {
+            backgroundColor: '#2e2e33',
+            shadowColor:'transparent',
+          },
+          headerTintColor: '#fff',}}
         />
 
 <Stack.Screen
@@ -144,7 +165,6 @@ const App = ({ navigation }) => {
                   return selectedItem.title;
                 }}
                 defaultButtonText={Perference.getUser()}
-                //defaultButtonText="김지나"
                 buttonStyle={styles.dropdown1BtnStyle}
                 buttonTextStyle={styles.BtnTextStyle}
                 
@@ -153,7 +173,7 @@ const App = ({ navigation }) => {
             ),
             headerStyle: {
               backgroundColor: '#2e2e33',
-              shadowColor:'transparent'
+              shadowColor:'transparent',
             },
           }} />
 

@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
   btn:{
     paddingLeft: wp(40),
     paddingRight: wp(40),
-    marginTop:hp(20)
+    marginTop:hp(15)
     
   },
   topInfo:{
