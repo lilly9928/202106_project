@@ -22,8 +22,7 @@ function wait(timeout) {
     setTimeout(resolve, timeout)
   })
 }
-
-
+//alert(Perference.getDashboardCountReal())
 
 function HomeScreen({ navigation }) {
 
@@ -48,7 +47,7 @@ function HomeScreen({ navigation }) {
         onPressOut: () => {
           setselectItem(null)
         },
-        fill: selectItem === index ? '#000000' : date.getHours() < index ? '#ffb851' : '#385bff',
+        fill: selectItem === index ? '#000000' : Perference.getDashboardCountReal()-1 < index ? '#ffb851' : '#385bff',
       }
     })
   );
@@ -108,7 +107,7 @@ function HomeScreen({ navigation }) {
               // svg={{fill: this.state.color,}}
               yAccessor={({ item }) => item.y}
               contentInset={{ top: 10, bottom: 10 }}
-              spacingInner={0.35}
+              spacingInner={0.05}
               spacingOuter={0.3}
               gridMin={1}
             >

@@ -30,10 +30,8 @@ const LoginScreen = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
   const [Errortext, setErrortext] = useState('');
   //날짜 임의로 데이터가 있는 구간으로 변경
-  const Today = new Date(2020,6.1);
-  let TodayConvert=Today.toISOString().split('.')[0];
-  TodayConvert= TodayConvert.split('T')[0]+' '+TodayConvert.split('T')[1]
- // alert(TodayConvert);
+  let TodayConvert=Perference.getConvertToday();
+  //alert(TodayConvert);
   const passwordInputRef = createRef();
 
   const query = (params) => {
@@ -50,6 +48,7 @@ const LoginScreen = ({ navigation }) => {
        Perference.setDashboardTotal(res.todayTotalRevenue)
        Perference.setDashboardToday(res.todayRevenue)
        Perference.setDashboardTodayPredicted(res.todayPredictedRevenue)
+       Perference.setDashboardCountReal(res.realGraph.Y)
        
   })
 }
@@ -61,6 +60,7 @@ const Detail= () => {
     .then(res => {
      Perference.setData(res.realPowerGraph.Y.concat(res.predictedPowerGraph.Y))
      Perference.setDataTable(res.revenueFromPowerList)
+     Perference.setDataCountReal(res.realPowerGraph.Y)
     //  .catch(function(error) {
     //   console.log('There has been a problem with your fetch operation: ' + error.message);
     //    // ADD THIS THROW error

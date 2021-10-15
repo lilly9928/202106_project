@@ -9,6 +9,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { BarChart, Grid } from 'react-native-svg-charts'
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
 import Perference from '../Perference';
+import { RefreshControl } from 'react-native-web-refresh-control'
 
 import {
   StyleSheet,
@@ -46,7 +47,6 @@ Date.prototype.format = function (f) {
     }
   });
 };
-
 String.prototype.string = function (len) { var s = '', i = 0; while (i++ < len) { s += this; } return s; };
 String.prototype.zf = function (len) { return "0".string(len - this.length) + this; };
 Number.prototype.zf = function (len) { return this.toString().zf(len); };
@@ -61,10 +61,15 @@ function DetailScreen({ navigation }) {
   const [selectValue, setselectValue] = useState(null);
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
-  const [date, setDate] = useState(new Date());
+  //const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(Perference.getToday());
   const [buttonName, setButtonName] = useState(0);
   const [selectedDay, setselectedDay] = useState(date.format('yyyy년MM월dd일'));
   const today = new Date();
+
+  const [refreshing, setRefreshing] = useState(false);
+
+
   const newData = data.map(
     (item, index) => ({
       y: parseInt(item),
@@ -76,36 +81,11 @@ function DetailScreen({ navigation }) {
         onPressOut: () => {
           setselectItem(null);
         },
-        fill: fill(selectItem,index)
         //날짜데이터 색상변경 
+        fill: selectItem === index ? '#000000' : Perference.getDataCountReal()-1 < index ? '#ffb851' : '#385bff',
       }
     })
   );
-  function fill(selectItem,index){
-    var color;
-    if(selectItem===index){
-      color='#000000';
-    }
-    else if(date.format('yyyy년MM월dd일')== today.format('yyyy년MM월dd일')){
-      if(today.getHours() < index){
-        color = '#FFBF00';
-      }
-      else{
-        color = '#385bff';
-      }
-      return color;
-    }
-    else if(date < today){
-     color= '#385bff';
-    }
-    else if(date > today){
-      color = '#ffb851';
-    }
-    else{
-      color = '#385bff';
-    }
-    return color;
-  };
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -180,11 +160,60 @@ function DetailScreen({ navigation }) {
     setselectedDay(temp.format("yyyy년MM월dd일"));
   };
 
+  const query = (params) => {
+    return Object.keys(params) .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(params[k])) .join('&');
+  }
 
+  const BtnClick = (num) =>{
+    let btn; 
+    switch(num){
+      case 0:
+        btn = 'day';
+      break;
+      case 1:
+        btn = 'week';
+      break;
+      case 2:
+        btn = 'month';
+      break;
+      case 3:
+        btn = 'year';
+      break;
+        
+    }
+    setButtonName(num);
+    let params = { "plantId_subId": Perference.getUser(), "timestamp": Perference.getConvertToday(),"periodType":btn };
+    let url = 'http://118.131.6.218:8000/detail?'+query(params);
+    fetch(url)
+      .then(res => res.json())
+      .then(res => {
+      Perference.setData(res.realPowerGraph.Y.concat(res.predictedPowerGraph.Y))
+      Perference.setDataTable(res.revenueFromPowerList)
+      Perference.setDataCountReal(res.realPowerGraph.Y)
+      });
+  }
+  const reloadLines = React.useCallback(() => {
+    setRefreshing(true)
+
+    wait(2000).then(() => {
+      setRefreshing(false)
+      
+    })
+  }, [])
+
+  function wait(timeout) {
+    return new Promise(resolve => {
+      setTimeout(resolve, timeout)
+    })
+  }
 
   return (
     <SafeAreaView style={styles.container}>
-         <ScrollView>
+         <ScrollView
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={reloadLines} />
+          }
+          >
       <View  style={styles.topContainer}>
         <View style={styles.topDate}>
         <TouchableOpacity style={styles.topBtn} onPress={Back}>
@@ -198,16 +227,16 @@ function DetailScreen({ navigation }) {
         </TouchableOpacity>
       </View>
         <View style={styles.topBox}>
-            <TouchableOpacity style={styles.topRoundBtn}  onPress={()=>setButtonName(0)}>
+            <TouchableOpacity style={styles.topRoundBtn}  onPress={()=>BtnClick(0)}>
               <Text style={(styles.topRoundBtnText)}> 일 </Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.topRoundBtn} onPress={()=>setButtonName(1)}>
+            <TouchableOpacity style={styles.topRoundBtn} onPress={()=>BtnClick(1)}>
               <Text style={(styles.topRoundBtnText)}> 주 </Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.topRoundBtn} onPress={()=>setButtonName(2)}>
+            <TouchableOpacity style={styles.topRoundBtn} onPress={()=>BtnClick(2)}>
               <Text style={(styles.topRoundBtnText)}> 월 </Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.topRoundBtn} onPress={()=>setButtonName(3)}>
+            <TouchableOpacity style={styles.topRoundBtn} onPress={()=>BtnClick(3)}>
               <Text style={(styles.topRoundBtnText)}> 년 </Text>
             </TouchableOpacity>
           </View>
@@ -227,7 +256,7 @@ function DetailScreen({ navigation }) {
               data={newData}
               yAccessor={({ item }) => item.y}
               contentInset={{ top: 10, bottom: 10 }}
-              spacingInner={0.35}
+              spacingInner={0.05}
               spacingOuter={0.3}
               gridMin={1}
             >

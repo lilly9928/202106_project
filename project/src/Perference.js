@@ -2,6 +2,7 @@ var DashboardData = [];
 var DashboardTotal='';
 var DashboardToday='';
 var DashboardTodayPredicted='';
+var DashboardCountReal=0;
 
 var ReportData=[];
 var ReportDataTable=[];
@@ -14,10 +15,23 @@ var ReportActualRevenue='';
 
 var Data=[];
 var DataTable=[];
+var CountReal=0;
 var User
+
+let Today = new Date(2020,6,2,-2);
+
+let TodayConvert=Today.toISOString().split('.')[0];
+TodayConvert= TodayConvert.split('T')[0]+' '+TodayConvert.split('T')[1]
 
 var object = {
 
+    getToday:function(){
+        return Today
+    },
+
+    getConvertToday:function(){
+        return TodayConvert
+    },
     getUser:function(){
         return User
     },
@@ -39,6 +53,13 @@ var object = {
         item= item.map(value => value.map(number => number.toFixed(0)));
         DataTable = item
     },
+    getDataCountReal:function(){
+        return CountReal
+    },
+    setDataCountReal:function(item){
+        CountReal = item.length
+    },
+    
 
     //리포트데이터
     getReportData:function(){
@@ -124,6 +145,12 @@ var object = {
     },
     setDashboardTodayPredicted:function(item){
         DashboardTodayPredicted = item.toFixed(0)
+    },
+    getDashboardCountReal:function(){
+        return DashboardCountReal
+    },
+    setDashboardCountReal:function(item){
+        DashboardCountReal = item.length
     },
 }
 module.exports=object
