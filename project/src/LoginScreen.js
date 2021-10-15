@@ -70,8 +70,9 @@ const Detail= () => {
 }
 const Report= () => {
   let params = { "plantId_subId": userEmail, "timestamp": TodayConvert };
-  let url = 'http://118.131.6.218:8000/detail?'+query(params);
+  let url = 'http://118.131.6.218:8000/report?'+query(params);
   fetch(url)
+    .then(res => res.json())
     .then(res => {
      Perference.setReportMonthPredicted(res.predictedRevenueThisMonth)
      Perference.setReportMonthAverage(res.compareMonthAverage)

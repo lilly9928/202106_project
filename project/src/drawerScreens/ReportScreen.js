@@ -195,7 +195,7 @@ const styles = StyleSheet.create({
   },
   TableText:{
     color:'#000000',
-    fontSize:wp(5),
+    fontSize:wp(4),
     alignItems:'center',
     textAlign:'center',
     paddingTop:wp(5)
@@ -273,7 +273,8 @@ const styles = StyleSheet.create({
     paddingTop:wp(2),
   },
   borderText:{
-    color:'#ffffff'
+    color:'#ffffff',
+    fontSize:wp(3),
   },
   bordersubText:{
     color:'#909090'
@@ -301,7 +302,8 @@ const styles = StyleSheet.create({
   },
   middleBox: {
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    //flex:1
   },
   insideMiddleBox: {
     flexDirection: 'row',
@@ -309,7 +311,7 @@ const styles = StyleSheet.create({
     width:wp(35)
   },
   insideMiddleBoxWrap:{
-    marginTop:wp(7)
+    marginTop:wp(7),
   },
   middlePriceTextYellow: {
     fontSize: wp(6),

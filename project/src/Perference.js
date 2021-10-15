@@ -71,7 +71,7 @@ var object = {
     },
     setReportMonthAverage:function(item){
         ReportMonthAverage = item.toFixed(0)
-    },
+    }, 
     getReportLastYearOfMonth:function(){
         return ReportLastYearOfMonth
     },
