@@ -22,8 +22,9 @@ import {
   SafeAreaView,
   Button,
 } from 'react-native';
-import { set } from 'lodash';
-import { parse } from 'react-native-svg';
+
+import { useDispatch } from 'react-redux';
+import { dataRequestAction } from '../reducers/user';
 
 Date.prototype.format = function (f) {
   if (!this.valueOf()) return " ";
@@ -55,20 +56,19 @@ Number.prototype.zf = function (len) { return this.toString().zf(len); };
 function DetailScreen({ navigation }) {
   const data = Perference.getData();
   const HeadTable= ['시간', '발전량', '수익', '누적수익'];
+  const today = Perference.getToday();
+  const converttoday = Perference.getConvertToday();
   const DataTable=Perference.getDataTable();
-  // const date = new Date();
   const [selectItem, setselectItem] = useState(null);
   const [selectValue, setselectValue] = useState(null);
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
-  //const [date, setDate] = useState(new Date());
-  const [date, setDate] = useState(Perference.getToday());
-  const [buttonName, setButtonName] = useState(0);
-  const [selectedDay, setselectedDay] = useState(date.format('yyyy년MM월dd일'));
-  const today = new Date();
-
+  const [selectedDay, setselectedDay] = useState(today.format("yyyy년MM월dd일"));
+  const user = Perference.getUser();
+  const buttonkor =Perference.getDetailButton();
   const [refreshing, setRefreshing] = useState(false);
 
+  const dispatch = useDispatch();
 
   const newData = data.map(
     (item, index) => ({
@@ -88,10 +88,13 @@ function DetailScreen({ navigation }) {
   );
 
   const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate || date;
+    const currentDate = selectedDate || today;
     setShow(Platform.OS === 'ios');
-    setDate(currentDate);
+    Perference.setDetailDate(currentDate);
+    Perference.setDetailTodayConvert(currentDate);
     setselectedDay(currentDate.format("yyyy년MM월dd일"));
+
+    dispatch(dataRequestAction({userEmail:user,TodayConvert:converttoday,periodType:buttonkor }));
   };
 
 
@@ -105,64 +108,23 @@ function DetailScreen({ navigation }) {
   };
   
   const Back = () => {
-    var temp = new Date(date.getFullYear(),date.getMonth(),date.getDate());
-    switch(buttonName)
-    {
-      case 0:
-        temp.setDate(temp.getDate()-1);
-        break;
-      case 1:
-        temp.setDate(temp.getDate()-7);
-        break;
-      case 2:
-        var datetemp = temp.getDate();
-        temp.setMonth(temp.getMonth()-1);
-        if(datetemp!=temp.getDate())
-        {
-          console.log("error!");
-          temp = new Date(temp.getFullYear(),temp.getMonth(),-1);
-          temp.setDate(temp.getDate()+1);
-        }
-        break;
-      case 3:
-        temp.setFullYear(temp.getFullYear()-1);
-        break;
-    }
-    setDate(temp)
-    setselectedDay(temp.format("yyyy년MM월dd일"));
-    
+    today.setDate(today.getDate()-1);
+    Perference.setDetailDate(today);
+    Perference.setDetailTodayConvert(today);
+    setselectedDay(today.format("yyyy년MM월dd일"));  
+
+    dispatch(dataRequestAction({userEmail:user,TodayConvert:Perference.getDetailTodayConvert(),periodType:Perference.getDetailButton() }));
+    reloadLines();
   };
   const Next = () => {
-    var temp = new Date(date.getFullYear(),date.getMonth(),date.getDate());
-    switch(buttonName)
-    {
-      case 0:
-        temp.setDate(temp.getDate()+1);
-        break;
-      case 1:
-        temp.setDate(temp.getDate()+7);
-        break;
-      case 2:
-        var datetemp = temp.getDate();
-        temp.setMonth(temp.getMonth()+1);
-        if(datetemp!=temp.getDate())
-        {
-          console.log("error!");
-          temp = new Date(temp.getFullYear(),temp.getMonth(),-1);
-          temp.setDate(temp.getDate()+1);
-        }
-        break;
-      case 3:
-        temp.setFullYear(temp.getFullYear()+1);
-        break;
-    }
-    setDate(temp)
-    setselectedDay(temp.format("yyyy년MM월dd일"));
-  };
+    today.setDate(today.getDate()+1);
+    Perference.setDetailDate(today);
+    Perference.setDetailTodayConvert(today);
+    setselectedDay(today.format("yyyy년MM월dd일"));  
 
-  const query = (params) => {
-    return Object.keys(params) .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(params[k])) .join('&');
-  }
+    dispatch(dataRequestAction({userEmail:user,TodayConvert:Perference.getDetailTodayConvert(),periodType:Perference.getDetailButton() }));
+    reloadLines();
+  };
 
   const BtnClick = (num) =>{
     let btn; 
@@ -181,17 +143,10 @@ function DetailScreen({ navigation }) {
       break;
         
     }
-    setButtonName(num);
-    let params = { "plantId_subId": Perference.getUser(), "timestamp": Perference.getConvertToday(),"periodType":btn };
-    let url = 'http://118.131.6.218:8000/detail?'+query(params);
-    fetch(url)
-      .then(res => res.json())
-      .then(res => {
-      Perference.setData(res.realPowerGraph.Y.concat(res.predictedPowerGraph.Y))
-      Perference.setDataTable(res.revenueFromPowerList)
-      Perference.setDataCountReal(res.realPowerGraph.Y)
-      });
-      reloadLines;
+    Perference.setDetailButton(btn);
+
+    dispatch(dataRequestAction({userEmail:user,TodayConvert:Perference.getDetailTodayConvert(),periodType:Perference.getDetailButton()}));
+    reloadLines();
   }
   const reloadLines = React.useCallback(() => {
     setRefreshing(true)
@@ -300,7 +255,7 @@ function DetailScreen({ navigation }) {
       {show && (
         <DateTimePicker
           testID="dateTimePicker"
-          value={date}
+          value={todaydate}
           mode={mode}
           is24Hour={true}
           display="default"

@@ -1,3 +1,5 @@
+let Today = new Date(2020,6,2,-2);
+
 var DashboardData = [];
 var DashboardTotal='';
 var DashboardToday='';
@@ -17,8 +19,11 @@ var Data=[];
 var DataTable=[];
 var CountReal=0;
 var User
+var DetailDate=Today;
+var DetailButton = 'day';
+var DetailTodayConvert=DetailDate.toISOString().split('.')[0];
+DetailTodayConvert= DetailTodayConvert.split('T')[0]+' '+DetailTodayConvert.split('T')[1]
 
-let Today = new Date(2020,6,2,-2);
 
 let TodayConvert=Today.toISOString().split('.')[0];
 TodayConvert= TodayConvert.split('T')[0]+' '+TodayConvert.split('T')[1]
@@ -27,12 +32,6 @@ var object = {
 
     getToday:function(){
         return Today
-    },
-    setToday:function(item){
-            Today=item
-    },
-    setTodayConvert:function(item){
-        TodayConvert=item
     },
     getConvertToday:function(){
         return TodayConvert
@@ -63,6 +62,26 @@ var object = {
     },
     setDataCountReal:function(item){
         CountReal = item.length
+    },
+    getDetailTodayConvert:function(){
+        return DetailTodayConvert
+    },
+    setDetailTodayConvert:function(item){
+        var convertItem=item.toISOString().split('.')[0];
+        convertItem= convertItem.split('T')[0]+' '+convertItem.split('T')[1]
+        DetailTodayConvert = convertItem
+    },
+    getDetailDate:function(){
+        return DetailDate
+    },
+    setDetailDate:function(item){
+        DetailDate = item
+    },
+    getDetailButton:function(){
+        return DetailButton
+    },
+    setDetailButton:function(item){
+        DetailButton = item
     },
     
 

@@ -10,6 +10,19 @@ import ReportScreen from './src/drawerScreens/ReportScreen';
 import DetailScreen from './src/drawerScreens/DetailScreen';
 import Perference from './src/Perference';
 
+import { Provider } from 'react-redux';
+import {createStore, applyMiddleware} from 'redux';
+import reducer from './src/reducers/user';
+
+import createSagaMiddleware from 'redux-saga';
+import rootSaga from './src/sagas';
+
+const sagaMiddleware = createSagaMiddleware();
+
+const store = createStore(reducer, applyMiddleware(sagaMiddleware));
+
+sagaMiddleware.run(rootSaga);
+
 
 import {
   widthPercentageToDP as wp,
@@ -89,6 +102,7 @@ const App = ({ navigation }) => {
   const User = ["test1@", "test2@", "test3@", "test4@"]
 
   return (
+    <Provider store={store}>
     <NavigationContainer>
       <Stack.Navigator initialRouteName="SplashScreen">
         <Stack.Screen
@@ -181,6 +195,7 @@ const App = ({ navigation }) => {
 
       </Stack.Navigator>
     </NavigationContainer>
+    </Provider>
 
 
 

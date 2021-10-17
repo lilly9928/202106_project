@@ -21,6 +21,7 @@ import {
 
 import styled from 'styled-components/native'
 
+
 var fullwidth = Dimensions.get('window').width;
 
 const LoginScreen = ({ navigation }) => {
@@ -55,6 +56,7 @@ const LoginScreen = ({ navigation }) => {
 const Detail= () => {
   let params = { "plantId_subId": userEmail, "timestamp": TodayConvert,"periodType":"day" };
   let url = 'http://118.131.6.218:8000/detail?'+query(params);
+  console.log('login'+url)
   fetch(url)
     .then(res => res.json())
     .then(res => {
@@ -134,24 +136,6 @@ const Report= () => {
     //validateEmail(userEmail);
     //validatePassword(userPassword);
 
-    // for (var i = 0; i < Userdata.length; i++) {
-    //   if (Userdata[i].id == userEmail) {
-    //     if (Userdata[i].password == userPassword) {
-    //       Perference.setUser(userEmail);
-    //       Dashboard();
-    //       Detail();
-    //       Report();
-    //       //navigation.dispatch(CommonActions.navigate("이전")); 
-    //      navigation.navigate('이전');
-    //       return;
-    //     }
-    //     else {
-    //       alert('아이디 또는 비밀번호가 틀립니다.');
-    //       return;
-    //     }
-    //   }
-    // }
-    // alert('아이디 또는 비밀번호가 틀립니다.');
 
   };
   function postData(url = '', data = {}) {
