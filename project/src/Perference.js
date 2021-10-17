@@ -28,7 +28,12 @@ var object = {
     getToday:function(){
         return Today
     },
-
+    setToday:function(item){
+            Today=item
+    },
+    setTodayConvert:function(item){
+        TodayConvert=item
+    },
     getConvertToday:function(){
         return TodayConvert
     },

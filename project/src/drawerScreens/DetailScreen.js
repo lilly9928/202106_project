@@ -191,6 +191,7 @@ function DetailScreen({ navigation }) {
       Perference.setDataTable(res.revenueFromPowerList)
       Perference.setDataCountReal(res.realPowerGraph.Y)
       });
+      reloadLines;
   }
   const reloadLines = React.useCallback(() => {
     setRefreshing(true)

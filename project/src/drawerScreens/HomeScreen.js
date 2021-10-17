@@ -32,9 +32,10 @@ function HomeScreen({ navigation }) {
 
 
   const data = Perference.getDashboard();
-  const date = new Date();
+  //const date = new Date();
+  const date = Perference.getToday();
   const dataDate = date.getHours()+':'+date.getMinutes()+'기준';
-  const dataDay = date.getMonth()+'월'+date.getDate()+'일';
+  const dataDay = date.getMonth()+1+'월'+date.getDate()+'일';
 
   const newData = data.map(
     (item, index) => ({

@@ -212,8 +212,8 @@ const Report= () => {
           secureTextEntry={true} 
         />
       </View>
-      <View style={styles.TextValidation}>
-      <Text style={styles.TextValidationText}>{Errortext}</Text>
+      <View style={Errortext?styles.TextValidation:''}>
+      <Text  style={styles.TextValidationText}>{Errortext}</Text>
       </View>
       </View>
      

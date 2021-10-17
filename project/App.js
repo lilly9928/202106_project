@@ -10,6 +10,7 @@ import ReportScreen from './src/drawerScreens/ReportScreen';
 import DetailScreen from './src/drawerScreens/DetailScreen';
 import Perference from './src/Perference';
 
+
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -169,6 +170,7 @@ const App = ({ navigation }) => {
                 buttonTextStyle={styles.BtnTextStyle}
                 
                  /> 
+             
                  </View>
             ),
             headerStyle: {
@@ -231,7 +233,7 @@ const styles = StyleSheet.create({
   bottomnav_icon_click_home:{
     width:wp(10),
     resizeMode: 'contain',
-  }
+  },
 });
 
 export default App;
