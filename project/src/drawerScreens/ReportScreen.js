@@ -10,6 +10,7 @@ import { ClipPath, Defs, Rect, Line, } from 'react-native-svg'
 import { LineChart, Path } from 'react-native-svg-charts'
 import Perference from '../Perference';
 
+import { RefreshControl } from 'react-native-web-refresh-control'
 
 import {
   StyleSheet,
@@ -27,12 +28,27 @@ function ReportScreen({ navigation }) {
   const data = Perference.getReportData();
   const HeadTable= ['일시', '수익', '누적 수익', '살제누적 수익'];
   const DataTable= Perference.getReportDataTable();
-  console.log(DataTable);
-  console.log(data);
+  //console.log(DataTable);
+  //console.log(data);
   const date = new Date();
   const dataDate = date.getHours()+':'+date.getMinutes()+'기준'
   const indexToClipFrom = date.getMonth();
   const money = Perference.getMoney();
+  const actualRevernue=Perference.getReportActualRevenue();
+  const [refreshing, setRefreshing] = useState(false);
+ // const breakeven =(Perference.getMoney()/(data[1]-data[0]));
+
+//   const breakevenF =()=>{
+//     for(var i =0;i>DataTable.length;i++){
+//       alert(DataTable.length);
+//       if(DataTable[3]>=Perference.getMoney()){
+//         alert(i);
+//        return i; 
+//     }
+//   }
+// }
+Perference.setReportIndexUserInvestment(Perference.getMoney());
+const breakeven=Perference.getReportIndexUserInvestment();
 
   const Clips = ({ x, width }) => (
       <Defs key={ 'clips' }>
@@ -60,31 +76,53 @@ const HorizontalLine = (({ y }) => (
       key={ 'zero-axis' }
       x1={ '0%' }
       x2={ '100%' }
-      y1={ y(money) }
-      y2={ y(money) }
+      y1={ y(Perference.getMoney()) }
+      y2={ y(Perference.getMoney()) }
       stroke={ '#292929' }
      // strokeDasharray={ [ 4, 8 ] }
       strokeWidth={ 3 }
   />
 ))
 
-const VerticalLine = (({ x }) => (
+const VerticalLine = (({ x,y }) => (
   <Line
       key={ 'zero-axis' }
-      x1={ x(6.5) }
-      x2={ x(6.5)}
-      y1={ "0%" }
-      y2={ "100%" }
+      x1={x(breakeven)}
+      x2={x(breakeven)}
+      y1={ '0%' }
+      y2={ '100%' }
       stroke={ '#e051ff' }
       strokeWidth={ 3 }
   />
 ))
+React.useEffect(() => {
+  reloadLines();
 
+}, [])
+
+const reloadLines = React.useCallback(() => {
+  setRefreshing(true)
+
+  wait(2000).then(() => {
+    setRefreshing(false)
+    
+  })
+}, [])
+
+function wait(timeout) {
+  return new Promise(resolve => {
+    setTimeout(resolve, timeout)
+  })
+}
 
   return (
     
     <SafeAreaView style={styles.container}>
-      <ScrollView>
+       <ScrollView
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={reloadLines} />
+        }
+      >
       <View style={styles.topContainerWrap}>
       <View style={styles.topContainer}>
         <View style={styles.borderBox}>

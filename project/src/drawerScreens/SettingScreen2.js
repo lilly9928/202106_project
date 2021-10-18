@@ -22,7 +22,7 @@ import {
   function SettingScreen({ navigation }) {
 
      const [data, setData] = useState(Perference.getData());
-
+      const user = Perference.getUser();
 
      const onlyNumber = (str,changeindex) => {
       var num =  str.replace(/[^0-9.]/g, "").replace(/(\.*)\./g, "$1");
@@ -36,7 +36,19 @@ import {
     const handleSubmitPress = () => {
       if(!data){
         alert('저장에 실패했습니다.')
-      }
+      }  
+      // fetch("http://118.131.6.218:8000/charge", {
+      //   method: "PUT",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify({
+      //     plantId_subId: user,
+      //     charge: data,
+      //   }),
+      // })
+      // .then((response) => response.json())
+      // .then((data) => console.log(data));
       Perference.setData(data);
       alert('저장되었습니다.');
       //navigation.navigate('이전');

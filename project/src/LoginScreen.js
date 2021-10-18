@@ -81,6 +81,7 @@ const Report= () => {
      Perference.setReportLastYearOfMonth(res.compareLastYearOfMonth)
      Perference.setReportData(res.accumulatedRevenueGraph.Real_Y.concat(res.accumulatedRevenueGraph.pred_Y))
      Perference.setReportDataTable(res.cumulativeRevenueList)
+     Perference.setReportIndexUserInvestment(res.userInvestment)
      Perference.setReportTotalRevenue(res.totalRevenue)
      Perference.setReportActualRevenue(res.actualRevenue)
      Perference.setMoney(res.userInvestment)

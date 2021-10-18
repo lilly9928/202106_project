@@ -8,8 +8,7 @@ import Perference from '../Perference';
 function DetailAPI(userEmail,TodayConvert,periodType){
     let params = { "plantId_subId": userEmail, "timestamp": TodayConvert,"periodType":periodType };
     let url = 'http://118.131.6.218:8000/detail?'+query(params);
-   // let url = 'http://118.131.6.218:8000/detail?'+'plantId_subId='+userEmail+'+&timestamp='+TodayConvert+'&periodType='+periodType+'';
-    console.log(url);
+     console.log(url);
     fetch(url)
       .then(res => res.json())
       .then(res => {
@@ -21,10 +20,8 @@ function DetailAPI(userEmail,TodayConvert,periodType){
 }
 function* GetData(action) {
     try {
-        console.log('saga / logIn'+JSON.stringify(action.data));
-      //  yield call(DashboardAPI,JSON.stringify(action.data.userEmail),JSON.stringify(action.data.TodayConvert));
+        console.log('saga / data'+JSON.stringify(action.data));
         yield call(DetailAPI,action.data.userEmail,action.data.TodayConvert,action.data.periodType);
-      //  yield call(ReportAPI,JSON.stringify(action.data.userEmail),JSON.stringify(action.data.TodayConvert));
         yield put({
             type: GET_SUCCESS,
         });

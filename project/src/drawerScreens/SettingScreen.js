@@ -7,7 +7,7 @@ import React, { useState } from 'react';
 import 'react-native-gesture-handler';
 import Perference from '../Perference';
 
-
+import { RefreshControl } from 'react-native-web-refresh-control'
 import {
   StyleSheet,
   View,

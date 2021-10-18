@@ -10,7 +10,7 @@ export const GET_SUCCESS = 'GET_SUCCESS';
 export const GET_FAILURE = 'GET_FAILURE';
 
 export const dataRequestAction = (data) =>{
-    console.log('reducer / loginRequestAction ');
+    console.log('reducer / dataRequestAction ');
     return {
         type: GET_REQUEST,
         data:data
@@ -21,7 +21,7 @@ export const dataRequestAction = (data) =>{
 const reducer = (state=initialState, action) => {
     switch(action.type) {
         case GET_REQUEST:{
-            console.log('reducer / 로그인 요청');
+            console.log('reducer / data req 요청');
             return {
                 ...state,
                 logInLoading : true,
@@ -30,7 +30,7 @@ const reducer = (state=initialState, action) => {
             };
         }
         case GET_SUCCESS:{
-            console.log('reducer / 로그인 완료');
+            console.log('reducer / data req 완료');
             return {
                 ...state,
                 logInLoading : false,
@@ -39,7 +39,7 @@ const reducer = (state=initialState, action) => {
             };
         }
         case GET_FAILURE:{
-            console.log('reducer / 로그인 실패');
+            console.log('reducer / data req 실패');
             return {
                 logInLoading : false,
                 logInError : action.error,

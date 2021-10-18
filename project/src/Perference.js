@@ -14,6 +14,7 @@ var ReportLastYearOfMonth='';
 var ReportTotalRevenue='';
 var ReportUserInvestment='';
 var ReportActualRevenue='';
+var ReportIndexUserInvestment=0;
 
 var Data=[];
 var DataTable=[];
@@ -140,10 +141,30 @@ var object = {
         return ReportUserInvestment
     },
     setMoney:function(item){
-        item= item.map(number => number.toFixed(0));
         ReportUserInvestment = item
     },
+    setReportIndexUserInvestment:function(item){
+        let index=0;
+        for(let i= 0;i<ReportData.length;i++){
+            console.log(item);
+            console.log(ReportData[i]);
+            console.log(item-ReportData[i]);
+            // if(ReportData[i]-item>=0){
+            //     ReportIndexUserInvestment = ReportIndexUserInvestment; 
+            // }
 
+                if(item-ReportData[i]<0){
+                    console.log(index);
+                    if(index==0){
+                        index = i;
+                    }
+                }
+        }
+        return ReportIndexUserInvestment = index
+    },
+    getReportIndexUserInvestment:function() {
+        return ReportIndexUserInvestment
+    },
 
     //대시보드데이터
     getDashboard:function(){

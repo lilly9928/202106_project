@@ -21,6 +21,7 @@ import {
   
   function SettingScreen({ navigation }) {
 
+    const user = Perference.getUser();
     const [price, setPrice] = useState(Perference.getMoney());
     const [Errortext, setErrortext] = useState('오류');
 
@@ -34,7 +35,21 @@ import {
       if(!price){
         alert('저장에 실패했습니다.')
       }
+      fetch("http://118.131.6.218:8000/investment", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        plantId_subId: user,
+        investment: price,
+      }),
+    })
+    .then((response) => response.json())
+    .then((data) => console.log(data));
       Perference.setMoney(price);
+      Perference.setReportIndexUserInvestment(price);
+
       alert('저장되었습니다.');
       navigation.reset({index: 0, routes: [{ name: '이전' }],});
     };
