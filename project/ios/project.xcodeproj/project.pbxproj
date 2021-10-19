@@ -160,7 +160,6 @@
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
-				8B8BB90EA6821BAE52B0FA40 /* [CP] Embed Pods Frameworks */,
 				455B4F5A691821C32C82B743 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
@@ -183,7 +182,6 @@
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				5E0097751C70587E5164C43B /* [CP] Embed Pods Frameworks */,
 				E35D99E219ED6C0B1CD6CFF4 /* [CP] Copy Pods Resources */,
 				DA3DCE0478F6BBB5EECA4869 /* [CP-User] [RNFB] Core Configuration */,
 				A4F67372AEBE6B2E06EE6DBD /* [CP-User] [RNFB] Crashlytics Configuration */,
@@ -282,40 +280,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-project-projectTests/Pods-project-projectTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		5E0097751C70587E5164C43B /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-project/Pods-project-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-project/Pods-project-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-project/Pods-project-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		8B8BB90EA6821BAE52B0FA40 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-project-projectTests/Pods-project-projectTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-project-projectTests/Pods-project-projectTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-project-projectTests/Pods-project-projectTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		96A361B4CA5C01B057DB1C39 /* [CP] Check Pods Manifest.lock */ = {

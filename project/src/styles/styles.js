@@ -5,147 +5,155 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
-const Home = {
+export const Home = {
+  SafeAreaViewCustom:styled.SafeAreaView `
+    flex: 1;
+    flex-direction: column;
+    background-color:#f5f5f5;
+  `,
     topContainer: styled.View`
       flex: 0.8;
       padding: 1%;
-      backgroundColor: #2e2e33;
-      borderBottomLeftRadius: 30;
-      borderBottomRightRadius:30;
+      background-color: #2e2e33;
+      border-bottom-right-radius:30px;
+      border-bottom-left-radius:30px;
     `,
     Box:styled.View`
-    borderColor: "#000";
-    height: "100%";
-    borderWidth: 0;
-    flexDirection: "row";
+    height: 100%;
+    border:0;
+    flex-direction: row;
     `,
     topBox:styled.View`
-    justifyContent: 'space-between';
-    alignItems: 'flex-start';
-    width:'50%';
-    marginTop:`+wp(5)+`;
-    marginLeft:`+wp(5)+`;
-    marginBottom:`+wp(5)+`;
+    justifyContent: space-between;
+    alignItems: flex-start;
+    width:45%;
+    margin:5%;
     `,
+    // topBox:styled.View`
+    // justifyContent: space-between;
+    // alignItems: flex-start;
+    // width:'50%';
+    // marginTop:5%;
+    // marginLeft:5%;
+    // marginBottom:5%;
+    //`,
     Boxtitle:styled.Text`
-    fontSize:`+wp(5)+`;
-    paddingLeft: `+wp(1)+`;
-    paddingBottom: `+wp(3)+`;
-    paddingTop:`+wp(3)+`;
-    color:"white";
+    font-size:25px;
+    padding-left: 1%;
+    padding-bottom: 3%;
+    padding-top:3%;
+    color:white;
     `,
     BoxtitleBig:styled.Text`
-    fontSize: `+wp(8)+`;
-    paddingLeft: `+wp(1)+`;
-    paddingBottom: `+wp(3)+`;
-    paddingTop: `+wp(1)+`;
-    fontWeight: "bold";
-    color:"white";
+    font-size: 30px;
+    padding-left: 1%;
+    padding-bottom: 3%;
+    paddingTop: 1%;
+    font-weight: bold;
+    color:white;
     `,
     BoxtitleSmall:styled.Text`
-    fontSize:`+wp(3)+`;
-    justifyContent:'flex-end';
-    color: "#909090";
+    font-size:20px;
+    justify-content:flex-end;
+    color: #909090;
     `,
     left:styled.View`
-    alignItems:'flex-end';
+    align-items:flex-end;
     `,
     middleBox:styled.View`
-    justifyContent: 'center';
-    alignItems: 'center';
-    borderRadius: 20;
-    backgroundColor: "#222225";
-    width:`+wp(40)+`;
-    marginTop:`+wp(5)+`;
-    marginBottom:`+wp(5)+`;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    background-color: #222225;
+    width:100%;
+    margin-top:5%;
+    margin-bottom:5%;
+    padding-left:10%;
+    padding-right:10%;
+    padding-top:4%;
+    padding-bottom:4%;
     `,
     middleText:styled.Text`
-    fontSize: `+wp(5)+`;
-     paddingTop: `+wp(5)+`;
-     fontWeight: "bold";
-     color: "#385bff";
+    font-size: 23px;
+     padding-top: 5%;
+     font-weight: bold;
+     color: #385bff;
     `,
     middlesubText:styled.Text`
-    fontSize: `+wp(3)+`;
-    color: "#909090";
-    paddingBottom: `+wp(5)+`;
+    font-size: 15px;
+    color: #909090;
+    padding-bottom: 5%;
     `,
     middleTextYellow:styled.Text`
-    fontSize: `+wp(5)+`);
-    paddingTop: `+wp(5)+`;
-    fontWeight: "bold";
-    color: "#ffb851";
+    font-size: 23px;
+    padding-top: 5%;
+    font-weight: bold;
+    color: #ffb851;
     `,
     middleTopBox:styled.View`
-    backgroundColor: "#ffffff";
-    borderBottomLeftRadius: 30;
-    borderBottomRightRadius:30;
-    flexDirection: "row";
-    justifyContent: 'space-between';
-    padding:wp(5);
+    background-color: #ffffff;
+    border-bottom-right-radius:30px;
+    border-bottom-left-radius:30px;
+    flex-direction: row;
+    justify-content: space-between;
+    padding:5%;
     `,
     middleBoxTitle:styled.Text`
-    color:'black';
-    fontSize:`+wp(4)+`;
+    color:black;
+    font-size:18px;
     `,
     middleBoxsubTitle:styled.Text`
-    color:'#3943ff';
-    fontWeight:'bold';
-    fontSize`+wp(6)+`;
+    color:#3943ff;
+    font-weight:700;
+    font-size:23px;
     `,
     middleContainer:styled.View`
     flex: 1;
-    backgroundColor:"#f5f5f5";
-    padding: '1%';
+    background-color:#f5f5f5;
+    padding: 1%;
     `,
     bottomContainer:styled.View`
     flex: 0.5;
-    paddingLeft: `+wp(3)+`;
-    paddingRight:`+wp(3)+`;
-    marginBottom:`+hp(3)+`;
+    padding-left:3%;
+    padding-right:3%;
+    margin-bottom:3%;
     `,
     bottomBox:styled.View`
-    width:'100%';
-    flexDirection: "column";
-    backgroundColor:"#fff";
-    padding: '3%';
-    shadowColor: "rgba(0, 0, 0, 0.03)";
-    shadowOffset: {
-    width: 0;
-    height: 0;
-    };
-  shadowRadius: 16;
-  shadowOpacity: 1;
-  borderRadius: 16;
+    width:100%;
+    flex-direction: column;
+    background-color:#fff;
+    padding: 3%;
+    shadow-color: rgba(0, 0, 0, 0.03);
+    border-radius: 16px;
     `,
     bottomBoxRow:styled.View`
-    flexDirection: "row";
-    justifyContent: 'space-around';
-    padding:`+wp(5)+`;
+    flex-direction: row;
+    justify-content: space-around;
+    padding:5%;
     `,
     colorBox:styled.View`
-    width: 15;
-    height: 15;
-    backgroundColor: "#000";
+    width: 15px;
+    height: 15px;
+    background-color: #000;
     `,
     bottomText:styled.Text`
-    fontSize: `+wp(4)+`;
-    fontWeight:'bold;
+    font-size: 18px;
+    font-weight:700;
     `,
     bottomsubText:styled.Text`
-    color: "#909090";
-    fontWeight:'bold';
-    padding:`+wp(1)+`;
+    color: #909090;
+    font-weight:bold;
+    padding:1%;
     `,
     tailContainer:styled.View`
     flex: 0.4;
     `,
     bottomTextBox:styled.View`
-    borderRadius: 8;
-    backgroundColor: "#f5f5f5";
-    alignItems:"center";
-    padding:`+wp(2)+`;
-    width:"95%";
-    marginLeft:`+wp(2)+`;
+    border-radius: 8px;
+    background-color: #f5f5f5;
+    align-items:center;
+    padding:2%;
+    width:95%;
+    margin-left:2%;
     `,
   };
