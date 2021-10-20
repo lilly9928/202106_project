@@ -5,7 +5,7 @@ import {
 } from 'react-native-responsive-screen';
 
 import 'react-native-gesture-handler';
-import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
+import { Table, Row, Rows} from 'react-native-table-component';
 import { ClipPath, Defs, Rect, Line, } from 'react-native-svg'
 import { LineChart, Path } from 'react-native-svg-charts'
 import Perference from '../Perference';
@@ -16,10 +16,6 @@ import {
   StyleSheet,
   View,
   Text,
-  Image,
-  TouchableOpacity,
-  TextInput,
-  SafeAreaView,
   ScrollView,
 } from 'react-native';
 
@@ -28,28 +24,15 @@ function ReportScreen({ navigation }) {
   const data = Perference.getReportData();
   const HeadTable= ['일시', '수익', '누적 수익', '살제누적 수익'];
   const DataTable= Perference.getReportDataTable();
-  //console.log(DataTable);
-  //console.log(data);
   const date = new Date();
   const dataDate = date.getHours()+':'+date.getMinutes()+'기준'
   const indexToClipFrom = date.getMonth();
-  const money = Perference.getMoney();
-  const actualRevernue=Perference.getReportActualRevenue();
   const [refreshing, setRefreshing] = useState(false);
- // const breakeven =(Perference.getMoney()/(data[1]-data[0]));
 
-//   const breakevenF =()=>{
-//     for(var i =0;i>DataTable.length;i++){
-//       alert(DataTable.length);
-//       if(DataTable[3]>=Perference.getMoney()){
-//         alert(i);
-//        return i; 
-//     }
-//   }
-// }
-Perference.setReportIndexUserInvestment(Perference.getMoney());
-const breakeven=Perference.getReportIndexUserInvestment();
+  Perference.setReportIndexUserInvestment(Perference.getMoney());
+  const breakeven=Perference.getReportIndexUserInvestment();
 
+  //그래프 디자인 
   const Clips = ({ x, width }) => (
       <Defs key={ 'clips' }>
           <ClipPath id="clip-path-1">
@@ -60,6 +43,7 @@ const breakeven=Perference.getReportIndexUserInvestment();
           </ClipPath>
       </Defs>
   )
+  //줄 
   const DashedLine = ({ line }) => (
     <Path
         key={ 'line-1' }
@@ -67,10 +51,11 @@ const breakeven=Perference.getReportIndexUserInvestment();
         stroke={ '#ffb851' }
         strokeWidth={ 4 }
         fill={ 'none' }
-        //strokeDasharray={ [ 4, 4 ] }
         clipPath={ 'url(#clip-path-2)' }
     />
 )
+
+//세로줄 투자원금 
 const HorizontalLine = (({ y }) => (
   <Line
       key={ 'zero-axis' }
@@ -84,6 +69,7 @@ const HorizontalLine = (({ y }) => (
   />
 ))
 
+//가로줄 손익분기점
 const VerticalLine = (({ x,y }) => (
   <Line
       key={ 'zero-axis' }
@@ -95,6 +81,8 @@ const VerticalLine = (({ x,y }) => (
       strokeWidth={ 3 }
   />
 ))
+
+//새로고침
 React.useEffect(() => {
   reloadLines();
 
@@ -116,7 +104,6 @@ function wait(timeout) {
 }
 
   return (
-    
     <Report.container>
        <ScrollView
         refreshControl={
@@ -208,16 +195,8 @@ function wait(timeout) {
   );
 }
 
+//표 디자인 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: "column",
-    backgroundColor:"#f5f5f5"
-  },
-  Center:{
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   HeadStyle:{
     backgroundColor:'#ebebeb',
     borderRadius:20,
@@ -238,169 +217,5 @@ const styles = StyleSheet.create({
     textAlign:'center',
     paddingTop:wp(5)
   },
-  middle_BoxsubtitleDate:{
-    fontSize:wp(4),
-    color:'#909090',
-    paddingTop:wp(1)
-  },
-  dateText:{
-    color:'#909090',
-    fontSize:wp(4),
-    paddingLeft:wp(3.5),
-    paddingTop:wp(4),
-    paddingBottom:wp(2)
-  },
-  headContainer: {
-    flex: 0.30,
-  },
-  topContainerWrap:{
-    backgroundColor:'#2e2e33',
-    paddingBottom:hp(3),
-    borderBottomLeftRadius: 30,
-    borderBottomRightRadius:30,
-  },
-  topContainer: {
-    flex: 0.8,
-    padding: '1%',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    textAlign:'center'
-    
-  },
-  middleContainer: {
-    flex: 1,
-    padding: '1%',
-    backgroundColor:"#f5f5f5",
-    marginBottom:'10%'
-  },
-  bottomContainer: {
-    flex: 0.5,
-  
-  },
-  bottomBox:{
-    width:'95%',
-    marginLeft:wp(2),
-    flexDirection: "row",
-    backgroundColor:"#ffffff",
-    padding: wp(5),
-    shadowColor: "rgba(0, 0, 0, 0.03)",
-    shadowOffset: {
-    width: 0,
-    height: 0
-    },
-  shadowRadius: 16,
-  shadowOpacity: 1,
-  borderRadius: 16,
-  justifyContent:'space-between',
-  marginBottom:hp(5)
-  },
-  tailContainer: {
-    flex: 0.4,
-    backgroundColor: "#000",
-  },
-  borderBox: {
-    backgroundColor:'#222225',
-    padding:wp(5),
-    borderRadius:20,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  columnBox:{
-    flexDirection: "column",
-    justifyContent: 'space-between',
-    paddingTop:wp(2),
-  },
-  borderText:{
-    color:'#ffffff',
-    fontSize:wp(3),
-  },
-  bordersubText:{
-    color:'#909090'
-  },
-  Boxtitle: {
-    fontSize: wp(4),
-    paddingLeft: wp('1%'),
-    paddingBottom: wp('3%'),
-    paddingTop: wp('1%'),
-    fontWeight: "bold",
-    color:'#ffffff',
-
-  },
-  Boxsubtitle: {
-    fontSize: wp(6),
-    paddingRight: wp('1%'),
-    paddingBottom: wp('3%'),
-    paddingTop: wp('2%'),
-    color:'#ffffff'
-
-  },
-  topBox: {
-    flexDirection: 'row',
-    justifyContent: 'space-between'
-  },
-  middleBox: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    //flex:1
-  },
-  insideMiddleBox: {
-    flexDirection: 'row',
-    justifyContent:'space-between',
-    width:wp(35)
-  },
-  insideMiddleBoxWrap:{
-    marginTop:wp(7),
-  },
-  middlePriceTextYellow: {
-    fontSize: wp(6),
-    fontWeight: "bold",
-    paddingLeft: wp('1%'),
-    color:'#ffb851'
-  },
-  middlePriceTextBlue: {
-    fontSize: wp(6),
-    fontWeight: "bold",
-    paddingLeft: wp('1%'),
-    color:'#385bff'
-  },
-  middleConText: {
-    paddingBottom: wp('3%'),
-    paddingTop: wp('2%'),
-    color:'#ffffff'
-  },
-  bottomContainer: {
-    flex: 0.5,
-    padding: '1%'
-  },
-  bottomText: {
-    fontSize: wp(4),
-    fontWeight:'bold',
-    marginBottom:wp(2)
-    
-  },
-  colorBox: {
-    width: 15,
-    height: 15,
-    //marginRight:wp(5)
-
-  },
-  middle_topBox:{
-    backgroundColor: "#ffffff",
-    borderBottomLeftRadius: 30,
-    borderBottomRightRadius:30,
-    flexDirection: "row",
-    justifyContent: 'space-between',
-    padding:wp(5)
-    
-  },
-  middle_Boxtitle:{
-    color:'black',
-    fontSize:wp(4)
-  },
-  middle_Boxsubtitle:{
-    color:'#000000',
-    fontWeight:'bold',
-    fontSize:wp(6)
-  },
-});
+  });
 export default ReportScreen;

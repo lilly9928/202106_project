@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
+  widthPercentageToDP as wp
 } from 'react-native-responsive-screen';
 
 import 'react-native-gesture-handler';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { BarChart, Grid } from 'react-native-svg-charts'
-import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
+import { Table, Row, Rows } from 'react-native-table-component';
 import Perference from '../Perference';
 import { RefreshControl } from 'react-native-web-refresh-control'
 import {Detail} from '../styles/styles'
@@ -15,17 +14,13 @@ import {
   StyleSheet,
   View,
   Text,
-  Image,
-  TouchableOpacity,
-  TextInput,
   ScrollView,
-  SafeAreaView,
-  Button,
 } from 'react-native';
 
 import { useDispatch } from 'react-redux';
 import { dataRequestAction } from '../reducers/user';
 
+//날짜 포멧 설정 
 Date.prototype.format = function (f) {
   if (!this.valueOf()) return " ";
 
@@ -67,9 +62,9 @@ function DetailScreen({ navigation }) {
   const user = Perference.getUser();
   const buttonkor =Perference.getDetailButton();
   const [refreshing, setRefreshing] = useState(false);
-
   const dispatch = useDispatch();
 
+  //그래프 데이터 디자인 
   const newData = data.map(
     (item, index) => ({
       y: parseInt(item),
@@ -87,6 +82,7 @@ function DetailScreen({ navigation }) {
     })
   );
 
+  //달력 클릭 이벤트
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || today;
     setShow(Platform.OS === 'ios');
@@ -97,7 +93,7 @@ function DetailScreen({ navigation }) {
     dispatch(dataRequestAction({userEmail:user,TodayConvert:converttoday,periodType:buttonkor }));
   };
 
-
+//달력 클릭 이벤트
   const showMode = (currentMode) => {
     setShow(true);
     setMode(currentMode);
@@ -107,6 +103,7 @@ function DetailScreen({ navigation }) {
     showMode('date');
   };
   
+  //이전 날짜 클릭 이벤트 
   const Back = () => {
     today.setDate(today.getDate()-1);
     Perference.setDetailDate(today);
@@ -116,6 +113,7 @@ function DetailScreen({ navigation }) {
     dispatch(dataRequestAction({userEmail:user,TodayConvert:Perference.getDetailTodayConvert(),periodType:Perference.getDetailButton() }));
     reloadLines();
   };
+  //이후 날짜 클릭 이벤트
   const Next = () => {
     today.setDate(today.getDate()+1);
     Perference.setDetailDate(today);
@@ -125,7 +123,7 @@ function DetailScreen({ navigation }) {
     dispatch(dataRequestAction({userEmail:user,TodayConvert:Perference.getDetailTodayConvert(),periodType:Perference.getDetailButton() }));
     reloadLines();
   };
-
+//일 주 월 년 버튼 클릭 이벤트
   const BtnClick = (num) =>{
     let btn; 
     switch(num){
@@ -148,6 +146,8 @@ function DetailScreen({ navigation }) {
     dispatch(dataRequestAction({userEmail:user,TodayConvert:Perference.getDetailTodayConvert(),periodType:Perference.getDetailButton()}));
     reloadLines();
   }
+
+  //새로고침
   const reloadLines = React.useCallback(() => {
     setRefreshing(true)
 
@@ -162,7 +162,6 @@ function DetailScreen({ navigation }) {
       setTimeout(resolve, timeout)
     })
   }
-
   return (
     <Detail.container>
          <ScrollView
@@ -266,10 +265,8 @@ function DetailScreen({ navigation }) {
     </Detail.container>
 
   );
-
 }
-//}
-
+//표 스타일시트
 const styles = StyleSheet.create({
   HeadStyle:{
     backgroundColor:'#ebebeb',
@@ -291,166 +288,5 @@ const styles = StyleSheet.create({
     textAlign:'center',
     paddingTop:wp(5)
   },
-  container: {
-    flex: 1,
-    flexDirection: "column",
-    backgroundColor: "#f5f5f5"
-  },
-  headContainer: {
-    flex: 0.30,
-    backgroundColor: "#2e2e33",
-    flexWrap:"wrap",
-  },
-  topContainer: {
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    backgroundColor: "#2e2e33",
-    position:"relative",
-    paddingBottom:hp(4),
-    borderBottomLeftRadius: 30,
-    borderBottomRightRadius:30,
-  },
-  topDate:{
-    flex: 0.2,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    backgroundColor: "#2e2e33",
-    position:"relative",
-    marginBottom:'5%'
-  },
-  middleContainer: {
-    flex: 1,
-    backgroundColor: "#fff",
-    position:"relative",
-    marginBottom:'10%',
-    borderBottomLeftRadius: 30,
-    borderBottomRightRadius:30,
-  },
-  tailContainer: {
-    flex: 0.4,
-    padding: '1%',
-    marginBottom:'5%',
-    paddingLeft: wp(5),
-    paddingRight: wp(5),
-  },
-  topBtn: {
-   // borderColor: "#000",
-   // borderWidth: 2,
-    borderRadius: 3,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginLeft: wp('1%'),
-    marginRight: wp('1%'),
-    marginTop: wp('1%'),
-    marginBottom: wp('1%'),
-
-  },
-  bottomBoxRow:{
-    flexDirection: "row",
-    justifyContent: 'space-around',
-    padding:wp(5)
-  },
-  bottomTextBox:{
-    borderRadius: 8,
-    backgroundColor: "#ffffff",
-    alignItems:"center",
-    padding:wp(2),
-    width:"95%",
-    marginLeft:wp(2)
-
-  },
-  middleBox:{
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginLeft:wp(5),
-    marginRight:wp(5),
-    marginTop:wp(5)
-  },
-  topRoundBtn:{
-    borderRadius: 20,
-    backgroundColor: "#222225",
-    paddingLeft:wp(6),
-    paddingRight:wp(6),
-    paddingTop:wp(1),
-    paddingBottom:wp(1),
-  },
-  topRoundBtnText:{
-    fontSize:wp(4),
-    color:'#ffffff',
-
-  },
-  topBtnText: {
-    color: '#ffffff',
-    fontSize:wp(6),
-    paddingLeft:wp(1),
-    paddingRight:wp(1)
-
-  },
-  Box: {
-   
-
-  },
-  colorBox: {
-    width: 15,
-    height: 15,
-    backgroundColor: "#000"
-
-  },
-  bottomContainer: {
-    flex: 0.5,
-    paddingLeft: wp(3),
-    paddingRight: wp(3),
-    marginBottom:hp(3),
-  },
-  bottomBox: {
-    width:'100%',
-    flexDirection: "column",
-    backgroundColor:"#f5f5f5",
-    padding: '3%',
-    shadowColor: "rgba(0, 0, 0, 0.03)",
-    shadowOffset: {
-    width: 0,
-    height: 0
-    },
-  shadowRadius: 16,
-  shadowOpacity: 1,
-  borderRadius: 16,
-
-  },
-  bottomText: {
-    fontSize: wp(4),
-    fontWeight:'bold'
-
-  },
-  bottomsubText:{
-    color: "#909090",
-    fontWeight:'bold',
-    padding:wp(1)
-  },
-  bottomRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: "50%"
-  },
-  Boxtitle: {
-    fontSize: wp(4.5),
-    paddingLeft: wp('1%'),
-    paddingBottom: wp('3%'),
-    paddingTop: wp('1%'),
-    fontWeight: "bold"
-  },
-  topBox: {
-    flexDirection: 'row',
-    justifyContent: 'space-around'
-  },
-  Boxsubtitle: {
-    fontSize: wp(6),
-    paddingRight: wp('1%'),
-    paddingBottom: wp('3%'),
-    paddingTop: wp('2%'),
-    fontWeight:"bold"
-
-  },
-
 });
 export default DetailScreen;
