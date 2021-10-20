@@ -1,11 +1,16 @@
+//데이터 
+
+//날짜 데이터 
 let Today = new Date(2020,6,2,-2);
 
+//대시보드 데이터 
 var DashboardData = [];
 var DashboardTotal='';
 var DashboardToday='';
 var DashboardTodayPredicted='';
 var DashboardCountReal=0;
 
+//리포트 데이터 
 var ReportData=[];
 var ReportDataTable=[];
 var ReportMonthPredicted='';
@@ -16,6 +21,7 @@ var ReportUserInvestment='';
 var ReportActualRevenue='';
 var ReportIndexUserInvestment=0;
 
+//디테일 데이터 
 var Data=[];
 var DataTable=[];
 var CountReal=0;
@@ -25,7 +31,7 @@ var DetailButton = 'day';
 var DetailTodayConvert=DetailDate.toISOString().split('.')[0];
 DetailTodayConvert= DetailTodayConvert.split('T')[0]+' '+DetailTodayConvert.split('T')[1]
 
-
+//서버 날짜 값 수정
 let TodayConvert=Today.toISOString().split('.')[0];
 TodayConvert= TodayConvert.split('T')[0]+' '+TodayConvert.split('T')[1]
 
@@ -143,16 +149,10 @@ var object = {
     setMoney:function(item){
         ReportUserInvestment = item
     },
+    //손익분기점계산
     setReportIndexUserInvestment:function(item){
         let index=0;
         for(let i= 0;i<ReportData.length;i++){
-            console.log(item);
-            console.log(ReportData[i]);
-            console.log(item-ReportData[i]);
-            // if(ReportData[i]-item>=0){
-            //     ReportIndexUserInvestment = ReportIndexUserInvestment; 
-            // }
-
                 if(item-ReportData[i]<0){
                     console.log(index);
                     if(index==0){

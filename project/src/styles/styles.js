@@ -1,9 +1,5 @@
-import React from 'react';
+
 import styled from 'styled-components/native';
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
 
 export const Home = {
   SafeAreaViewCustom:styled.SafeAreaView `
