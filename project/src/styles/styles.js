@@ -271,3 +271,119 @@ export const Home = {
     margin-bottom:7%;`,
     
   }
+  export const Detail ={
+    container:styled.SafeAreaView`
+    flex: 1;
+    flex-direction: column;
+    background-color: #f5f5f5;`,
+    topContainer:styled.View`
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #2e2e33;
+    position:relative;
+    padding-bottom:4%;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius:30px;`,
+
+    topDate:styled.View`
+   
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: #2e2e33;
+    position:relative;
+    margin-bottom:5%;`,
+
+    topBtn:styled.TouchableOpacity`
+    border-radius: 3px;
+    justify-content: center;
+    align-items: center;
+    margin: 1%;
+`,
+    topBtnText:styled.Text`
+    color: #ffffff;
+    font-size:20px;
+    padding-left:1%;
+    padding-right:1%;
+    `,
+    topBox:styled.View`
+    flex-direction: row;
+    justify-content: space-around;`,
+    topRoundBtn:styled.TouchableOpacity`
+    border-radius: 20px;
+    background-color: #222225;
+    padding-left:6%;
+    padding-right:6%;
+    padding-top:1%;
+    padding-bottom:1%;`,
+    topRoundBtnText:styled.Text`
+    font-size:20px;
+    color:#ffffff;`,
+    middleContainer:styled.View`
+    flex: 1;
+    background-color: #fff;
+    position:relative;
+    margin-bottom:10%;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius:30px;`,
+    middleBox:styled.View`
+    flex-direction: row;
+    justify-content: space-between;
+    margin-left:5%;
+    margin-right:5%;
+    margin-top:5%;`,
+    Boxtitle:styled.Text`
+    font-size: 20px;
+    padding-left: 1%;
+    padding-bottom: 3%;
+    padding-top: 1%;
+    font-weight: bold;`,
+    Boxsubtitle:styled.Text`
+    font-size: 20px;
+    padding-right: 1%;
+    padding-bottom: 3%;
+    padding-top:2%;
+    font-weight:bold;`,
+    Box:styled.View``,
+    bottomContainer:styled.View`
+    flex: 0.5;
+    padding-left: 3%;
+    padding-right: 3%;
+    margin-bottom:3%;`,
+    bottomBox:styled.View`
+    width:100%;
+    flex-direction: column;
+    background-color:#f5f5f5;
+    padding: 3%;
+    border-radius: 16px;
+`,
+    bottomBoxRow:styled.View`
+    flex-direction: row;
+    justify-content: space-around;
+    padding:5%;`,
+    colorBox:styled.View`
+    width: 15px;
+    height: 15px;
+    background-color: #000;`,
+    bottomText:styled.Text`
+    font-size:20px;
+    font-weight:bold;
+`,
+    bottomsubText:styled.Text`
+    color: #909090;
+    font-weight:bold;
+    padding:1%;`,
+    bottomTextBox:styled.View`
+    border-radius: 8px;
+    background-color: #ffffff;
+    align-items:center;
+    padding:2px;
+    width:95%;
+    margin-left:2px;`,
+    tailContainer:styled.View`
+    flex: 0.4;
+    padding: 1%;
+    margin-bottom:5%;
+    padding-left: 5%;
+    padding-right:5%;`,
+
+  }

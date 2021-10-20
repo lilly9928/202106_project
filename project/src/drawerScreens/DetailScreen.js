@@ -10,7 +10,7 @@ import { BarChart, Grid } from 'react-native-svg-charts'
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
 import Perference from '../Perference';
 import { RefreshControl } from 'react-native-web-refresh-control'
-
+import {Detail} from '../styles/styles'
 import {
   StyleSheet,
   View,
@@ -164,47 +164,47 @@ function DetailScreen({ navigation }) {
   }
 
   return (
-    <SafeAreaView style={styles.container}>
+    <Detail.container>
          <ScrollView
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={reloadLines} />
           }
           >
-      <View  style={styles.topContainer}>
-        <View style={styles.topDate}>
-        <TouchableOpacity style={styles.topBtn} onPress={Back}>
-          <Text style={(styles.topBtnText)}> &lt;</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.topBtn} onPress={showDatepicker}>
-          <Text style={[{ color: "#fff",fontSize:wp(5),fontWeight:"bold" }]}> {selectedDay} </Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.topBtn}  onPress={Next}>
-          <Text style={(styles.topBtnText)}> &gt;</Text>
-        </TouchableOpacity>
-      </View>
-        <View style={styles.topBox}>
-            <TouchableOpacity style={styles.topRoundBtn}  onPress={()=>BtnClick(0)}>
-              <Text style={(styles.topRoundBtnText)}> 일 </Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.topRoundBtn} onPress={()=>BtnClick(1)}>
-              <Text style={(styles.topRoundBtnText)}> 주 </Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.topRoundBtn} onPress={()=>BtnClick(2)}>
-              <Text style={(styles.topRoundBtnText)}> 월 </Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.topRoundBtn} onPress={()=>BtnClick(3)}>
-              <Text style={(styles.topRoundBtnText)}> 년 </Text>
-            </TouchableOpacity>
-          </View>
-      </View>
+      <Detail.topContainer>
+        <Detail.topDate>
+        <Detail.topBtn onPress={Back}>
+          <Detail.topBtnText> &lt;</Detail.topBtnText>
+        </Detail.topBtn>
+        <Detail.topBtn onPress={showDatepicker}>
+          <Text style={{ color: "#ffffff",fontSize:wp(5),fontWeight:"bold" }}> {selectedDay} </Text>
+        </Detail.topBtn>
+        <Detail.topBtn onPress={Next}>
+          <Detail.topBtnText> &gt;</Detail.topBtnText>
+        </Detail.topBtn>
+      </Detail.topDate>
+        <Detail.topBox>
+            <Detail.topRoundBtn onPress={()=>BtnClick(0)}>
+              <Detail.topRoundBtnText> 일 </Detail.topRoundBtnText>
+            </Detail.topRoundBtn>
+            <Detail.topRoundBtn onPress={()=>BtnClick(1)}>
+              <Detail.topRoundBtnText> 주 </Detail.topRoundBtnText>
+            </Detail.topRoundBtn>
+            <Detail.topRoundBtn onPress={()=>BtnClick(2)}>
+              <Detail.topRoundBtnText> 월 </Detail.topRoundBtnText>
+            </Detail.topRoundBtn>
+            <Detail.topRoundBtn onPress={()=>BtnClick(3)}>
+              <Detail.topRoundBtnText> 년 </Detail.topRoundBtnText>
+            </Detail.topRoundBtn>
+          </Detail.topBox>
+      </Detail.topContainer>
 
 
-      <View style={styles.middleContainer}>
-      <View style={styles.middleBox}>
-            <Text style={styles.Boxtitle}>발전량 그래프</Text>
-            <Text style={styles.Boxsubtitle}>{selectValue}</Text>
-          </View>
-        <View style={styles.Box}>
+      <Detail.middleContainer>
+      <Detail.middleBox>
+            <Detail.Boxtitle>발전량 그래프</Detail.Boxtitle>
+            <Detail.Boxsubtitle>{selectValue}</Detail.Boxsubtitle>
+          </Detail.middleBox>
+        <Detail.Box>
         <ScrollView horizontal={true}>
           <View style={{ flex: 1, width:500,height: 200 }}>
             <BarChart
@@ -220,38 +220,38 @@ function DetailScreen({ navigation }) {
             </BarChart>
           </View>
           </ScrollView>
-        </View>
-        <View style={styles.bottomContainer} >
-        <View style={styles.bottomBox}>
-          <View style={styles.bottomBoxRow}>
-          <View style={[styles.colorBox, { marginTop: wp(1),borderRadius:100,backgroundColor: "#385bff" }]} />
+        </Detail.Box>
+        <Detail.bottomContainer>
+        <Detail.bottomBox>
+          <Detail.bottomBoxRow>
+          <Detail.colorBox style={{ marginTop: wp(1),borderRadius:100,backgroundColor: "#385bff" }} />
             <View>
-              <Text style={styles.bottomText}>실제 발전량</Text>
-              <Text style={styles.bottomsubText}>실제 측정된</Text>
-              <Text style={styles.bottomsubText}>발전량 데이터</Text>
+              <Detail.bottomText>실제 발전량</Detail.bottomText>
+              <Detail.bottomsubText>실제 측정된</Detail.bottomsubText>
+              <Detail.bottomsubText>발전량 데이터</Detail.bottomsubText>
             </View>
-            <View style={[styles.colorBox, { marginTop: wp(1),borderRadius:100,backgroundColor: '#FFBF00' }]} />
+            <Detail.colorBox style={ { marginTop: wp(1),borderRadius:100,backgroundColor: '#FFBF00' }} />
             <View>
-              <Text style={styles.bottomText}>예측 발전량</Text>
-              <Text style={styles.bottomsubText}>현재 시간 이후의</Text>
-              <Text style={styles.bottomsubText}>예측 발전량 데이터</Text>
+              <Detail.bottomText>예측 발전량</Detail.bottomText>
+              <Detail.bottomsubText>현재 시간 이후의</Detail.bottomsubText>
+              <Detail.bottomsubText>예측 발전량 데이터</Detail.bottomsubText>
             </View>
-          </View>
+          </Detail.bottomBoxRow>
 
-          <View style={styles.bottomTextBox}>
-              <Text style={styles.bottomsubText}>그래프 클릭 시 구간 별 발전량을 확인할 수 있습니다.</Text>
-          </View>
-        </View>
-      </View>
-      </View>
+          <Detail.bottomTextBox>
+              <Detail.bottomsubText>그래프 클릭 시 구간 별 발전량을 확인할 수 있습니다.</Detail.bottomsubText>
+          </Detail.bottomTextBox>
+        </Detail.bottomBox>
+      </Detail.bottomContainer>
+      </Detail.middleContainer>
 
 
-      <View style={styles.tailContainer} >
+      <Detail.tailContainer>
         <Table borderStyle={{borderWidth: 0}}>
           <Row data={HeadTable} style={styles.HeadStyle} textStyle={styles.TableTitleText}/>
           <Rows data={DataTable} textStyle={styles.TableText}/>
         </Table>
-      </View>
+      </Detail.tailContainer>
       {show && (
         <DateTimePicker
           testID="dateTimePicker"
@@ -263,7 +263,7 @@ function DetailScreen({ navigation }) {
         />
       )}
     </ScrollView>
-    </SafeAreaView>
+    </Detail.container>
 
   );
 
