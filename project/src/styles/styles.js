@@ -383,3 +383,6 @@ export const Home = {
     padding-right:5%;`,
 
   }
+export const Setting ={
+  
+}

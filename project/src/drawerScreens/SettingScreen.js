@@ -16,6 +16,7 @@ import {
   TouchableOpacity
 } from 'react-native';
 
+import {Setting} from '../styles/styles'
 
 
 function SettingScreen({ navigation }) {
