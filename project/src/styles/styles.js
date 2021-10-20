@@ -29,14 +29,6 @@ export const Home = {
     width:45%;
     margin:5%;
     `,
-    // topBox:styled.View`
-    // justifyContent: space-between;
-    // alignItems: flex-start;
-    // width:'50%';
-    // marginTop:5%;
-    // marginLeft:5%;
-    // marginBottom:5%;
-    //`,
     Boxtitle:styled.Text`
     font-size:25px;
     padding-left: 1%;
@@ -123,7 +115,6 @@ export const Home = {
     flex-direction: column;
     background-color:#fff;
     padding: 3%;
-    shadow-color: rgba(0, 0, 0, 0.03);
     border-radius: 16px;
     `,
     bottomBoxRow:styled.View`
@@ -156,4 +147,127 @@ export const Home = {
     width:95%;
     margin-left:2%;
     `,
-  };
+  }
+  export const Report = {
+    container:styled.SafeAreaView `
+    flex: 1;
+    flex-direction: column;
+    background-color:#f5f5f5;
+    `,
+    topContainerWrap:styled.View`
+    background-color:#2e2e33;
+    border-bottom-right-radius:30px;
+    border-bottom-left-radius:30px;
+    padding-top:3%;
+    `,
+    topContainer:styled.View`
+    flex: 0.8;
+    padding: 1%;
+    flex-direction: row;
+    justify-content: space-around;
+    text-align:center;
+    
+    `,
+    colorBox:styled.View`
+    width: 15px;
+    height: 15px;
+    background-color: #000;
+    `,
+    borderBox:styled.View`
+    background-color:#222225;
+    padding-top:5%;
+    padding-bottom:20%;
+    padding-left:3%;
+    padding-right:3%;
+    border-radius:20px;
+    align-items: center;
+    `,
+    Boxtitle:styled.Text`
+    font-size: 20px;
+    padding-left: 1%;
+    padding-bottom: 3%;
+    padding-top: 1%;
+    font-weight: bold;
+    color:#ffffff;
+    `,
+    middlePriceTextYellow:styled.Text`
+    font-size: 20px;
+    font-weight: bold;
+    padding-left: 1%;
+    color:#ffb851;
+    `,
+    middlePriceTextBlue:styled.Text`
+    font-size: 20px;
+    font-weight: bold;
+    padding-left: 1%;
+    color:#385bff;
+    `,
+    insideMiddleBoxWrap:styled.View`
+    margin-top:7px;
+    `,
+    insideMiddleBox:styled.View`
+    flex-direction: row;
+    width:100%;
+    `,
+    bordersubText:styled.Text`
+    color:#909090;
+    font-size:13px;
+  `,
+    borderText:styled.Text`
+    color:#ffffff;
+    font-size:13px;
+    `,
+    dateText:styled.Text`
+    color:#909090;
+    font-size:13px;
+    padding-left:3.5%;
+    padding-top:4%;`,
+    middle_topBox:styled.View`
+    background-color: #ffffff;
+    border-bottom-right-radius:30px;
+    border-bottom-left-radius:30px;
+    flex-direction: row;
+    justify-content: space-between;
+    padding:5%;`,
+    middle_Boxtitle:styled.Text`
+    color:black;
+    font-size:20px;`,
+    middle_Boxsubtitle:styled.Text`
+    color:#000000;
+    font-weight:bold;
+    font-size:20px;
+    `,
+    middle_BoxsubtitleDate:styled.Text`
+    font-size:20px;
+    color:#909090;
+    padding-top:1%;`,
+    middleContainer:styled.View`
+    flex: 1;
+    padding: 1%;
+    background-color:#f5f5f5;
+    margin-bottom:10%;`,
+    Box:styled.View``,
+    bottomContainer:styled.View`
+    flex: 0.5;
+    `,
+    bottomBox:styled.View`
+    width:95%;
+    margin-left:2%;
+    flex-direction: row;
+    background-color:#ffffff;
+    padding: 5%;
+    border-radius: 16px;
+    justify-content:space-between;
+    margin-bottom:5%;`,
+    
+    columnBox:styled.View`
+    flex-direction: column;
+    justify-content: space-between;
+    padding-top:2%;`,
+    bottomText:styled.Text`
+    color:#000000;
+    font-size:20px;
+    font-weight:bold;
+    margin-bottom:7%;`,
+    
+  }

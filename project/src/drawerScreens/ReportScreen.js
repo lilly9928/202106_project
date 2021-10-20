@@ -9,7 +9,7 @@ import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-ta
 import { ClipPath, Defs, Rect, Line, } from 'react-native-svg'
 import { LineChart, Path } from 'react-native-svg-charts'
 import Perference from '../Perference';
-
+import {Report} from '../styles/styles'
 import { RefreshControl } from 'react-native-web-refresh-control'
 
 import {
@@ -117,54 +117,54 @@ function wait(timeout) {
 
   return (
     
-    <SafeAreaView style={styles.container}>
+    <Report.container>
        <ScrollView
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={reloadLines} />
         }
       >
-      <View style={styles.topContainerWrap}>
-      <View style={styles.topContainer}>
-        <View style={styles.borderBox}>
-            <Text style={styles.Boxtitle}>이번달 예상 수익</Text>
-            <Text style={styles.middlePriceTextYellow}>{Perference.getReportMonthPredicted()+'원'}</Text>
-            <View style={styles.insideMiddleBoxWrap}>
-            <View style={styles.insideMiddleBox}>
-              <Text style={styles.bordersubText}>월 평균 비교: </Text>
-              <Text style={styles.borderText}>{Perference.getReportMonthAverage()+'원'}</Text>
-            </View>
-            <View style={styles.insideMiddleBox}>
-            <Text style={styles.bordersubText}>작년 1월 비교: </Text>
-              <Text style={styles.borderText}>{Perference.getReportLastYearOfMonth()+'원'}</Text>
-            </View>
-            </View>
-        </View>
-        <View style={styles.borderBox}>
-            <Text style={styles.Boxtitle}>현재까지 누적 수익</Text>
-            <Text style={styles.middlePriceTextBlue}>{Perference.getReportTotalRevenue()+'원'}</Text>
-            <View style={styles.insideMiddleBoxWrap}>
-            <View style={styles.insideMiddleBox}>
-              <Text style={styles.bordersubText}>투자원금: </Text>
-              <Text style={styles.borderText}>{Perference.getMoney()+'원'}</Text>
-            </View>
-            <View style={styles.insideMiddleBox}>
-            <Text style={styles.bordersubText}>실제 누적 수익: </Text>
-              <Text style={styles.borderText}>{Perference.getReportActualRevenue()+'원'}</Text>
-            </View>
-            </View>
-        </View>
-      </View>
-      <Text style={styles.dateText}>{dataDate}</Text>
-      </View>
-      <View style={styles.middle_topBox}>
-            <Text style={styles.middle_Boxtitle}>손익분기점 그래프</Text>
+      <Report.topContainerWrap>
+      <Report.topContainer>
+        <Report.borderBox>
+            <Report.Boxtitle>이번달 예상 수익</Report.Boxtitle>
+            <Report.middlePriceTextYellow>{Perference.getReportMonthPredicted()+'원'}</Report.middlePriceTextYellow>
+            <Report.insideMiddleBoxWrap>
+            <Report.insideMiddleBox>
+              <Report.bordersubText>월 평균 비교: </Report.bordersubText>
+              <Report.borderText>{Perference.getReportMonthAverage()+'원'}</Report.borderText>
+            </Report.insideMiddleBox>
+            <Report.insideMiddleBox>
+            <Report.bordersubText>작년 1월 비교: </Report.bordersubText>
+              <Report.borderText>{Perference.getReportLastYearOfMonth()+'원'}</Report.borderText>
+            </Report.insideMiddleBox>
+            </Report.insideMiddleBoxWrap>
+        </Report.borderBox>
+        <Report.borderBox>
+            <Report.Boxtitle>현재까지 누적 수익</Report.Boxtitle>
+            <Report.middlePriceTextBlue>{Perference.getReportTotalRevenue()+'원'}</Report.middlePriceTextBlue>
+            <Report.insideMiddleBoxWrap>
+            <Report.insideMiddleBox>
+              <Report.bordersubText>투자원금: </Report.bordersubText>
+              <Report.borderText>{Perference.getMoney()+'원'}</Report.borderText>
+            </Report.insideMiddleBox>
+            <Report.insideMiddleBox>
+            <Report.bordersubText>실제 누적 수익: </Report.bordersubText>
+              <Report.borderText>{Perference.getReportActualRevenue()+'원'}</Report.borderText>
+            </Report.insideMiddleBox>
+            </Report.insideMiddleBoxWrap>
+        </Report.borderBox>
+      </Report.topContainer>
+      <Report.dateText>{dataDate}</Report.dateText>
+      </Report.topContainerWrap>
+      <Report.middle_topBox>
+            <Report.middle_Boxtitle>손익분기점 그래프</Report.middle_Boxtitle>
             <View style={{alignItems:'flex-end'}}>
-            <Text style={styles.middle_Boxsubtitle}>도달 예상<Text style={{color:'#e051ff'}}>3개월 후</Text></Text>
-            <Text style={styles.middle_BoxsubtitleDate}>2021년 9월</Text>
+            <Report.middle_Boxsubtitle>도달 예상<Text style={{color:'#e051ff'}}>3개월 후</Text></Report.middle_Boxsubtitle>
+            <Report.middle_BoxsubtitleDate>2021년 9월</Report.middle_BoxsubtitleDate>
             </View>
-          </View>
-      <View style={styles.middleContainer}>
-        <View style={styles.Box}>
+          </Report.middle_topBox>
+      <Report.middleContainer>
+        <Report.Box>
           <View style={{ flex: 1 , marginTop:hp(5)}}>
           <LineChart
                 style={{ height: 250 }}
@@ -182,29 +182,29 @@ function wait(timeout) {
                 <DashedLine/>
             </LineChart>
           </View>
-        </View>
-      </View>
-      <View style={styles.bottomContainer} >
-        <View style={styles.bottomBox}>
-          <View style={styles.columnBox}>
-                <Text style={styles.bottomText}><View style={[styles.colorBox, { marginTop: wp(1),borderRadius:100,backgroundColor: "#292929" }]} />투자 원금</Text>
-                <Text style={styles.bottomText}><View style={[styles.colorBox, { marginTop: wp(1),borderRadius:100,backgroundColor: "#ffb851" }]} />누적 수익(예측)</Text>
-          </View>
-          <View style={styles.columnBox}>
-              <Text style={styles.bottomText}><View style={[styles.colorBox, { marginTop: wp(1),borderRadius:100,backgroundColor: "#385bff" }]} />누적 수익(실측)</Text>
-              <Text style={styles.bottomText}><View style={[styles.colorBox, { marginTop: wp(1),borderRadius:100,backgroundColor: "#e051ff" }]} />손익분기점</Text>
-          </View>
-        </View>
-      </View>
-      <View style={styles.bottomContainer}>
+        </Report.Box>
+      </Report.middleContainer>
+      <Report.bottomContainer>
+        <Report.bottomBox>
+          <Report.columnBox>
+                <Report.bottomText><Report.colorBox style={{ marginTop: wp(1),borderRadius:100,backgroundColor: "#292929" }} />투자 원금</Report.bottomText>
+                <Report.bottomText><Report.colorBox style={ { marginTop: wp(1),borderRadius:100,backgroundColor: "#ffb851" }} />누적 수익(예측)</Report.bottomText>
+          </Report.columnBox>
+          <Report.columnBox>
+              <Report.bottomText><Report.colorBox style={{marginTop: wp(1),borderRadius:100,backgroundColor: "#385bff" }} />누적 수익(실측)</Report.bottomText>
+              <Report.bottomText><Report.colorBox style={{marginTop: wp(1),borderRadius:100,backgroundColor: "#e051ff" }} />손익분기점</Report.bottomText>
+          </Report.columnBox>
+        </Report.bottomBox>
+      </Report.bottomContainer>
+      <Report.bottomContainer>
       <Table borderStyle={{}}>
           <Row data={HeadTable} style={styles.HeadStyle} textStyle={styles.TableTitleText}/>
           <Rows data={DataTable} textStyle={styles.TableText}/>
         </Table>
-      </View>
+      </Report.bottomContainer>
       </ScrollView>
 
-    </SafeAreaView>
+    </Report.container>
   );
 }
 
