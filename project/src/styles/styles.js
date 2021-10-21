@@ -384,5 +384,62 @@ export const Home = {
 
   }
 export const Setting ={
-  
+    container:styled.SafeAreaView`
+    flex: 1;
+    flex-direction: column;
+    background-color:#f5f5f5;`,
+    roundHead:styled.View`
+    background-color:#2e2e33;
+    width:100%;
+    border-bottom-right-radius:30px;
+    border-bottom-left-radius:30px;
+    height:4%;`,
+    topInfo:styled.View`
+    flex-direction: row;
+    border-bottom-right-radius:30px;
+    border-bottom-left-radius:30px;
+    border-style:solid;
+    width:100%;
+    height:13%;
+    background-color: #ffffff;
+    margin-bottom:3%;
+    justify-content:center;`,
+    topInfoText:styled.Text`
+    font-size: 20px;
+    padding-top: 7%;`,
+    btnWrap:styled.View`
+    padding-left: 5%;
+    padding-right: 5%;`,
+    btnStyle:styled.View`
+    flex-direction: row;
+    border-radius:20px;
+    border-style:solid;
+    width:100%;
+    margin-bottom:3%;
+    background-color: #ffffff;
+    border-color:#c9c9c9;
+    border-width:1px;
+    justify-content:space-between;
+    padding-right:5%;`,
+    Text:styled.Text`
+    font-size: 20px;
+    padding-bottom: 5%;
+    padding-top: 7%;
+    padding-left:5%;`,
+    btn:styled.TouchableOpacity`
+    padding-left: 40%;
+    padding-right:40%;
+    margin-top:15%;`,
+    bottomText:styled.View`
+    align-items:center;
+    border-style:solid;
+    border-width:1px;
+    border-color:#2e2e33;
+    border-radius:16px;
+    padding-bottom:2%;
+    padding-top:2%;`,
+    smallText:styled.Text`
+    text-align:center;
+    padding-top:2%;`,
+
 }
