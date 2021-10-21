@@ -443,3 +443,59 @@ export const Setting ={
     padding-top:2%;`,
 
 }
+
+export const SettingIn ={
+  ContainerWrap:styled.SafeAreaView`
+  height:100%;`,
+  roundHead:styled.View`
+  background-color:#2e2e33;
+  width:100%;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius:30px;
+  height:3%;`,
+  container:styled.View`
+  flex-direction: column;
+  background-color:#f5f5f5;
+  padding-left:5%;
+  padding-right:5%;`,
+  formArea:styled.View`
+  flex-direction: row;
+  padding-top: 2%;
+  padding-bottom:2%;
+  background-color:#ffffff;
+  border-radius:20px;
+  margin-top:4%;
+  padding-left:4%;
+  padding-right:4%;
+  justify-content:space-around;`,
+  Text:styled.Text`
+  font-size: 20px;
+  padding-bottom:5%;
+  padding-top: 5%;
+  padding-right:5%;`,
+  textFormBottom:styled.TextInput`
+  width: 70%;
+  text-align:right;
+  font-size:20px;
+  `,
+  TextGray:styled.Text`
+  font-size: 20px;
+  padding-bottom: 5%;
+  padding-top: 5%;
+  padding-right:5%;
+  color:#909090;`,
+  btn:styled.TouchableOpacity`
+  width: 100%;
+  align-items: center;
+  background-color: #292929;
+  bottom:0;
+  position:absolute;
+  `,
+  btnText:styled.Text`
+  padding-bottom: 5%;
+  padding-top: 5%;
+  padding-right:2%;
+  color: white;
+  font-size:20px;`
+
+}

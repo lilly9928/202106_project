@@ -17,7 +17,7 @@ import {
     Input
   } from 'react-native';
   
-  
+  import{SettingIn} from '../styles/styles'
   
   function SettingScreen({ navigation }) {
 
@@ -54,14 +54,13 @@ import {
       navigation.reset({index: 0, routes: [{ name: '이전' }],});
     };
     return (
-      <SafeAreaView tyle={styles.containerWrap}>
-           <View style={styles.roundHead}/>
-       <View style={styles.container}>
-       <View  style={styles.formArea}>
-           <Text   style={styles.Text}>금액</Text>
-           <TextInput
+      <SettingIn.ContainerWrap>
+           <SettingIn.roundHead/>
+       <SettingIn.container>
+       <SettingIn.formArea>
+           <SettingIn.Text>금액</SettingIn.Text>
+           <SettingIn.textFormBottom
            type="number"
-          style={styles.textFormBottom}
           autoCapitalize="none"
           returnKeyType="next"
           underlineColorAndroid="#f000"
@@ -69,17 +68,16 @@ import {
           value={price.toString()}
           onChangeText={(input) => onlyNumber(input)}
         />
-        <Text style={styles.TextGray}>원</Text>
-       </View>
-      </View>
-      <TouchableOpacity
-         style={styles.btn}
+        <SettingIn.TextGray>원</SettingIn.TextGray>
+       </SettingIn.formArea>
+      </SettingIn.container>
+      <SettingIn.btn
             activeOpacity={0.5}
             onPress={handleSubmitPress}
           >
-            <Text style={styles.btnText}>저장</Text>
-          </TouchableOpacity>
-      </SafeAreaView>
+            <SettingIn.btnText>저장</SettingIn.btnText>
+          </SettingIn.btn>
+      </SettingIn.ContainerWrap>
     );
   }
   
