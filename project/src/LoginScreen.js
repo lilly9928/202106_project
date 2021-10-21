@@ -11,18 +11,10 @@ import React, { useState, createRef } from 'react';
 import {
   StyleSheet,
   View,
-  Text,
-  Image,
-  TouchableOpacity,
-  TextInput,
-  KeyboardAvoidingView,
-  Dimensions
 } from 'react-native';
 
-import styled from 'styled-components/native'
+import{Login} from './styles/styles'
 
-
-var fullwidth = Dimensions.get('window').width;
 
 const LoginScreen = ({ navigation }) => {
 
@@ -157,22 +149,20 @@ const Report= () => {
       .then(response => response.json()); // parses JSON response into native JavaScript objects
   }
   return (
-    <View style={styles.container}>
+    <Login.container>
      
-     <View style={styles.topArea}>
-        <View style={styles.titleArea}>
-            <Image
-            style={styles.logo}
+     <Login.topArea>
+        <Login.titleArea>
+            <Login.logo
             source={require('./Image/logo.png')}
           />
-        </View>
-      </View>
+        </Login.titleArea>
+      </Login.topArea>
 
-      <View style={styles.formArea}>
-        <View style={styles.inputArea}>
-        <Text style={styles.Text}>아이디</Text>
-        <TextInput
-          style={styles.textFormTop}
+      <Login.formArea>
+        <Login.inputArea>
+        <Login.Text>아이디</Login.Text>
+        <Login.textFormTop
           placeholder={'이메일을 입력'}
           onChangeText={(userEmail) => setUserEmail(userEmail)}
           autoCapitalize="none"
@@ -183,11 +173,10 @@ const Report= () => {
           underlineColorAndroid="#f000"
           blurOnSubmit={false}
         />
-        </View>
-        <View style={styles.inputArea}>
-        <Text style={styles.Text}>비밀번호</Text>
-        <TextInput
-          style={styles.textFormBottom}
+        </Login.inputArea>
+        <Login.inputArea>
+        <Login.Text>비밀번호</Login.Text>
+        <Login.textFormBottom
           placeholder={'입력하세요'}
           onChangeText={(userPassword) => setUserPassword(userPassword)}
           autoCapitalize="none"
@@ -196,76 +185,28 @@ const Report= () => {
           blurOnSubmit={false}
           secureTextEntry={true} 
         />
-      </View>
+      </Login.inputArea>
       <View style={Errortext?styles.TextValidation:''}>
-      <Text  style={styles.TextValidationText}>{Errortext}</Text>
+      <Login.TextValidationText >{Errortext}</Login.TextValidationText >
       </View>
-      </View>
+      </Login.formArea>
      
-        <View style={styles.btnArea}>
-          <TouchableOpacity
-            style={styles.btn}
+        <Login.btnArea>
+          <Login.btn
             activeOpacity={0.5}
             onPress={handleSubmitPress}
           >
-            <Text style={(styles.Text, { color: 'white' })}>로그인</Text>
-          </TouchableOpacity>
-        </View>
+            <Login.Text style={{ color: 'white' }}>로그인</Login.Text >
+          </Login.btn>
+        </Login.btnArea>
     
       <View style={{height:hp(20) }} />
-    </View>
+    </Login.container>
   );
 };
 
-// export const TopArea = styled.View`
-//     width: 720,
-//     height: 190,
-//     borderRadius: 48,
-//     backgroundColor: "#2e2e33"
-// `
 
 const styles = StyleSheet.create({
-  container: {
-   // flex: 1, //전체의 공간을 차지한다는 의미
-    flexDirection: 'column',
-    backgroundColor: '#f5f5f5',
-   // paddingLeft: wp(7),
-   // paddingRight: wp(7),
-
-  },
-  logo:{
-    width:wp(40),
-    resizeMode: 'contain',
-    marginBottom:hp(8),
-    marginLeft:wp(4)
-
-  },
-  topArea: {
-  //  flex: 1,
-    width:fullwidth,
-    paddingTop: wp(20),
-    borderBottomLeftRadius: 30,
-    borderBottomRightRadius:30,
-    backgroundColor: "#2e2e33"
-  },
-  titleArea: {
-   // flex: 0.7,
-    justifyContent: 'center',
-    paddingTop: wp(1),
-    height:hp(3)
-  },
-  TextArea: {
-    //flex: 0.3,
-    justifyContent: 'center',
-    backgroundColor: 'white',
-  },
-  Text: {
-    fontSize: wp('4%'),
-    paddingBottom: wp(5),
-    paddingTop: wp(5),
-    color:'#909090',
-    paddingLeft:wp(3)
-  },
   TextValidation: {
    // paddingTop: wp(10),
     borderWidth:1,
@@ -275,69 +216,6 @@ const styles = StyleSheet.create({
     justifyContent:"center",
     height:hp(6),
     marginBottom:hp(3)
-    
-  },
-  TextValidationText:{
-    fontSize: wp(4),
-    color: 'red',
-    textAlign:"center",
-  },
-  inputArea:{
-    flexDirection: "row",
-    backgroundColor:'#ffffff',
-    borderRadius:16,
-    width: '100%',
-    height: hp(10),
-    marginBottom:wp(5)
-  },
-
-  formArea: {
-    justifyContent: 'center',
-    paddingTop: wp(20),
-    //flex: 5,
-    paddingLeft: wp(7),
-    paddingRight: wp(7),
-  },
-  textFormTop: {
-    width: '50%',
-    height: hp(10),
-    paddingLeft: 30,
-    paddingRight: 10,
-    borderWidth:0,
-    backgroundColor:'#ffffff',
-    borderRadius:16,
-    color:'#909090',
-    fontSize: wp('4%'),
-
-  },
-  textFormBottom: {
-    width: '50%',
-    height: hp(10),
-    paddingLeft: 30,
-    paddingRight: 10,
-    borderWidth:0,
-    backgroundColor:'#ffffff',
-    borderRadius:16,
-    color:'#909090',
-    fontSize: wp('4%'),
-  },
-  btnArea: {
-    height: hp(10),
-    // backgroundColor: 'orange',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingBottom: hp(1.5),
-    paddingLeft: wp(7),
-    paddingRight: wp(7),
-  },
-  btn: {
-    flex: 1,
-    width: '100%',
-    borderRadius: 7,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#292929',
-
   },
 });
 export default LoginScreen;

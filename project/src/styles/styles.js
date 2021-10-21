@@ -36,7 +36,7 @@ export const Home = {
     font-size: 30px;
     padding-left: 1%;
     padding-bottom: 3%;
-    paddingTop: 1%;
+    padding-top: 1%;
     font-weight: bold;
     color:white;
     `,
@@ -515,7 +515,80 @@ export const SettingIn ={
   opacity:0;
   margin-top:30%;
   `
-
+}
+export const Login ={
+  container:styled.View`
+  flex-direction:column;
+  background-color:#f5f5f5;`,
+  topArea:styled.View`
+    width:100%;
+    padding-top: 20%;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius:30px;
+    background-color:#2e2e33;`,
+  logo:styled.Image`
+  width:40%;
+  resize-mode: contain;
+  marginBottom:8px;
+  marginLeft:4px;`,
+  formArea:styled.View`
+  justify-content: center;
+  padding-top: 20%;
+  padding-left: 7%;
+  padding-right: 7%;`,
+  inputArea:styled.View`
+  flex-direction: row;
+  background-color:#ffffff;
+  border-radius:16px;
+  width: 100%;
+  height: 20%;
+  margin-bottom:5%;`,
+  Text:styled.Text`
+  font-size: 18px;
+    padding-bottom: 5%;
+    padding-top: 5%;
+    color:#909090;
+    padding-left:3%;`,
+  textFormTop:styled.TextInput`
+  padding-left: 30px;
+  padding-right: 10px;
+  border-width:0;
+  background-color:#ffffff;
+  border-radius:16px;
+  color:#909090;
+  font-size: 15px;
+`,
+  textFormBottom:styled.TextInput`
+  padding-left: 30px;
+  padding-right: 10px;
+  border-width:0;
+  background-color:#ffffff;
+  border-radius:16px;
+  color:#909090;
+  font-size: 15px;`,
+  TextValidationText:styled.Text`
+  font-size:20px;
+  color: red;
+  text-align:center;`,
+  btnArea:styled.View`
+  height: 10%;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 1.5%;
+  padding-left: 7%;
+  padding-right: 7%;`,
+  btn:styled.TouchableOpacity`
+  flex: 1;
+  width: 100%;
+  border-radius: 7px;
+  justify-content: center;
+  align-items: center;
+  background-color: #292929;`,
+  titleArea:styled.View`
+  justify-content: center;
+  padding-top:0;
+  height:7%;
+  `
 }
 
 
