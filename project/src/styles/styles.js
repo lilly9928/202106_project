@@ -453,6 +453,12 @@ export const SettingIn ={
   border-bottom-left-radius: 30px;
   border-bottom-right-radius:30px;
   height:3%;`,
+  roundHead2:styled.View`
+  background-color:#2e2e33;
+  width:100%;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius:30px;
+  height:10px;`,
   container:styled.View`
   flex-direction: column;
   background-color:#f5f5f5;
@@ -496,6 +502,20 @@ export const SettingIn ={
   padding-top: 5%;
   padding-right:2%;
   color: white;
-  font-size:20px;`
+  font-size:20px;`,
+  
+  title:styled.Text`
+  text-align:center;
+  font-size:20px;
+  color:#909090;
+  margin-top:5%;
+  margin-bottom:3%;
+  padding-top:2%`,
+  hide:styled.Text`
+  opacity:0;
+  margin-top:30%;
+  `
 
 }
+
+
