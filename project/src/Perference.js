@@ -1,7 +1,9 @@
 //데이터 
 let Users = [];
 //날짜 데이터 
-let Today = new Date(2020,6,2,-2);
+const Time = new Date();
+
+let Today = new Date(2020,5,20,Time.getHours(),Time.getMinutes());
 
 //대시보드 데이터 
 var DashboardData = [];

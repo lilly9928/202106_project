@@ -71,10 +71,11 @@ function DetailScreen({ navigation }) {
       svg: {
         onPressIn: () => {
           setselectItem(index);
-          setselectValue(item + 'KWh');
+          setselectValue(item.toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + 'KWh');
         },
         onPressOut: () => {
-          setselectItem(null);
+          setselectItem(index);
+          setselectValue(item.toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + 'KWh');
         },
         //날짜데이터 색상변경 
         fill: selectItem === index ? '#000000' : Perference.getDataCountReal()-1 < index ? '#ffb851' : '#385bff',

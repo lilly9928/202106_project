@@ -19,7 +19,7 @@ function HomeScreen({ navigation }) {
   const [selectItem, setselectItem] = useState(null);
   const [selectValue, setselectValue] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
-
+  
 
   const data = Perference.getDashboard();
   const date = Perference.getToday();
@@ -33,10 +33,11 @@ function HomeScreen({ navigation }) {
       svg: {
         onPressIn: () => {
           setselectItem(index),
-          setselectValue(item + '원')
+          setselectValue(item.toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '원')
         },
         onPressOut: () => {
-          setselectItem(null)
+          setselectItem(index),
+          setselectValue(item.toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '원')
         },
         fill: selectItem === index ? '#000000' : Perference.getDashboardCountReal()-1 < index ? '#ffb851' : '#385bff',
       }
