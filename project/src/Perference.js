@@ -67,7 +67,7 @@ var object = {
         return DataTable
     },
     setDataTable:function(item){
-        item= item.map(value => value.map(number => number.toFixed(0)));
+        item= item.map(value => value.map(number => number.toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")));
         DataTable = item
     },
     getDataCountReal:function(){
@@ -122,31 +122,31 @@ var object = {
         return ReportMonthPredicted
     },
     setReportMonthPredicted:function(item){
-        ReportMonthPredicted = item.toFixed(0)
+        ReportMonthPredicted = item.toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
     },
     getReportMonthAverage:function(){
         return ReportMonthAverage
     },
     setReportMonthAverage:function(item){
-        ReportMonthAverage = item.toFixed(0)
+        ReportMonthAverage = item.toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
     }, 
     getReportLastYearOfMonth:function(){
         return ReportLastYearOfMonth
     },
     setReportLastYearOfMonth:function(item){
-        ReportLastYearOfMonth = item.toFixed(0)
+        ReportLastYearOfMonth = item.toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
     },
     getReportTotalRevenue:function(){
         return ReportTotalRevenue
     },
     setReportTotalRevenue:function(item){
-        ReportTotalRevenue = item.toFixed(0)
+        ReportTotalRevenue = item.toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
     },
     getReportActualRevenue:function(){
         return ReportActualRevenue
     },
     setReportActualRevenue:function(item){
-        item= item.map(number => number.toFixed(0));
+        item= item.map(number => number.toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
         ReportActualRevenue = item
     },
     getMoney:function(){
@@ -183,19 +183,19 @@ var object = {
         return DashboardTotal
     },
     setDashboardTotal:function(item){
-        DashboardTotal = item.toFixed(0)
+        DashboardTotal = item.toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
     },
     getDashboardToday:function(){
         return DashboardToday
     },
     setDashboardToday:function(item){
-        DashboardToday = item.toFixed(0)
+        DashboardToday = item.toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
     },
     getDashboardTodayPredicted:function(){
         return DashboardTodayPredicted
     },
     setDashboardTodayPredicted:function(item){
-        DashboardTodayPredicted = item.toFixed(0)
+        DashboardTodayPredicted = item.toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
     },
     getDashboardCountReal:function(){
         return DashboardCountReal
