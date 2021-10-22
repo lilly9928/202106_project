@@ -80,6 +80,17 @@ const Report= () => {
      
 })
 }
+
+const Users= () => {
+  let url = 'http://118.131.6.218:8000/user/list'
+  fetch(url)
+    .then(res => res.json())
+    .then(res => {
+      console.log(res.subUserList);
+     Perference.setUsers(res.subUserList) 
+})
+}
+
   const validateEmail = (mail) => {
     if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail))
      {
@@ -117,6 +128,7 @@ const Report= () => {
             Dashboard();
             Detail();
             Report();
+            Users();
             navigation.navigate('이전');
            return;
           }

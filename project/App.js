@@ -12,7 +12,9 @@ import Perference from './src/Perference';
 
 import { Provider } from 'react-redux';
 import {createStore, applyMiddleware} from 'redux';
-import reducer from './src/reducers/user';
+import reducer,{LoginRequestAction} from './src/reducers/user';
+
+import { useDispatch } from 'react-redux';
 
 import createSagaMiddleware from 'redux-saga';
 import rootSaga from './src/sagas';
@@ -37,12 +39,10 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
-
-const TestStack = createStackNavigator();
 const HomeStack = createStackNavigator();
-const SettingStack = createStackNavigator();
+
+
 import SelectDropdown from 'react-native-select-dropdown'
-import { color } from 'react-native-reanimated';
 
 const Auth = () => {
   return (
@@ -97,12 +97,21 @@ const MainTabScreen = () => {
     </Tab.Navigator>
   );
 };
-const App = ({ navigation }) => {
 
-  const User = ["test1@", "test2@", "test3@", "test4@"]
-
+const AppWrapper = () => {
   return (
     <Provider store={store}>
+      <App />
+    </Provider>
+  )
+}
+
+const App = ({ navigation }) => {
+  const dispatch = useDispatch();
+  const converttoday = Perference.getConvertToday();
+  const [refreshing, setRefreshing] = useState(false);
+
+  return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="SplashScreen">
         <Stack.Screen
@@ -172,12 +181,15 @@ const App = ({ navigation }) => {
                   />
             <View style={{width:wp(28)}} />
                <SelectDropdown
-                data={User}
+                data={Perference.getUsers()}
                 onSelect={(selectedItem, index) => {
-                  console.log(selectedItem, index)
+                  dispatch(LoginRequestAction({userEmail:selectedItem,TodayConvert:converttoday}));
+                  console.log(selectedItem, converttoday)
+                //  reloadLines()
+
                 }}
                 buttonTextAfterSelection={(selectedItem, index) => {
-                  return selectedItem.title;
+                  return selectedItem;
                 }}
                 defaultButtonText={Perference.getUser()}
                 buttonStyle={styles.dropdown1BtnStyle}
@@ -195,9 +207,6 @@ const App = ({ navigation }) => {
 
       </Stack.Navigator>
     </NavigationContainer>
-    </Provider>
-
-
 
   );
 };
@@ -251,4 +260,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default App;
+export default AppWrapper;

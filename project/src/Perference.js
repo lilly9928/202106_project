@@ -1,5 +1,5 @@
 //데이터 
-
+let Users = [];
 //날짜 데이터 
 let Today = new Date(2020,6,2,-2);
 
@@ -48,6 +48,12 @@ var object = {
     },
     setUser:function(item){
         User = item
+    },
+    getUsers:function(){
+        return Users
+    },
+    setUsers:function(item){
+        Users = item
     },
 
     //상세데이터
