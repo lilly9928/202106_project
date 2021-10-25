@@ -30,6 +30,7 @@ var CountReal=0;
 var User
 var DetailDate=Today;
 var DetailButton = 'day';
+var DetailXData=[];
 var DetailTodayConvert=DetailDate.toISOString().split('.')[0];
 DetailTodayConvert= DetailTodayConvert.split('T')[0]+' '+DetailTodayConvert.split('T')[1]
 
@@ -98,7 +99,15 @@ var object = {
     setDetailButton:function(item){
         DetailButton = item
     },
-    
+    getDetailXData:function(){
+        return DetailXData
+    },
+    setDetailXData:function(item){
+        console.log(item);
+        var convert =item.map(value => value.split('T')[0].split('-')[2]+'일'+value.split('T')[1].split(':')[0]+'시');
+        console.log(convert);
+        DetailXData = convert
+    },
 
     //리포트데이터
     getReportData:function(){
@@ -162,7 +171,6 @@ var object = {
         let index=0;
         for(let i= 0;i<ReportData.length;i++){
                 if(item-ReportData[i]<0){
-                    console.log(index);
                     if(index==0){
                         index = i;
                     }

@@ -5,7 +5,7 @@ import {
 
 import 'react-native-gesture-handler';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { BarChart, Grid } from 'react-native-svg-charts'
+import { BarChart, Grid,XAxis,YAxis } from 'react-native-svg-charts'
 import { Table, Row, Rows } from 'react-native-table-component';
 import Perference from '../Perference';
 import { RefreshControl } from 'react-native-web-refresh-control'
@@ -19,6 +19,7 @@ import {
 
 import { useDispatch } from 'react-redux';
 import { dataRequestAction } from '../reducers/user';
+import * as scale from 'd3-scale'
 
 //날짜 포멧 설정 
 Date.prototype.format = function (f) {
@@ -50,6 +51,7 @@ Number.prototype.zf = function (len) { return this.toString().zf(len); };
 
 function DetailScreen({ navigation }) {
   const data = Perference.getData();
+  const Xdata = Perference.getDetailXData();
   const HeadTable= ['시간', '발전량', '수익', '누적수익'];
   const today = Perference.getToday();
   const converttoday = Perference.getConvertToday();
@@ -63,6 +65,8 @@ function DetailScreen({ navigation }) {
   const buttonkor =Perference.getDetailButton();
   const [refreshing, setRefreshing] = useState(false);
   const dispatch = useDispatch();
+  const day=['00시','01시','02시','03시','04시','05시','06시','07시','08시','09시','10시','11시','12시','13시','14시','15시','16시','17시','18시','19시','20시','21시','22시','23시'];
+  const week=['월','화','수','목','금','토','일'];
 
   //그래프 데이터 디자인 
   const newData = data.map(
@@ -205,8 +209,15 @@ function DetailScreen({ navigation }) {
             <Detail.Boxsubtitle>{selectValue}</Detail.Boxsubtitle>
           </Detail.middleBox>
         <Detail.Box>
+        <View style = {{height: 200, flexDirection: 'row'}}>
+        <YAxis
+          data = {data}
+          style = {{marginTop: 30}}
+          contentInset = {{ top: 10, bottom: 30 }}
+          svg = {{fontSize: 13, fill: '#909090' }}
+          />
         <ScrollView horizontal={true}>
-          <View style={{ flex: 1, width:500,height: 200 }}>
+          <View style={{ flex: 1, width:2000,height: 200 }}>
             <BarChart
               style={{ flex: 1, marginTop: 30 }}
               data={newData}
@@ -218,8 +229,16 @@ function DetailScreen({ navigation }) {
             >
               <Grid direction={Grid.Direction.HORIZONTAL}/>
             </BarChart>
+            <XAxis
+                    style={{}}
+                    data={ newData }
+                    scale={scale.scaleBand}
+                    formatLabel={(value, index) => Xdata[index]}
+                    labelStyle={ { fontSize:30 , color:'black'} }
+                />
           </View>
           </ScrollView>
+          </View>
         </Detail.Box>
         <Detail.bottomContainer>
         <Detail.bottomBox>

@@ -7,7 +7,7 @@ import {
 import 'react-native-gesture-handler';
 import { Table, Row, Rows} from 'react-native-table-component';
 import { ClipPath, Defs, Rect, Line, } from 'react-native-svg'
-import { LineChart, Path } from 'react-native-svg-charts'
+import { LineChart, Path,XAxis,YAxis,Grid } from 'react-native-svg-charts'
 import Perference from '../Perference';
 import {Report} from '../styles/styles'
 import { RefreshControl } from 'react-native-web-refresh-control'
@@ -152,11 +152,19 @@ function wait(timeout) {
           </Report.middle_topBox>
       <Report.middleContainer>
         <Report.Box>
-          <View style={{ flex: 1 , marginTop:hp(5)}}>
+        <View style = {{flexDirection: 'row'}}>
+        <YAxis
+          data = {data}
+          style = {{ }}
+          contentInset={{top: 10, bottom: -25 }}
+          svg = {{fontSize: 13, fill: '#909090' }}
+          />
+          <ScrollView horizontal={true}>
+          <View style={{flex:1, width:1000,height: 200 }}>
           <LineChart
-                style={{ height: 250 }}
+                style={{ height: 200 }}
                 data={ data }
-                contentInset={{ top: 20, bottom: 20 }}
+                contentInset={{ top: 10, bottom: 10 }}
                 svg={{
                     stroke: '#385bff',
                     strokeWidth: 4,
@@ -167,7 +175,10 @@ function wait(timeout) {
                 <HorizontalLine/>
                 <Clips/>
                 <DashedLine/>
+                <Grid direction={Grid.Direction.HORIZONTAL}/>
             </LineChart>
+          </View>
+          </ScrollView>
           </View>
         </Report.Box>
       </Report.middleContainer>

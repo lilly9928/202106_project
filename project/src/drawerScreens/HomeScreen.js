@@ -6,8 +6,9 @@ import {
   View,
   ScrollView
 } from 'react-native';
-import { BarChart, Grid } from 'react-native-svg-charts'
+import { BarChart, Grid ,XAxis,YAxis} from 'react-native-svg-charts'
 import { RefreshControl } from 'react-native-web-refresh-control'
+import * as scale from 'd3-scale'
 
 function wait(timeout) {
   return new Promise(resolve => {
@@ -19,7 +20,6 @@ function HomeScreen({ navigation }) {
   const [selectItem, setselectItem] = useState(null);
   const [selectValue, setselectValue] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
-  
 
   const data = Perference.getDashboard();
   const date = Perference.getToday();
@@ -29,6 +29,7 @@ function HomeScreen({ navigation }) {
 //그래프 데이터 디자인 
   const newData = data.map(
     (item, index) => ({
+      x:index+'시',
       y: item,
       svg: {
         onPressIn: () => {
@@ -43,6 +44,7 @@ function HomeScreen({ navigation }) {
       }
     })
   );
+
 //새로고침 
   React.useEffect(() => {
     reloadLines()
@@ -92,20 +94,34 @@ function HomeScreen({ navigation }) {
       
       <Home.middleContainer>
         <Home.Box>
+        <YAxis
+          data = {data}
+          style = {{}}
+          contentInset = {{ top: 10, bottom: 10 }}
+          svg = {{fontSize: 13, fill: '#909090' }}
+          />
         <ScrollView horizontal={true}>
-          <View style={{  width:500,height: 200,backgroundColor:'#f5f5f5'}}>
+          <View style={{  width:1200,height: 250,backgroundColor:'#f5f5f5'}}>
             <BarChart
               style={{ flex: 1}}
               data={newData}
               // svg={{fill: this.state.color,}}
               yAccessor={({ item }) => item.y}
               contentInset={{ top: 10, bottom: 10 }}
-              spacingInner={0.05}
+              spacingInner={0.03}
               spacingOuter={0.3}
               gridMin={1}
             >
               <Grid direction={Grid.Direction.HORIZONTAL}/>
             </BarChart>
+            <XAxis
+                    style={{}}
+                    data={ newData }
+                    scale={scale.scaleBand}
+                    xAccessor={({ item }) => item.x}
+                    formatLabel={ (value) => value}
+                    labelStyle={ { fontSize:30 , color:'black'} }
+                />
           </View>
           </ScrollView>
         </Home.Box>

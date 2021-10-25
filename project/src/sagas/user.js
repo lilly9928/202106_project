@@ -5,6 +5,18 @@ import Perference from '../Perference';
   const query = (params) => {
     return Object.keys(params) .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(params[k])) .join('&');
   }
+  
+  function ResetData(){
+    Perference.setData([]);
+    Perference.setDataTable([]);
+    Perference.setDataCountReal(0);
+    Perference.setDetailXData([]);
+    Perference.setDashboard([]);
+    Perference.setDashboardTotal('');
+    Perference.setDashboardToday('');
+    Perference.setDashboardTodayPredicted('');
+    Perference.setDashboardCountReal(0);
+  }
 
 function DetailAPI(userEmail,TodayConvert,periodType){
     let params = { "plantId_subId": userEmail, "timestamp": TodayConvert,"periodType":periodType };
@@ -13,10 +25,15 @@ function DetailAPI(userEmail,TodayConvert,periodType){
     fetch(url)
       .then(res => res.json())
       .then(res => {
+        Perference.setData([]);
+        Perference.setDataTable([]);
+        Perference.setDataCountReal(0);
+        Perference.setDetailXData([]);
         console.log('detailin');
-       Perference.setData(res.realPowerGraph.Y.concat(res.predictedPowerGraph.Y))
-       Perference.setDataTable(res.revenueFromPowerList)
-       Perference.setDataCountReal(res.realPowerGraph.Y)
+       Perference.setData(res.realPowerGraph.Y.concat(res.predictedPowerGraph.Y));
+       Perference.setDataTable(res.revenueFromPowerList);
+       Perference.setDataCountReal(res.realPowerGraph.Y);
+       Perference.setDetailXData(res.realPowerGraph.X.concat(res.predictedPowerGraph.X));
       })
 }
 
@@ -27,12 +44,17 @@ function DashboardAPI(userEmail,TodayConvert){
     fetch(url)
       .then(res => res.json())
       .then(res => {
+        Perference.setDashboard([]);
+        Perference.setDashboardTotal('');
+        Perference.setDashboardToday('');
+        Perference.setDashboardTodayPredicted('');
+        Perference.setDashboardCountReal(0);
         console.log('dashboardin');
-        Perference.setDashboard(res.realGraph.Y.concat(res.predictedGraph.Y))
-       Perference.setDashboardTotal(res.todayTotalRevenue)
-       Perference.setDashboardToday(res.todayRevenue)
-       Perference.setDashboardTodayPredicted(res.todayPredictedRevenue)
-       Perference.setDashboardCountReal(res.realGraph.Y)
+       Perference.setDashboard(res.realGraph.Y.concat(res.predictedGraph.Y));
+       Perference.setDashboardTotal(res.todayTotalRevenue);
+       Perference.setDashboardToday(res.todayRevenue);
+       Perference.setDashboardTodayPredicted(res.todayPredictedRevenue);
+       Perference.setDashboardCountReal(res.realGraph.Y);
       })
 }
 function ReportAPI(userEmail,TodayConvert){
@@ -43,15 +65,15 @@ function ReportAPI(userEmail,TodayConvert){
       .then(res => res.json())
       .then(res => {
         console.log('reportin');
-        Perference.setReportMonthPredicted(res.predictedRevenueThisMonth)
-        Perference.setReportMonthAverage(res.compareMonthAverage)
-        Perference.setReportLastYearOfMonth(res.compareLastYearOfMonth)
-        Perference.setReportData(res.accumulatedRevenueGraph.Real_Y.concat(res.accumulatedRevenueGraph.pred_Y))
-        Perference.setReportDataTable(res.cumulativeRevenueList)
-        Perference.setReportIndexUserInvestment(res.userInvestment)
-        Perference.setReportTotalRevenue(res.totalRevenue)
-        Perference.setReportActualRevenue(res.actualRevenue)
-        Perference.setMoney(res.userInvestment)
+        Perference.setReportMonthPredicted(res.predictedRevenueThisMonth);
+        Perference.setReportMonthAverage(res.compareMonthAverage);
+        Perference.setReportLastYearOfMonth(res.compareLastYearOfMonth);
+        Perference.setReportData(res.accumulatedRevenueGraph.Real_Y.concat(res.accumulatedRevenueGraph.pred_Y));
+        Perference.setReportDataTable(res.cumulativeRevenueList);
+        Perference.setReportIndexUserInvestment(res.userInvestment);
+        Perference.setReportTotalRevenue(res.totalRevenue);
+        Perference.setReportActualRevenue(res.actualRevenue);
+        Perference.setMoney(res.userInvestment);
       })
 }
 function* GetData(action) {

@@ -55,11 +55,7 @@ const Detail= () => {
      Perference.setData(res.realPowerGraph.Y.concat(res.predictedPowerGraph.Y))
      Perference.setDataTable(res.revenueFromPowerList)
      Perference.setDataCountReal(res.realPowerGraph.Y)
-    //  .catch(function(error) {
-    //   console.log('There has been a problem with your fetch operation: ' + error.message);
-    //    // ADD THIS THROW error
-    //     throw error;
-    //   }); 
+     Perference.setDetailXData(res.realPowerGraph.X.concat(res.predictedPowerGraph.X))
 })
 }
 const Report= () => {

@@ -43,7 +43,7 @@ export const Home = {
     BoxtitleSmall:styled.Text`
     font-size:20px;
     justify-content:flex-end;
-    color: #909090;
+    color: #ffffff;
     `,
     left:styled.View`
     align-items:flex-end;
@@ -69,7 +69,7 @@ export const Home = {
     `,
     middlesubText:styled.Text`
     font-size: 15px;
-    color: #909090;
+    color: #ffffff;
     padding-bottom: 5%;
     `,
     middleTextYellow:styled.Text`
@@ -206,7 +206,7 @@ export const Home = {
     width:100%;
     `,
     bordersubText:styled.Text`
-    color:#909090;
+    color:#ffffff;
     font-size:13px;
   `,
     borderText:styled.Text`
@@ -214,7 +214,7 @@ export const Home = {
     font-size:13px;
     `,
     dateText:styled.Text`
-    color:#909090;
+    color:#ffffff;
     font-size:13px;
     padding-left:3.5%;
     padding-top:4%;`,
@@ -235,7 +235,7 @@ export const Home = {
     `,
     middle_BoxsubtitleDate:styled.Text`
     font-size:20px;
-    color:#909090;
+    color:#ffffff;
     padding-top:1%;`,
     middleContainer:styled.View`
     flex: 1;
@@ -489,7 +489,7 @@ export const SettingIn ={
   padding-bottom: 5%;
   padding-top: 5%;
   padding-right:5%;
-  color:#909090;`,
+  color:#ffffff;`,
   btn:styled.TouchableOpacity`
   width: 100%;
   align-items: center;
@@ -507,7 +507,7 @@ export const SettingIn ={
   title:styled.Text`
   text-align:center;
   font-size:20px;
-  color:#909090;
+  color:#ffffff;
   margin-top:5%;
   margin-bottom:3%;
   padding-top:2%`,
