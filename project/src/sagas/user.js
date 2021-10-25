@@ -6,24 +6,6 @@ import Perference from '../Perference';
     return Object.keys(params) .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(params[k])) .join('&');
   }
 
-  function postData(url = '', data = {}) {
-    // Default options are marked with *
-      return fetch(url, {
-          method: 'POST', // *GET, POST, PUT, DELETE, etc.
-          mode: 'cors', // no-cors, cors, *same-origin
-          cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-          credentials: 'same-origin', // include, *same-origin, omit
-          headers: {
-              'Content-Type': 'application/json',
-              // 'Content-Type': 'application/x-www-form-urlencoded',
-          },
-          redirect: 'follow', // manual, *follow, error
-          referrer: 'no-referrer', // no-referrer, *client
-          body: JSON.stringify(data), // body data type must match "Content-Type" header
-      })
-      .then(response => response.json()); // parses JSON response into native JavaScript objects
-  }
-
 function DetailAPI(userEmail,TodayConvert,periodType){
     let params = { "plantId_subId": userEmail, "timestamp": TodayConvert,"periodType":periodType };
     let url = 'http://118.131.6.218:8000/detail?'+query(params);
@@ -37,12 +19,7 @@ function DetailAPI(userEmail,TodayConvert,periodType){
        Perference.setDataCountReal(res.realPowerGraph.Y)
       })
 }
-// function LoginAPI(userEmail,TodayConvert){
-//       postData('http://118.131.6.218:8000/login', {id: userEmail , passwd:userPassword})
-//     .then(res => {
-//             Perference.setUser(userEmail);
-//         })
-// }
+
 function DashboardAPI(userEmail,TodayConvert){
     let params = { "plantId_subId": userEmail, "timestamp": TodayConvert };
     let url = 'http://118.131.6.218:8000/dashboard?'+query(params);

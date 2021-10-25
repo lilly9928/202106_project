@@ -116,7 +116,7 @@ var object = {
                 if(index==0){
                     return number.split('T')[0]
                 }
-                else return number.toFixed(0);
+                else return number.toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         }));
         ReportDataTable = item
     },

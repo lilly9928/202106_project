@@ -533,7 +533,7 @@ export const Login ={
   marginLeft:4px;`,
   formArea:styled.View`
   justify-content: center;
-  padding-top: 20%;
+  padding-top: 5%;
   padding-left: 7%;
   padding-right: 7%;`,
   inputArea:styled.View`

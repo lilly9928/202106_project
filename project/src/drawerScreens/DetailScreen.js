@@ -255,7 +255,7 @@ function DetailScreen({ navigation }) {
       {show && (
         <DateTimePicker
           testID="dateTimePicker"
-          value={todaydate}
+          value={today}
           mode={mode}
           is24Hour={true}
           display="default"

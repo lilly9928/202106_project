@@ -6,6 +6,7 @@ import HomeScreen from './src/drawerScreens/HomeScreen';
 import SettingScreen from './src/drawerScreens/SettingScreen';
 import SettingScreen1 from './src/drawerScreens/SettingScreen1';
 import SettingScreen2 from './src/drawerScreens/SettingScreen2';
+import MemberScreen from './src/drawerScreens/MemberScreen';
 import ReportScreen from './src/drawerScreens/ReportScreen';
 import DetailScreen from './src/drawerScreens/DetailScreen';
 import Perference from './src/Perference';
@@ -41,8 +42,6 @@ const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
 
-
-import SelectDropdown from 'react-native-select-dropdown'
 
 const Auth = () => {
   return (
@@ -107,10 +106,6 @@ const AppWrapper = () => {
 }
 
 const App = ({ navigation }) => {
-  const dispatch = useDispatch();
-  const converttoday = Perference.getConvertToday();
-  const [refreshing, setRefreshing] = useState(false);
-
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="SplashScreen">
@@ -141,7 +136,7 @@ const App = ({ navigation }) => {
           headerTintColor: '#fff',}}
         />
 
-<Stack.Screen
+      <Stack.Screen
           name="시간대별 kW 당 발전 수익 설정"
           component={SettingScreen2}
           options={{
@@ -155,7 +150,20 @@ const App = ({ navigation }) => {
           },
           headerTintColor: '#fff',}}
         />
-
+     <Stack.Screen
+          name="유저 변경"
+          component={MemberScreen}
+          options={{
+            headerTitleStyle: {
+            fontSize:wp(4),
+            color:'#909090'
+          },
+          headerStyle: {
+            backgroundColor: '#2e2e33',
+            shadowColor:'transparent',
+          },
+          headerTintColor: '#fff',}}
+        />
 <Stack.Screen
           name="Login"
           component={LoginScreen}
@@ -169,7 +177,7 @@ const App = ({ navigation }) => {
         />
 
         <Stack.Screen name="이전" component={MainTabScreen}
-          options={{
+          options={({navigation})=>({
             headerLeft: () => {
               return null;
             },
@@ -179,31 +187,20 @@ const App = ({ navigation }) => {
                 style={styles.logo}
                 source={require('./src/Image/logo.png')}
                   />
-            <View style={{width:wp(28)}} />
-               <SelectDropdown
-                data={Perference.getUsers()}
-                onSelect={(selectedItem, index) => {
-                  dispatch(LoginRequestAction({userEmail:selectedItem,TodayConvert:converttoday}));
-                  console.log(selectedItem, converttoday)
-                //  reloadLines()
-
-                }}
-                buttonTextAfterSelection={(selectedItem, index) => {
-                  return selectedItem;
-                }}
-                defaultButtonText={Perference.getUser()}
-                buttonStyle={styles.dropdown1BtnStyle}
-                buttonTextStyle={styles.BtnTextStyle}
-                
-                 /> 
-             
                  </View>
             ),
+            headerRight: ()=>( 
+              <TouchableOpacity style={styles.dropdown1BtnStyle}
+              onPress={() =>navigation.navigate('유저 변경')}>
+               <Text style={styles.BtnTextStyle}>{Perference.getUser()}</Text>
+               </TouchableOpacity>
+               ),
             headerStyle: {
               backgroundColor: '#2e2e33',
               shadowColor:'transparent',
             },
-          }} />
+          })}
+   />
 
       </Stack.Navigator>
     </NavigationContainer>

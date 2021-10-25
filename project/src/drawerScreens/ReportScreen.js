@@ -132,7 +132,7 @@ function wait(timeout) {
             <Report.insideMiddleBoxWrap>
             <Report.insideMiddleBox>
               <Report.bordersubText>투자원금: </Report.bordersubText>
-              <Report.borderText>{Perference.getMoney()+'원'}</Report.borderText>
+              <Report.borderText>{Perference.getMoney().toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+'원'}</Report.borderText>
             </Report.insideMiddleBox>
             <Report.insideMiddleBox>
             <Report.bordersubText>실제 누적 수익: </Report.bordersubText>
