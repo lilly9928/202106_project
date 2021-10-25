@@ -77,11 +77,11 @@ function HomeScreen({ navigation }) {
           </Home.topBox>
          <Home.left>
           <Home.middleBox>
-            <Home.middleText>{Perference.getDashboardTotal()+'원'}</Home.middleText >
+            <Home.middleText>{Perference.getDashboardToday()+'원'}</Home.middleText >
             <Home.middlesubText>현재까지 수익</Home.middlesubText >
           </Home.middleBox>
           <Home.middleBox>
-          <Home.middleTextYellow>{Perference.getDashboardToday()+'원'}</Home.middleTextYellow>
+          <Home.middleTextYellow>{Perference.getDashboardTodayPredicted()+'원'}</Home.middleTextYellow>
             <Home.middlesubText>잔여시간 예측</Home.middlesubText>
           </Home.middleBox>
           </Home.left>
