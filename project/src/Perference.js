@@ -108,6 +108,7 @@ var object = {
     },
     setPredictData:function(item){
         const itemY = item.Y
+        console.log(item);
         const newData = item.X.map(
             (item, index) => ({
               real:0,

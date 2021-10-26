@@ -25,15 +25,11 @@ function DetailAPI(userEmail,TodayConvert,periodType){
     fetch(url)
       .then(res => res.json())
       .then(res => {
-        Perference.setData([]);
-        Perference.setDataTable([]);
-        Perference.setDataCountReal(0);
-        Perference.setDetailXData([]);
         console.log('detailin');
-       Perference.setData(res.realPowerGraph.Y.concat(res.predictedPowerGraph.Y));
-       Perference.setDataTable(res.revenueFromPowerList);
-       Perference.setDataCountReal(res.realPowerGraph.Y);
-       Perference.setDetailXData(res.realPowerGraph.X.concat(res.predictedPowerGraph.X));
+        Perference.setRealData(res.realPowerGraph)
+        Perference.setPredictData(res.predictedPowerGraph)
+        Perference.setDataTable(res.revenueFromPowerList)
+        Perference.setDataCountReal(res.realPowerGraph.Y)
       })
     
 }
@@ -45,11 +41,6 @@ function DashboardAPI(userEmail,TodayConvert){
     fetch(url)
       .then(res => res.json())
       .then(res => {
-        Perference.setDashboard([]);
-        Perference.setDashboardTotal('');
-        Perference.setDashboardToday('');
-        Perference.setDashboardTodayPredicted('');
-        Perference.setDashboardCountReal(0);
         console.log('dashboardin');
        Perference.setDashboard(res.realGraph.Y.concat(res.predictedGraph.Y));
        Perference.setDashboardTotal(res.todayTotalRevenue);

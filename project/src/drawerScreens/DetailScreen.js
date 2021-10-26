@@ -50,26 +50,21 @@ Number.prototype.zf = function (len) { return this.toString().zf(len); };
 
 
 function DetailScreen({ navigation }) {
-  const data = Perference.getDataResult();
-  const Xdata = Perference.getDetailXData();
-  const HeadTable= ['시간', '발전량', '수익', '누적수익'];
-  const today = Perference.getToday();
-  const converttoday = Perference.getConvertToday();
-  const DataTable=Perference.getDataTable();
+  const [HeadTable, setHeadTable]= useState(['시간', '발전량', '수익', '누적수익']);
   const [selectItem, setselectItem] = useState(null);
   const [selectValue, setselectValue] = useState(null);
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
+  const today = Perference.getToday();
   const [selectedDay, setselectedDay] = useState(today.format("yyyy년MM월dd일"));
-  const user = Perference.getUser();
-  const buttonkor =Perference.getDetailButton();
   const [refreshing, setRefreshing] = useState(false);
   const dispatch = useDispatch();
+  //label
   const day=['00시','01시','02시','03시','04시','05시','06시','07시','08시','09시','10시','11시','12시','13시','14시','15시','16시','17시','18시','19시','20시','21시','22시','23시'];
   const week=['월','화','수','목','금','토','일'];
 
   //그래프 데이터 디자인 
-  const newData = data.map(
+  const newData = Perference.getDataResult().map(
     (item, index) => ({
       real:{
         value:item.real,
@@ -78,10 +73,6 @@ function DetailScreen({ navigation }) {
             setselectItem(index);
             setselectValue((item.real).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + 'KWh');
           },
-          // onPressOut: () => {
-          //   setselectItem(index);
-          //   setselectValue((item.real+item.predict).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + 'KWh');
-          // },
           //날짜데이터 색상변경 
           fill: selectItem === index ? '#000000' :  '#385bff' 
         }
@@ -93,14 +84,10 @@ function DetailScreen({ navigation }) {
             setselectItem(index);
             setselectValue((item.predict).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + 'KWh');
           },
-          // onPressOut: () => {
-          //   setselectItem(index);
-          //   setselectValue((item.real+item.predict).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + 'KWh');
-          // },
           //날짜데이터 색상변경 
           fill: selectItem === index ? '#000000' :  '#ffb851' 
         }
-      }
+      },
     })
   );
 
@@ -116,7 +103,7 @@ const keys = ['real', 'predict']
     Perference.setDetailTodayConvert(currentDate);
     setselectedDay(currentDate.format("yyyy년MM월dd일"));
 
-    dispatch(dataRequestAction({userEmail:user,TodayConvert:converttoday,periodType:buttonkor }));
+    dispatch(dataRequestAction({userEmail:Perference.getUser(),TodayConvert:Perference.getConvertToday(),periodType:Perference.getDetailButton() }));
   };
 
 //달력 클릭 이벤트
@@ -136,7 +123,7 @@ const keys = ['real', 'predict']
     Perference.setDetailTodayConvert(today);
     setselectedDay(today.format("yyyy년MM월dd일"));  
 
-    dispatch(dataRequestAction({userEmail:user,TodayConvert:Perference.getDetailTodayConvert(),periodType:Perference.getDetailButton() }));
+    dispatch(dataRequestAction({userEmail:Perference.getUser(),TodayConvert:Perference.getDetailTodayConvert(),periodType:Perference.getDetailButton() }));
     reloadLines();
   };
   //이후 날짜 클릭 이벤트
@@ -146,30 +133,35 @@ const keys = ['real', 'predict']
     Perference.setDetailTodayConvert(today);
     setselectedDay(today.format("yyyy년MM월dd일"));  
 
-    dispatch(dataRequestAction({userEmail:user,TodayConvert:Perference.getDetailTodayConvert(),periodType:Perference.getDetailButton() }));
+    dispatch(dataRequestAction({userEmail:Perference.getUser(),TodayConvert:Perference.getDetailTodayConvert(),periodType:Perference.getDetailButton() }));
     reloadLines();
   };
 //일 주 월 년 버튼 클릭 이벤트
   const BtnClick = (num) =>{
     let btn; 
+    setHeadTable([]);
     switch(num){
       case 0:
         btn = 'day';
+        setHeadTable(['시간', '발전량', '수익', '누적수익']);
       break;
       case 1:
         btn = 'week';
+        setHeadTable(['일', '발전량', '수익', '누적수익']);
       break;
       case 2:
         btn = 'month';
+        setHeadTable(['일', '발전량', '수익', '누적수익']);
       break;
       case 3:
         btn = 'year';
+        setHeadTable(['월', '발전량', '수익', '누적수익']);
       break;
         
     }
     Perference.setDetailButton(btn);
 
-    dispatch(dataRequestAction({userEmail:user,TodayConvert:Perference.getDetailTodayConvert(),periodType:Perference.getDetailButton()}));
+    dispatch(dataRequestAction({userEmail:Perference.getUser(),TodayConvert:Perference.getDetailTodayConvert(),periodType:Perference.getDetailButton()}));
     reloadLines();
   }
 
@@ -188,6 +180,7 @@ const keys = ['real', 'predict']
       setTimeout(resolve, timeout)
     })
   }
+
   return (
     <Detail.container>
          <ScrollView
@@ -199,8 +192,8 @@ const keys = ['real', 'predict']
         <Detail.topDate>
         {/* <Detail.topBtn onPress={Back}>
           <Detail.topBtnText> &lt;</Detail.topBtnText>
-        </Detail.topBtn> */}
-        {/* <Detail.topBtn onPress={showDatepicker}> */}
+        </Detail.topBtn> 
+          <Detail.topBtn onPress={showDatepicker}> */}
         <Detail.topBtn>
           <Text style={{ color: "#ffffff",fontSize:wp(5),fontWeight:"bold" }}> {selectedDay} </Text>
         </Detail.topBtn>
@@ -233,39 +226,40 @@ const keys = ['real', 'predict']
         <Detail.Box>
         <View style = {{height: 200, flexDirection: 'row'}}>
         <YAxis
-          data = {data}
-          style = {{marginTop: 30}}
-          contentInset = {{ top: 10, bottom: 30 }}
+          data = {newData}
+          style = {{}}
+          contentInset = {{ top: 10, bottom: 10 }}
+          yAccessor={({ item }) => item.real.value+item.predict.value}
           svg = {{fontSize: 13, fill: '#909090' }}
           />
         <ScrollView horizontal={true}>
-          <View style={{ flex: 1, width:2000,height: 200 }}>
-            {/* <BarChart
-              style={{ flex: 1, marginTop: 30 }}
-              data={testdata}
-              yAccessor={({ item }) => item.y}
-              contentInset={{ top: 10, bottom: 10 }}
-              spacingInner={0.05}
-              spacingOuter={0.3}
-              gridMin={1}
-            > */}
+          <View style={{ flex: 1, width:1500,height: 500 }}>
              <StackedBarChart
-                style={{ flex: 1, marginTop: 30 }}
+                style={{ flex: 1}}
                 keys={keys}
                 colors={colors}
                 data={newData}
+                showGrid={true}
                 valueAccessor={({ item, key }) => item[key].value}
                 contentInset={{ top: 10, bottom: 10 }}
             />
+              <XAxis
+                    style={{ marginLeft: 10, height: 330 }}
+                    data={ newData }
+                    svg={{
+                      fill: "#000000",
+                      fontSize: 15,
+                      fontWeight: "bold",
+                  }}
+                    scale={scale.scaleTime}
+                    valueAccessor={({ item, key }) => item[key].value}
+                    formatLabel={(value, index) => Perference.getDetailButton()=='day'?day[index]:
+                                                   Perference.getDetailButton()=='week'?index:
+                                                   Perference.getDetailButton()=='month'?(index+1)+'일':
+                                                   index }
+                />
               <Grid direction={Grid.Direction.HORIZONTAL}/>
             {/* </BarChart> */}
-            <XAxis
-                    style={{}}
-                    data={ newData }
-                    scale={scale.scaleBand}
-                    formatLabel={(value, index) => value}
-                    labelStyle={ { fontSize:30 , color:'black'} }
-                />
           </View>
           </ScrollView>
           </View>
@@ -298,7 +292,7 @@ const keys = ['real', 'predict']
       <Detail.tailContainer>
         <Table borderStyle={{borderWidth: 0}}>
           <Row data={HeadTable} style={styles.HeadStyle} textStyle={styles.TableTitleText}/>
-          <Rows data={DataTable} textStyle={styles.TableText}/>
+          <Rows data={Perference.getDataTable()} textStyle={styles.TableText}/>
         </Table>
       </Detail.tailContainer>
       {show && (
