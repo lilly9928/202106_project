@@ -12,6 +12,8 @@ import Perference from '../Perference';
 import {Report} from '../styles/styles'
 import { RefreshControl } from 'react-native-web-refresh-control'
 
+import * as scale from 'd3-scale'
+
 import {
   StyleSheet,
   View,
@@ -152,18 +154,17 @@ function wait(timeout) {
           </Report.middle_topBox>
       <Report.middleContainer>
         <Report.Box>
-        <View style = {{flexDirection: 'row'}}>
         <YAxis
-          data = {data}
+          data = {Perference.getReportData()}
           style = {{ }}
-          contentInset={{top: 10, bottom: -25 }}
+          contentInset={{top: 10, bottom: 10 }}
           svg = {{fontSize: 13, fill: '#909090' }}
           />
           <ScrollView horizontal={true}>
-          <View style={{flex:1, width:1000,height: 200 }}>
+          <View style={{ width:1200,height: 250 }}>
           <LineChart
-                style={{ height: 200 }}
-                data={ data }
+                style={{ flex: 1 }}
+                data={ Perference.getReportData() }
                 contentInset={{ top: 10, bottom: 10 }}
                 svg={{
                     stroke: '#385bff',
@@ -177,9 +178,23 @@ function wait(timeout) {
                 <DashedLine/>
                 <Grid direction={Grid.Direction.HORIZONTAL}/>
             </LineChart>
+            <XAxis
+                    style={{}}
+                    data={ Perference.getReportData()}
+                    svg={{
+                      fill: "#000000",
+                      fontSize: 15,
+                      fontWeight: "bold",
+                    }}
+                    scale={scale.scaleBand}
+                    formatLabel={ (value,index) => index==0?1+'월'
+                                                    :
+                                                    (index+1)%12==0?12+'월'
+                                                    :
+                                                    (index+1)%12+'월'}
+                />
           </View>
           </ScrollView>
-          </View>
         </Report.Box>
       </Report.middleContainer>
       <Report.bottomContainer>

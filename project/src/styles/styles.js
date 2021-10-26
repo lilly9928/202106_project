@@ -235,14 +235,16 @@ export const Home = {
     `,
     middle_BoxsubtitleDate:styled.Text`
     font-size:20px;
-    color:#ffffff;
+    color:#292929;
     padding-top:1%;`,
     middleContainer:styled.View`
     flex: 1;
-    padding: 1%;
     background-color:#f5f5f5;
-    margin-bottom:10%;`,
-    Box:styled.View``,
+    padding: 1%;`,
+    Box:styled.View`
+    height: 100%;
+    border:0;
+    flex-direction: row;`,
     bottomContainer:styled.View`
     flex: 0.5;
     `,
@@ -339,7 +341,10 @@ export const Home = {
     padding-bottom: 3%;
     padding-top:2%;
     font-weight:bold;`,
-    Box:styled.View``,
+    Box:styled.View`
+    height: 50%;
+    border:0;
+    flex-direction: row;`,
     bottomContainer:styled.View`
     flex: 0.5;
     padding-left: 3%;
@@ -489,7 +494,7 @@ export const SettingIn ={
   padding-bottom: 5%;
   padding-top: 5%;
   padding-right:5%;
-  color:#ffffff;`,
+  color:#292929;`,
   btn:styled.TouchableOpacity`
   width: 100%;
   align-items: center;
@@ -507,7 +512,7 @@ export const SettingIn ={
   title:styled.Text`
   text-align:center;
   font-size:20px;
-  color:#ffffff;
+  color:#292929;
   margin-top:5%;
   margin-bottom:3%;
   padding-top:2%`,

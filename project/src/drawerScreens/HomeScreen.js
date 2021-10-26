@@ -21,14 +21,13 @@ function HomeScreen({ navigation }) {
   const [selectValue, setselectValue] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
 
-  const data = Perference.getDashboard();
   const date = Perference.getToday();
   const today = new Date();
   const dataDate = today.getHours()+':'+today.getMinutes()+'기준';
   const dataDay = date.getMonth()+1+'월'+date.getDate()+'일';
 
 //그래프 데이터 디자인 
-  const newData = data.map(
+  const newData = Perference.getDashboard().map(
     (item, index) => ({
       x:index+'시',
       y: item,
@@ -45,6 +44,8 @@ function HomeScreen({ navigation }) {
       }
     })
   );
+
+
 
 //새로고침 
   React.useEffect(() => {
@@ -96,7 +97,7 @@ function HomeScreen({ navigation }) {
       <Home.middleContainer>
         <Home.Box>
         <YAxis
-          data = {data}
+          data = {Perference.getDashboard()}
           style = {{}}
           contentInset = {{ top: 10, bottom: 10 }}
           svg = {{fontSize: 13, fill: '#909090' }}
@@ -118,10 +119,14 @@ function HomeScreen({ navigation }) {
             <XAxis
                     style={{}}
                     data={ newData }
+                    svg={{
+                      fill: "#000000",
+                      fontSize: 15,
+                      fontWeight: "bold",
+                    }}
                     scale={scale.scaleBand}
                     xAccessor={({ item }) => item.x}
                     formatLabel={ (value) => value}
-                    labelStyle={ { fontSize:30 , color:'black'} }
                 />
           </View>
           </ScrollView>

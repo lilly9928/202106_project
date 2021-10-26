@@ -224,7 +224,7 @@ const keys = ['real', 'predict']
             <Detail.Boxsubtitle>{selectValue}</Detail.Boxsubtitle>
           </Detail.middleBox>
         <Detail.Box>
-        <View style = {{height: 200, flexDirection: 'row'}}>
+        {/* <View style = {{height: 200, flexDirection: 'row'}}> */}
         <YAxis
           data = {newData}
           style = {{}}
@@ -233,7 +233,7 @@ const keys = ['real', 'predict']
           svg = {{fontSize: 13, fill: '#909090' }}
           />
         <ScrollView horizontal={true}>
-          <View style={{ flex: 1, width:1500,height: 500 }}>
+          <View style={{  width:1200,height: 250 }}>
              <StackedBarChart
                 style={{ flex: 1}}
                 keys={keys}
@@ -242,16 +242,19 @@ const keys = ['real', 'predict']
                 showGrid={true}
                 valueAccessor={({ item, key }) => item[key].value}
                 contentInset={{ top: 10, bottom: 10 }}
+                spacingInner={0.03}
+                spacingOuter={0.3}
+                gridMin={1}
             />
               <XAxis
-                    style={{ marginLeft: 10, height: 330 }}
+                    style={{}}
                     data={ newData }
                     svg={{
                       fill: "#000000",
                       fontSize: 15,
                       fontWeight: "bold",
                   }}
-                    scale={scale.scaleTime}
+                    scale={scale.scaleBand}
                     valueAccessor={({ item, key }) => item[key].value}
                     formatLabel={(value, index) => Perference.getDetailButton()=='day'?day[index]:
                                                    Perference.getDetailButton()=='week'?index:
@@ -262,7 +265,7 @@ const keys = ['real', 'predict']
             {/* </BarChart> */}
           </View>
           </ScrollView>
-          </View>
+          {/* </View> */}
         </Detail.Box>
         <Detail.bottomContainer>
         <Detail.bottomBox>

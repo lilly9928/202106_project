@@ -9,10 +9,7 @@ import Perference from '../Perference';
 
 import { RefreshControl } from 'react-native-web-refresh-control'
 import {
-  StyleSheet,
-  View,
   Text,
-  SafeAreaView,
   TouchableOpacity
 } from 'react-native';
 
@@ -20,13 +17,29 @@ import {Setting} from '../styles/styles'
 
 
 function SettingScreen({ navigation }) {
+  const [refreshing, setRefreshing] = useState(false);
+
+  const reloadLines = React.useCallback(() => {
+    setRefreshing(true)
+
+    wait(2000).then(() => {
+      setRefreshing(false)
+      
+    })
+  }, [])
+
+  function wait(timeout) {
+    return new Promise(resolve => {
+      setTimeout(resolve, timeout)
+    })
+  }
   return (
+    
     <Setting.container>
       <Setting.roundHead/>
         <Setting.topInfo>
           <TouchableOpacity
                   activeOpacity={0.5}
-                  onPress={() => navigation.navigate('태양광 설치 투자 금액')}
                 >
             <Setting.topInfoText>안녕하세요.{Perference.getUser()}님</Setting.topInfoText>
             </TouchableOpacity>
@@ -54,7 +67,9 @@ function SettingScreen({ navigation }) {
         </Setting.btnWrap>
         <Setting.btn
             activeOpacity={0.5}
-            onPress={() => navigation.navigate('Login')}
+            onPress={() => {
+              Perference.setUser('');
+              navigation.navigate('Login')}}
           >
                   <Setting.bottomText>
                     <Text>로그아웃</Text>
