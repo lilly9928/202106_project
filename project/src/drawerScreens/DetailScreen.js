@@ -52,9 +52,11 @@ Number.prototype.zf = function (len) { return this.toString().zf(len); };
 function DetailScreen({ navigation }) {
   const [HeadTable, setHeadTable] = useState(['시간', '발전량', '수익', '누적수익']);
 
+
+  const [selectItem, setselectItem] = useState(null);
+  const [selectValue, setselectValue] = useState(null);
+
   //달력 state
-  // const [selectItem, setselectItem] = useState(null);
-  // const [selectValue, setselectValue] = useState(null);
   // const [mode, setMode] = useState('date');
   // const [show, setShow] = useState(false);
 
@@ -75,32 +77,32 @@ function DetailScreen({ navigation }) {
   const keys = ['real', 'predict']
 
   //그래프 데이터 디자인 
-  // const newData = Perference.getDataResult().map(
-  //   (item, index) => ({
-  //     real:{
-  //       value:item.real,
-  //       svg: {
-  //         onPress: () => {
-  //           setselectItem(index);
-  //           setselectValue((item.real).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + 'KWh');
-  //         },
-  //         //날짜데이터 색상변경 
-  //         fill: selectItem === index ? '#000000' :  '#385bff' 
-  //       }
-  //     },
-  //     predict:{
-  //       value:item.predict,
-  //       svg: {
-  //         onPress: () => {
-  //           setselectItem(index);
-  //           setselectValue((item.predict).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + 'KWh');
-  //         },
-  //         //날짜데이터 색상변경 
-  //         fill: selectItem === index ? '#000000' :  '#ffb851' 
-  //       }
-  //     },
-  //   })
-  // );
+  const newData = Perference.getDataResult().map(
+    (item, index) => ({
+      real:{
+        value:item.real,
+        svg: {
+          onPress: () => {
+            setselectItem(index);
+            setselectValue((item.real).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + 'KWh');
+          },
+          //날짜데이터 색상변경 
+          fill: selectItem === index ? '#000000' :  '#385bff' 
+        }
+      },
+      predict:{
+        value:item.predict,
+        svg: {
+          onPress: () => {
+            setselectItem(index);
+            setselectValue((item.predict).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + 'KWh');
+          },
+          //날짜데이터 색상변경 
+          fill: selectItem === index ? '#000000' :  '#ffb851' 
+        }
+      },
+    })
+  );
 
   //달력 클릭 이벤트
   // const onChange = (event, selectedDate) => {
