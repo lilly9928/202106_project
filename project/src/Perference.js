@@ -3,7 +3,7 @@ let Users = [];
 //날짜 데이터 
 const Time = new Date();
 
-let Today = new Date(2020,5,20,Time.getHours(),Time.getMinutes());
+let Today = new Date(2020,5,20,Time.getHours()+9,Time.getMinutes());
 
 //대시보드 데이터 
 var DashboardData = [];
@@ -24,8 +24,11 @@ var ReportActualRevenue='';
 var ReportIndexUserInvestment=0;
 
 //디테일 데이터 
-var Data=[];
+var DataResult=[];
+var RealData=[];
+var PredictData=[];
 var DataTable=[];
+
 var CountReal=0;
 var User
 var DetailDate=Today;
@@ -60,11 +63,61 @@ var object = {
     },
 
     //상세데이터
-    getData:function(){
-        return Data
+    getDataResult:function(){
+        const PredictDataTime = PredictData[0].time;
+        var check=0;
+        for(var i = 0;i<RealData.length;i++){
+           if( RealData[i].time==PredictDataTime){
+            check=1;
+           }
+        }
+        const newRealData = RealData.map(
+            (item, index) => ({
+              real: item.real,
+              predict:PredictDataTime==item.time?PredictData[0].predict:0,
+              time: item.time,
+            })
+          );
+        if(check==0){
+            DataResult = newRealData.concat(PredictData);
+           return DataResult
+        }else if(check==1){
+            const newPredictData = PredictData.filter(value=>value.time!==PredictDataTime)
+            DataResult = newRealData.concat(newPredictData);
+            return DataResult
+        }
     },
-    setData:function(item){
-        Data = item
+    getRealData:function(){
+        return RealData
+    },
+    setRealData:function(item){
+        const itemY = item.Y
+        const newData = item.X.map(
+            (item, index) => ({
+              predict:0,
+              real:itemY[index],
+              time: item,
+            
+            })
+          );
+          console.log(newData)
+        RealData = newData
+    },
+    getPredictData:function(){
+        return PredictData
+    },
+    setPredictData:function(item){
+        const itemY = item.Y
+        const newData = item.X.map(
+            (item, index) => ({
+              real:0,
+              predict:itemY[index],
+              time: item,
+            
+            })
+          );
+          console.log(newData)
+        PredictData = newData
     },
     getDataTable:function(){
         return DataTable

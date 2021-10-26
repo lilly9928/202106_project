@@ -35,6 +35,7 @@ function DetailAPI(userEmail,TodayConvert,periodType){
        Perference.setDataCountReal(res.realPowerGraph.Y);
        Perference.setDetailXData(res.realPowerGraph.X.concat(res.predictedPowerGraph.X));
       })
+    
 }
 
 function DashboardAPI(userEmail,TodayConvert){

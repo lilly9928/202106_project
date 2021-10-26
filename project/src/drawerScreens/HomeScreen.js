@@ -23,7 +23,8 @@ function HomeScreen({ navigation }) {
 
   const data = Perference.getDashboard();
   const date = Perference.getToday();
-  const dataDate = date.getHours()+':'+date.getMinutes()+'기준';
+  const today = new Date();
+  const dataDate = today.getHours()+':'+today.getMinutes()+'기준';
   const dataDay = date.getMonth()+1+'월'+date.getDate()+'일';
 
 //그래프 데이터 디자인 

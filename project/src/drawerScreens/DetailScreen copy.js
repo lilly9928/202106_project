@@ -5,7 +5,7 @@ import {
 
 import 'react-native-gesture-handler';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { BarChart, Grid,XAxis,YAxis ,StackedBarChart} from 'react-native-svg-charts'
+import { BarChart, Grid,XAxis,YAxis } from 'react-native-svg-charts'
 import { Table, Row, Rows } from 'react-native-table-component';
 import Perference from '../Perference';
 import { RefreshControl } from 'react-native-web-refresh-control'
@@ -50,7 +50,7 @@ Number.prototype.zf = function (len) { return this.toString().zf(len); };
 
 
 function DetailScreen({ navigation }) {
-  const data = Perference.getDataResult();
+  const data = Perference.getData();
   const Xdata = Perference.getDetailXData();
   const HeadTable= ['시간', '발전량', '수익', '누적수익'];
   const today = Perference.getToday();
@@ -71,42 +71,21 @@ function DetailScreen({ navigation }) {
   //그래프 데이터 디자인 
   const newData = data.map(
     (item, index) => ({
-      real:{
-        value:item.real,
-        svg: {
-          onPress: () => {
-            setselectItem(index);
-            setselectValue((item.real).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + 'KWh');
-          },
-          // onPressOut: () => {
-          //   setselectItem(index);
-          //   setselectValue((item.real+item.predict).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + 'KWh');
-          // },
-          //날짜데이터 색상변경 
-          fill: selectItem === index ? '#000000' :  '#385bff' 
-        }
-      },
-      predict:{
-        value:item.predict,
-        svg: {
-          onPress: () => {
-            setselectItem(index);
-            setselectValue((item.predict).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + 'KWh');
-          },
-          // onPressOut: () => {
-          //   setselectItem(index);
-          //   setselectValue((item.real+item.predict).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + 'KWh');
-          // },
-          //날짜데이터 색상변경 
-          fill: selectItem === index ? '#000000' :  '#ffb851' 
-        }
+      y: parseInt(item),
+      svg: {
+        onPressIn: () => {
+          setselectItem(index);
+          setselectValue(item.toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + 'KWh');
+        },
+        onPressOut: () => {
+          setselectItem(index);
+          setselectValue(item.toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + 'KWh');
+        },
+        //날짜데이터 색상변경 
+        fill: selectItem === index ? '#000000' : Perference.getDataCountReal()-1 < index ? '#ffb851' : '#385bff',
       }
     })
   );
-
-const colors = ['#385bff', '#ffb851']
-const keys = ['real', 'predict']
-
 
   //달력 클릭 이벤트
   const onChange = (event, selectedDate) => {
@@ -240,30 +219,22 @@ const keys = ['real', 'predict']
           />
         <ScrollView horizontal={true}>
           <View style={{ flex: 1, width:2000,height: 200 }}>
-            {/* <BarChart
+            <BarChart
               style={{ flex: 1, marginTop: 30 }}
-              data={testdata}
+              data={newData}
               yAccessor={({ item }) => item.y}
               contentInset={{ top: 10, bottom: 10 }}
               spacingInner={0.05}
               spacingOuter={0.3}
               gridMin={1}
-            > */}
-             <StackedBarChart
-                style={{ flex: 1, marginTop: 30 }}
-                keys={keys}
-                colors={colors}
-                data={newData}
-                valueAccessor={({ item, key }) => item[key].value}
-                contentInset={{ top: 10, bottom: 10 }}
-            />
+            >
               <Grid direction={Grid.Direction.HORIZONTAL}/>
-            {/* </BarChart> */}
+            </BarChart>
             <XAxis
                     style={{}}
                     data={ newData }
                     scale={scale.scaleBand}
-                    formatLabel={(value, index) => value}
+                    formatLabel={(value, index) => Xdata[index]}
                     labelStyle={ { fontSize:30 , color:'black'} }
                 />
           </View>

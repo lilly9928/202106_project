@@ -52,10 +52,12 @@ const Detail= () => {
   fetch(url)
     .then(res => res.json())
     .then(res => {
-     Perference.setData(res.realPowerGraph.Y.concat(res.predictedPowerGraph.Y))
+     //Perference.setData(res.realPowerGraph.Y.concat(res.predictedPowerGraph.Y))
+     Perference.setRealData(res.realPowerGraph)
+     Perference.setPredictData(res.predictedPowerGraph)
      Perference.setDataTable(res.revenueFromPowerList)
      Perference.setDataCountReal(res.realPowerGraph.Y)
-     Perference.setDetailXData(res.realPowerGraph.X.concat(res.predictedPowerGraph.X))
+     //Perference.setDetailXData(res.realPowerGraph.X.concat(res.predictedPowerGraph.X))
 })
 }
 const Report= () => {
