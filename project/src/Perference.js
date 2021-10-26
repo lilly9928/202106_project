@@ -124,7 +124,7 @@ var object = {
         return DataTable
     },
     setDataTable: function (item) {
-        item = item.map(value => value.map(number => number.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")));
+        item = item.map(value => value.map((number,index) => index==1?number.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","):number.toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")));
         DataTable = item
     },
     getDataCountReal: function () {
