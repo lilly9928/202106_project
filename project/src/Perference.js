@@ -3,269 +3,269 @@ let Users = [];
 //날짜 데이터 
 const Time = new Date();
 
-let Today = new Date(2020,5,20,Time.getHours()+9,Time.getMinutes());
+let Today = new Date(2020, 5, 20, Time.getHours() + 9, Time.getMinutes());
 
 //대시보드 데이터 
 var DashboardData = [];
-var DashboardTotal='';
-var DashboardToday='';
-var DashboardTodayPredicted='';
-var DashboardCountReal=0;
+var DashboardTotal = '';
+var DashboardToday = '';
+var DashboardTodayPredicted = '';
+var DashboardCountReal = 0;
 
 //리포트 데이터 
-var ReportData=[];
-var ReportDataTable=[];
-var ReportMonthPredicted='';
-var ReportMonthAverage='';
-var ReportLastYearOfMonth='';
-var ReportTotalRevenue='';
-var ReportUserInvestment='';
-var ReportActualRevenue='';
-var ReportIndexUserInvestment=0;
+var ReportData = [];
+var ReportDataTable = [];
+var ReportMonthPredicted = '';
+var ReportMonthAverage = '';
+var ReportLastYearOfMonth = '';
+var ReportTotalRevenue = '';
+var ReportUserInvestment = '';
+var ReportActualRevenue = '';
+var ReportIndexUserInvestment = 0;
 
 //디테일 데이터 
-var DataResult=[];
-var RealData=[];
-var PredictData=[];
-var DataTable=[];
+var DataResult = [];
+var RealData = [];
+var PredictData = [];
+var DataTable = [];
 
-var CountReal=0;
+var CountReal = 0;
 var User
-var DetailDate=Today;
+var DetailDate = Today;
 var DetailButton = 'day';
-var DetailXData=[];
-var DetailTodayConvert=DetailDate.toISOString().split('.')[0];
-DetailTodayConvert= DetailTodayConvert.split('T')[0]+' '+DetailTodayConvert.split('T')[1]
+var DetailXData = [];
+var DetailTodayConvert = DetailDate.toISOString().split('.')[0];
+DetailTodayConvert = DetailTodayConvert.split('T')[0] + ' ' + DetailTodayConvert.split('T')[1]
 
 //서버 날짜 값 수정
-let TodayConvert=Today.toISOString().split('.')[0];
-TodayConvert= TodayConvert.split('T')[0]+' '+TodayConvert.split('T')[1]
+let TodayConvert = Today.toISOString().split('.')[0];
+TodayConvert = TodayConvert.split('T')[0] + ' ' + TodayConvert.split('T')[1]
 
 var object = {
 
-    getToday:function(){
+    getToday: function () {
         return Today
     },
-    getConvertToday:function(){
+    getConvertToday: function () {
         return TodayConvert
     },
-    getUser:function(){
+    getUser: function () {
         return User
     },
-    setUser:function(item){
+    setUser: function (item) {
         User = item
     },
-    getUsers:function(){
+    getUsers: function () {
         return Users
     },
-    setUsers:function(item){
+    setUsers: function (item) {
         Users = item
     },
 
     //상세데이터
-    getDataResult:function(){
+    getDataResult: function () {
         const PredictDataTime = PredictData[0].time;
-        var check=0;
-        for(var i = 0;i<RealData.length;i++){
-           if( RealData[i].time==PredictDataTime){
-            check=1;
-           }
+        var check = 0;
+        for (var i = 0; i < RealData.length; i++) {
+            if (RealData[i].time == PredictDataTime) {
+                check = 1;
+            }
         }
         const newRealData = RealData.map(
             (item, index) => ({
-              real: item.real,
-              predict:PredictDataTime==item.time?PredictData[0].predict:0,
-              time: item.time,
+                real: item.real,
+                predict: PredictDataTime == item.time ? PredictData[0].predict : 0,
+                time: item.time,
             })
-          );
-        if(check==0){
+        );
+        if (check == 0) {
             DataResult = newRealData.concat(PredictData);
-           return DataResult
-        }else if(check==1){
-            const newPredictData = PredictData.filter(value=>value.time!==PredictDataTime)
+            return DataResult
+        } else if (check == 1) {
+            const newPredictData = PredictData.filter(value => value.time !== PredictDataTime)
             DataResult = newRealData.concat(newPredictData);
             return DataResult
         }
     },
-    getRealData:function(){
+    getRealData: function () {
         return RealData
     },
-    setRealData:function(item){
+    setRealData: function (item) {
         const itemY = item.Y
         const newData = item.X.map(
             (item, index) => ({
-              predict:0,
-              real:itemY[index],
-              time: item,
-            
+                predict: 0,
+                real: itemY[index],
+                time: item,
+
             })
-          );
-          console.log(newData)
+        );
+        console.log(newData)
         RealData = newData
     },
-    getPredictData:function(){
+    getPredictData: function () {
         return PredictData
     },
-    setPredictData:function(item){
+    setPredictData: function (item) {
         const itemY = item.Y
         console.log(item);
         const newData = item.X.map(
             (item, index) => ({
-              real:0,
-              predict:itemY[index],
-              time: item,
-            
+                real: 0,
+                predict: itemY[index],
+                time: item,
+
             })
-          );
-          console.log(newData)
+        );
+        console.log(newData)
         PredictData = newData
     },
-    getDataTable:function(){
+    getDataTable: function () {
         return DataTable
     },
-    setDataTable:function(item){
-        item= item.map(value => value.map(number => number.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")));
+    setDataTable: function (item) {
+        item = item.map(value => value.map(number => number.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")));
         DataTable = item
     },
-    getDataCountReal:function(){
+    getDataCountReal: function () {
         return CountReal
     },
-    setDataCountReal:function(item){
+    setDataCountReal: function (item) {
         CountReal = item.length
     },
-    getDetailTodayConvert:function(){
+    getDetailTodayConvert: function () {
         return DetailTodayConvert
     },
-    setDetailTodayConvert:function(item){
-        var convertItem=item.toISOString().split('.')[0];
-        convertItem= convertItem.split('T')[0]+' '+convertItem.split('T')[1]
+    setDetailTodayConvert: function (item) {
+        var convertItem = item.toISOString().split('.')[0];
+        convertItem = convertItem.split('T')[0] + ' ' + convertItem.split('T')[1]
         DetailTodayConvert = convertItem
     },
-    getDetailDate:function(){
+    getDetailDate: function () {
         return DetailDate
     },
-    setDetailDate:function(item){
+    setDetailDate: function (item) {
         DetailDate = item
     },
-    getDetailButton:function(){
+    getDetailButton: function () {
         return DetailButton
     },
-    setDetailButton:function(item){
+    setDetailButton: function (item) {
         DetailButton = item
     },
-    getDetailXData:function(){
+    getDetailXData: function () {
         return DetailXData
     },
-    setDetailXData:function(item){
+    setDetailXData: function (item) {
         console.log(item);
-        var convert =item.map(value => value.split('T')[0].split('-')[2]+'일'+value.split('T')[1].split(':')[0]+'시');
+        var convert = item.map(value => value.split('T')[0].split('-')[2] + '일' + value.split('T')[1].split(':')[0] + '시');
         console.log(convert);
         DetailXData = convert
     },
 
     //리포트데이터
-    getReportData:function(){
+    getReportData: function () {
         return ReportData
     },
-    setReportData:function(item){
+    setReportData: function (item) {
         ReportData = item
-    },    
-    getReportDataTable:function(){
+    },
+    getReportDataTable: function () {
         return ReportDataTable
     },
-    setReportDataTable:function(item){
-        item= item.map(value => value.map(
-            (number,index) =>{
-                if(index==0){
+    setReportDataTable: function (item) {
+        item = item.map(value => value.map(
+            (number, index) => {
+                if (index == 0) {
                     return number.split('T')[0]
                 }
                 else return number.toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        }));
+            }));
         ReportDataTable = item
     },
-    getReportMonthPredicted:function(){
+    getReportMonthPredicted: function () {
         return ReportMonthPredicted
     },
-    setReportMonthPredicted:function(item){
+    setReportMonthPredicted: function (item) {
         ReportMonthPredicted = item.toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
     },
-    getReportMonthAverage:function(){
+    getReportMonthAverage: function () {
         return ReportMonthAverage
     },
-    setReportMonthAverage:function(item){
+    setReportMonthAverage: function (item) {
         ReportMonthAverage = item.toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-    }, 
-    getReportLastYearOfMonth:function(){
+    },
+    getReportLastYearOfMonth: function () {
         return ReportLastYearOfMonth
     },
-    setReportLastYearOfMonth:function(item){
+    setReportLastYearOfMonth: function (item) {
         ReportLastYearOfMonth = item.toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
     },
-    getReportTotalRevenue:function(){
+    getReportTotalRevenue: function () {
         return ReportTotalRevenue
     },
-    setReportTotalRevenue:function(item){
+    setReportTotalRevenue: function (item) {
         ReportTotalRevenue = item.toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
     },
-    getReportActualRevenue:function(){
+    getReportActualRevenue: function () {
         return ReportActualRevenue
     },
-    setReportActualRevenue:function(item){
-        item= item.map(number => number.toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+    setReportActualRevenue: function (item) {
+        item = item.map(number => number.toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
         ReportActualRevenue = item
     },
-    getMoney:function(){
+    getMoney: function () {
         return ReportUserInvestment
     },
-    setMoney:function(item){
+    setMoney: function (item) {
         ReportUserInvestment = item
     },
     //손익분기점계산
-    setReportIndexUserInvestment:function(item){
-        let index=0;
-        for(let i= 0;i<ReportData.length;i++){
-                if(item-ReportData[i]<0){
-                    if(index==0){
-                        index = i;
-                    }
+    setReportIndexUserInvestment: function (item) {
+        let index = 0;
+        for (let i = 0; i < ReportData.length; i++) {
+            if (item - ReportData[i] < 0) {
+                if (index == 0) {
+                    index = i;
                 }
+            }
         }
         return ReportIndexUserInvestment = index
     },
-    getReportIndexUserInvestment:function() {
+    getReportIndexUserInvestment: function () {
         return ReportIndexUserInvestment
     },
 
     //대시보드데이터
-    getDashboard:function(){
+    getDashboard: function () {
         return DashboardData
     },
-    setDashboard:function(item){
+    setDashboard: function (item) {
         DashboardData = item
     },
-    getDashboardTotal:function(){
+    getDashboardTotal: function () {
         return DashboardTotal
     },
-    setDashboardTotal:function(item){
+    setDashboardTotal: function (item) {
         DashboardTotal = item.toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
     },
-    getDashboardToday:function(){
+    getDashboardToday: function () {
         return DashboardToday
     },
-    setDashboardToday:function(item){
+    setDashboardToday: function (item) {
         DashboardToday = item.toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
     },
-    getDashboardTodayPredicted:function(){
+    getDashboardTodayPredicted: function () {
         return DashboardTodayPredicted
     },
-    setDashboardTodayPredicted:function(item){
+    setDashboardTodayPredicted: function (item) {
         DashboardTodayPredicted = item.toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
     },
-    getDashboardCountReal:function(){
+    getDashboardCountReal: function () {
         return DashboardCountReal
     },
-    setDashboardCountReal:function(item){
+    setDashboardCountReal: function (item) {
         DashboardCountReal = item.length
     },
 }
-module.exports=object
+module.exports = object

@@ -1,12 +1,12 @@
-import { call,all, fork, takeLatest,delay, put} from "redux-saga/effects";
-import {GET_REQUEST,GET_SUCCESS, GET_FAILURE,GET_LOGINREQUEST,GET_LOGINSUCCESS, GET_LOGINFAILURE} from '../reducers/user';
+import { call, all, fork, takeLatest, delay, put } from "redux-saga/effects";
+import { GET_REQUEST, GET_SUCCESS, GET_FAILURE, GET_LOGINREQUEST, GET_LOGINSUCCESS, GET_LOGINFAILURE } from '../reducers/user';
 import Perference from '../Perference';
 
-  const query = (params) => {
-    return Object.keys(params) .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(params[k])) .join('&');
-  }
-  
-  function ResetData(){
+const query = (params) => {
+    return Object.keys(params).map(k => encodeURIComponent(k) + '=' + encodeURIComponent(params[k])).join('&');
+}
+
+function ResetData() {
     Perference.setData([]);
     Perference.setDataTable([]);
     Perference.setDataCountReal(0);
@@ -16,62 +16,62 @@ import Perference from '../Perference';
     Perference.setDashboardToday('');
     Perference.setDashboardTodayPredicted('');
     Perference.setDashboardCountReal(0);
-  }
-
-function DetailAPI(userEmail,TodayConvert,periodType){
-    let params = { "plantId_subId": userEmail, "timestamp": TodayConvert,"periodType":periodType };
-    let url = 'http://118.131.6.218:8000/detail?'+query(params);
-     console.log(url);
-    fetch(url)
-      .then(res => res.json())
-      .then(res => {
-        console.log('detailin');
-        Perference.setRealData(res.realPowerGraph)
-        Perference.setPredictData(res.predictedPowerGraph)
-        Perference.setDataTable(res.revenueFromPowerList)
-        Perference.setDataCountReal(res.realPowerGraph.Y)
-      })
-    
 }
 
-function DashboardAPI(userEmail,TodayConvert){
-    let params = { "plantId_subId": userEmail, "timestamp": TodayConvert };
-    let url = 'http://118.131.6.218:8000/dashboard?'+query(params);
-     console.log(url);
+function DetailAPI(userEmail, TodayConvert, periodType) {
+    let params = { "plantId_subId": userEmail, "timestamp": TodayConvert, "periodType": periodType };
+    let url = 'http://118.131.6.218:8000/detail?' + query(params);
+    console.log(url);
     fetch(url)
-      .then(res => res.json())
-      .then(res => {
-        console.log('dashboardin');
-       Perference.setDashboard(res.realGraph.Y.concat(res.predictedGraph.Y));
-       Perference.setDashboardTotal(res.todayTotalRevenue);
-       Perference.setDashboardToday(res.todayRevenue);
-       Perference.setDashboardTodayPredicted(res.todayPredictedRevenue);
-       Perference.setDashboardCountReal(res.realGraph.Y);
-      })
+        .then(res => res.json())
+        .then(res => {
+            console.log('detailin');
+            Perference.setRealData(res.realPowerGraph)
+            Perference.setPredictData(res.predictedPowerGraph)
+            Perference.setDataTable(res.revenueFromPowerList)
+            Perference.setDataCountReal(res.realPowerGraph.Y)
+        })
+
 }
-function ReportAPI(userEmail,TodayConvert){
+
+function DashboardAPI(userEmail, TodayConvert) {
     let params = { "plantId_subId": userEmail, "timestamp": TodayConvert };
-    let url = 'http://118.131.6.218:8000/report?'+query(params);
-     console.log(url);
+    let url = 'http://118.131.6.218:8000/dashboard?' + query(params);
+    console.log(url);
     fetch(url)
-      .then(res => res.json())
-      .then(res => {
-        console.log('reportin');
-        Perference.setReportMonthPredicted(res.predictedRevenueThisMonth);
-        Perference.setReportMonthAverage(res.compareMonthAverage);
-        Perference.setReportLastYearOfMonth(res.compareLastYearOfMonth);
-        Perference.setReportData(res.accumulatedRevenueGraph.Real_Y.concat(res.accumulatedRevenueGraph.pred_Y));
-        Perference.setReportDataTable(res.cumulativeRevenueList);
-        Perference.setReportIndexUserInvestment(res.userInvestment);
-        Perference.setReportTotalRevenue(res.totalRevenue);
-        Perference.setReportActualRevenue(res.actualRevenue);
-        Perference.setMoney(res.userInvestment);
-      })
+        .then(res => res.json())
+        .then(res => {
+            console.log('dashboardin');
+            Perference.setDashboard(res.realGraph.Y.concat(res.predictedGraph.Y));
+            Perference.setDashboardTotal(res.todayTotalRevenue);
+            Perference.setDashboardToday(res.todayRevenue);
+            Perference.setDashboardTodayPredicted(res.todayPredictedRevenue);
+            Perference.setDashboardCountReal(res.realGraph.Y);
+        })
+}
+function ReportAPI(userEmail, TodayConvert) {
+    let params = { "plantId_subId": userEmail, "timestamp": TodayConvert };
+    let url = 'http://118.131.6.218:8000/report?' + query(params);
+    console.log(url);
+    fetch(url)
+        .then(res => res.json())
+        .then(res => {
+            console.log('reportin');
+            Perference.setReportMonthPredicted(res.predictedRevenueThisMonth);
+            Perference.setReportMonthAverage(res.compareMonthAverage);
+            Perference.setReportLastYearOfMonth(res.compareLastYearOfMonth);
+            Perference.setReportData(res.accumulatedRevenueGraph.Real_Y.concat(res.accumulatedRevenueGraph.pred_Y));
+            Perference.setReportDataTable(res.cumulativeRevenueList);
+            Perference.setReportIndexUserInvestment(res.userInvestment);
+            Perference.setReportTotalRevenue(res.totalRevenue);
+            Perference.setReportActualRevenue(res.actualRevenue);
+            Perference.setMoney(res.userInvestment);
+        })
 }
 function* GetData(action) {
     try {
-        console.log('saga / data'+JSON.stringify(action.data));
-        yield call(DetailAPI,action.data.userEmail,action.data.TodayConvert,action.data.periodType);
+        console.log('saga / data' + JSON.stringify(action.data));
+        yield call(DetailAPI, action.data.userEmail, action.data.TodayConvert, action.data.periodType);
         yield put({
             type: GET_SUCCESS,
         });
@@ -85,9 +85,9 @@ function* GetData(action) {
 
 function* GetLoginData(action) {
     try {
-        console.log('saga / data'+JSON.stringify(action.data));
-        yield call(DashboardAPI,action.data.userEmail,action.data.TodayConvert);
-        yield call(ReportAPI,action.data.userEmail,action.data.TodayConvert);
+        console.log('saga / data' + JSON.stringify(action.data));
+        yield call(DashboardAPI, action.data.userEmail, action.data.TodayConvert);
+        yield call(ReportAPI, action.data.userEmail, action.data.TodayConvert);
         yield put({
             type: GET_LOGINSUCCESS,
         });
@@ -107,7 +107,7 @@ function* watchLogin() {
 
 }
 
-export default function* userSaga(){
+export default function* userSaga() {
     yield all([
         fork(watchLogin),
     ])

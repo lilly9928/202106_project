@@ -1,6 +1,6 @@
 // Import React and Component
-import React, {useState, useEffect} from 'react';
-import {ActivityIndicator, View, StyleSheet, Image,Text} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { ActivityIndicator, View, StyleSheet, Image, Text } from 'react-native';
 import Perference from './Perference';
 import {
   widthPercentageToDP as wp,
@@ -9,24 +9,24 @@ import {
 
 //import AsyncStorage from '@react-native-community/async-storage';
 
-const SplashScreen = ({navigation}) => {
+const SplashScreen = ({ navigation }) => {
   //State for ActivityIndicator animation
   const [animating, setAnimating] = useState(true);
 
   useEffect(() => {
     setTimeout(() => {
       setAnimating(false);
-      var value=null;
-        navigation.replace(value === null ? 'Auth' : 'DrawerNavigationRoutes')
+      var value = null;
+      navigation.replace(value === null ? 'Auth' : 'DrawerNavigationRoutes')
     }, 3000);
   }, []);
 
   return (
     <View style={styles.container}>
       <Image
-            style={styles.logo}
-            source={require('./Image/splash.png')}
-          />
+        style={styles.logo}
+        source={require('./Image/splash.png')}
+      />
       <ActivityIndicator
         animating={animating}
         color="#6990F7"
@@ -50,11 +50,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: 80,
   },
-  logo:{
-    width:wp(50),
+  logo: {
+    width: wp(50),
     resizeMode: 'contain',
-    marginBottom:hp(8),
-    marginLeft:wp(4)
+    marginBottom: hp(8),
+    marginLeft: wp(4)
 
   },
 });
