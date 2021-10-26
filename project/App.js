@@ -13,6 +13,8 @@ import Perference from './src/Perference';
 
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
+import reducer from './src/reducers/user';
+
 
 import createSagaMiddleware from 'redux-saga';
 import rootSaga from './src/sagas';
