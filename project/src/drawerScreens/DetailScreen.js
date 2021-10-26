@@ -5,7 +5,7 @@ import {
 
 import 'react-native-gesture-handler';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { BarChart, Grid,XAxis,YAxis ,StackedBarChart} from 'react-native-svg-charts'
+import { Grid,XAxis,YAxis ,StackedBarChart} from 'react-native-svg-charts'
 import { Table, Row, Rows } from 'react-native-table-component';
 import Perference from '../Perference';
 import { RefreshControl } from 'react-native-web-refresh-control'
@@ -93,7 +93,6 @@ function DetailScreen({ navigation }) {
 
 const colors = ['#385bff', '#ffb851']
 const keys = ['real', 'predict']
-
 
   //달력 클릭 이벤트
   const onChange = (event, selectedDate) => {
@@ -205,7 +204,8 @@ const keys = ['real', 'predict']
             <Detail.topRoundBtn onPress={()=>BtnClick(0)}>
               <Detail.topRoundBtnText> 일 </Detail.topRoundBtnText>
             </Detail.topRoundBtn>
-            <Detail.topRoundBtn onPress={()=>BtnClick(1)}>
+            {/* <Detail.topRoundBtn onPress={()=>BtnClick(1)}> */}
+            <Detail.topRoundBtn>
               <Detail.topRoundBtnText> 주 </Detail.topRoundBtnText>
             </Detail.topRoundBtn>
             <Detail.topRoundBtn onPress={()=>BtnClick(2)}>
@@ -224,7 +224,6 @@ const keys = ['real', 'predict']
             <Detail.Boxsubtitle>{selectValue}</Detail.Boxsubtitle>
           </Detail.middleBox>
         <Detail.Box>
-        {/* <View style = {{height: 200, flexDirection: 'row'}}> */}
         <YAxis
           data = {newData}
           style = {{}}
@@ -245,8 +244,10 @@ const keys = ['real', 'predict']
                 spacingInner={0.03}
                 spacingOuter={0.3}
                 gridMin={1}
-            />
-              <XAxis
+            >
+              <Grid direction={Grid.Direction.HORIZONTAL}/>
+             </StackedBarChart>
+             <XAxis
                     style={{}}
                     data={ newData }
                     svg={{
@@ -257,15 +258,12 @@ const keys = ['real', 'predict']
                     scale={scale.scaleBand}
                     valueAccessor={({ item, key }) => item[key].value}
                     formatLabel={(value, index) => Perference.getDetailButton()=='day'?day[index]:
-                                                   Perference.getDetailButton()=='week'?index:
+                                                   Perference.getDetailButton()=='week'?week[index]:
                                                    Perference.getDetailButton()=='month'?(index+1)+'일':
                                                    index }
                 />
-              <Grid direction={Grid.Direction.HORIZONTAL}/>
-            {/* </BarChart> */}
           </View>
           </ScrollView>
-          {/* </View> */}
         </Detail.Box>
         <Detail.bottomContainer>
         <Detail.bottomBox>
