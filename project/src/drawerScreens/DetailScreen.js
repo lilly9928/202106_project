@@ -328,7 +328,7 @@ const styles = StyleSheet.create({
   },
   TableText:{
     color:'#000000',
-    fontSize:wp(5),
+    fontSize:wp(4),
     alignItems:'center',
     textAlign:'center',
     paddingTop:wp(5)
