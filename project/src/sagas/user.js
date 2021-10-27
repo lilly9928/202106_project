@@ -6,17 +6,6 @@ const query = (params) => {
     return Object.keys(params).map(k => encodeURIComponent(k) + '=' + encodeURIComponent(params[k])).join('&');
 }
 
-function ResetData() {
-    Perference.setData([]);
-    Perference.setDataTable([]);
-    Perference.setDataCountReal(0);
-    Perference.setDetailXData([]);
-    Perference.setDashboard([]);
-    Perference.setDashboardTotal('');
-    Perference.setDashboardToday('');
-    Perference.setDashboardTodayPredicted('');
-    Perference.setDashboardCountReal(0);
-}
 
 function DetailAPI(userEmail, TodayConvert, periodType) {
     let params = { "plantId_subId": userEmail, "timestamp": TodayConvert, "periodType": periodType };
@@ -88,6 +77,7 @@ function* GetLoginData(action) {
         console.log('saga / data' + JSON.stringify(action.data));
         yield call(DashboardAPI, action.data.userEmail, action.data.TodayConvert);
         yield call(ReportAPI, action.data.userEmail, action.data.TodayConvert);
+        yield call(DetailAPI, action.data.userEmail, action.data.TodayConvert, "day");
         yield put({
             type: GET_LOGINSUCCESS,
         });

@@ -64,7 +64,7 @@ function SettingScreen({ navigation }) {
         activeOpacity={0.5}
         onPress={() => {
           Perference.setUser('');
-          navigation.navigate('Login')
+          navigation.reset({ index: 0, routes: [{ name: 'Login' }], });
         }}
       >
         <Setting.bottomText>

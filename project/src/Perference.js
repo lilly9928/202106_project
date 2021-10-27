@@ -56,9 +56,16 @@ var object = {
         User = item
     },
     getUsers: function () {
+        console.log(Users)
         return Users
     },
     setUsers: function (item) {
+        item=item.map(
+            (item,index)=>({
+                id:index,
+                value:item
+            })
+        );
         Users = item
     },
 
