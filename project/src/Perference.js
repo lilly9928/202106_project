@@ -221,7 +221,7 @@ var object = {
         return ReportActualRevenue
     },
     setReportActualRevenue: function (item) {
-        item = item.map(number => number.toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+        item = item.map(number => number.toFixed(0));
         ReportActualRevenue = item
     },
     getMoney: function () {
@@ -246,7 +246,7 @@ var object = {
         return ReportIndexUserInvestment
     },
     getReportMessage:function(){
-            if(ReportIndexUserInvestment-Today.getDate()<0){
+            if(ReportIndexUserInvestment-Today.getMonth()<0){
                 ReportMessage='예측 불가';
             }
             else{

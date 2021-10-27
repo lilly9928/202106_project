@@ -136,7 +136,7 @@ function ReportScreen({ navigation }) {
                 </Report.insideMiddleBox>
                 <Report.insideMiddleBox>
                   <Report.bordersubText>실제 누적 수익: </Report.bordersubText>
-                  <Report.borderText>{Perference.getReportActualRevenue() + '원'}</Report.borderText>
+                  <Report.borderText>{Perference.getReportActualRevenue().toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '원'}</Report.borderText>
                 </Report.insideMiddleBox>
               </Report.insideMiddleBoxWrap>
             </Report.borderBox>
@@ -145,7 +145,7 @@ function ReportScreen({ navigation }) {
         </Report.topContainerWrap>
         <Report.middle_topBox>
           <Report.middle_Boxtitle>손익분기점 그래프</Report.middle_Boxtitle>
-          {Number(Perference.getReportActualRevenue())>Number(Perference.getMoney())?
+          {Number(Perference.getReportActualRevenue()[0])>Number(Perference.getMoney())?
            <View style={{ alignItems: 'flex-end' }}>
            <Report.middle_Boxsubtitle>도달 예상<Text style={{ color: '#e051ff' }}>0개월</Text></Report.middle_Boxsubtitle>
            <Report.middle_BoxsubtitleDate>투자원금 회수 완료</Report.middle_BoxsubtitleDate>
