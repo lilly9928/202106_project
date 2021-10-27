@@ -223,16 +223,18 @@ const styles = StyleSheet.create({
     // marginTop:hp(1) 
   },
   BtnTextStyle: {
-    color: "#c9c9c9",
+    color: "#ffffff",
     textAlign: "left",
     borderRadius: 30,
     borderWidth: 1,
     borderColor: "#202023",
+    paddingBottom: wp(2),
+    paddingRight: wp(3),
     paddingLeft: wp(4),
     paddingTop: wp(2),
     paddingBottom: wp(1),
-    marginTop: wp(5.5),
-    marginLeft: wp(7)
+    marginTop: wp(4),
+    marginRight: wp(3)
   },
   logo: {
     width: wp(30),
