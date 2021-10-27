@@ -55,6 +55,7 @@ function ReportAPI(userEmail, TodayConvert) {
             Perference.setReportTotalRevenue(res.totalRevenue);
             Perference.setReportActualRevenue(res.actualRevenue);
             Perference.setMoney(res.userInvestment);
+            Perference.setReportCountReal(res.accumulatedRevenueGraph.Real_Y);
         })
 }
 function* GetData(action) {

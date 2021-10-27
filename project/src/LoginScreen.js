@@ -74,6 +74,7 @@ const LoginScreen = ({ navigation }) => {
         Perference.setReportIndexUserInvestment(res.userInvestment)
         Perference.setReportTotalRevenue(res.totalRevenue)
         Perference.setReportActualRevenue(res.actualRevenue)
+        Perference.setReportCountReal(res.accumulatedRevenueGraph.Real_Y)
         Perference.setMoney(res.userInvestment)
 
       })

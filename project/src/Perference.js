@@ -22,6 +22,9 @@ var ReportTotalRevenue = '';
 var ReportUserInvestment = '';
 var ReportActualRevenue = '';
 var ReportIndexUserInvestment = 0;
+var ReportDate='';
+var ReportMessage='';
+var ReportCountReal=0;
 
 //디테일 데이터 
 var DataResult = [];
@@ -242,6 +245,28 @@ var object = {
     getReportIndexUserInvestment: function () {
         return ReportIndexUserInvestment
     },
+    getReportMessage:function(){
+            if(ReportIndexUserInvestment-Today.getDate()<0){
+                ReportMessage='예측 불가';
+            }
+            else{
+                var result =ReportDataTable[ReportIndexUserInvestment][0].split('-');
+                ReportMessage =(result[0]-(Today.getFullYear())+'년')+' '+(result[1]-(Today.getMonth()+1)+'개월')
+            } 
+        return ReportMessage
+    },
+    getReportDate:function(){
+        var result =ReportDataTable[ReportIndexUserInvestment][0].split('-');
+        ReportDate= result[0]+'년'+result[1]+'월';
+        return ReportDate
+    },
+    getReportCountReal: function () {
+        return ReportCountReal
+    },
+    setReportCountReal: function (item) {
+        ReportCountReal = item.length
+    },
+
 
     //대시보드데이터
     getDashboard: function () {

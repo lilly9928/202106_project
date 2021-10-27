@@ -26,7 +26,7 @@ function ReportScreen({ navigation }) {
   const HeadTable = ['일시', '수익', '누적 수익', '살제누적 수익'];
   const date = new Date();
   const dataDate = date.getHours() + ':' + date.getMinutes() + '기준'
-  const indexToClipFrom = date.getMonth();
+  const indexToClipFrom = Perference.getReportCountReal();
   const [refreshing, setRefreshing] = useState(false);
 
   Perference.setReportIndexUserInvestment(Perference.getMoney());
@@ -145,10 +145,16 @@ function ReportScreen({ navigation }) {
         </Report.topContainerWrap>
         <Report.middle_topBox>
           <Report.middle_Boxtitle>손익분기점 그래프</Report.middle_Boxtitle>
-          <View style={{ alignItems: 'flex-end' }}>
-            <Report.middle_Boxsubtitle>도달 예상<Text style={{ color: '#e051ff' }}>3개월 후</Text></Report.middle_Boxsubtitle>
-            <Report.middle_BoxsubtitleDate>2021년 9월</Report.middle_BoxsubtitleDate>
+          {Number(Perference.getReportActualRevenue())>Number(Perference.getMoney())?
+           <View style={{ alignItems: 'flex-end' }}>
+           <Report.middle_Boxsubtitle>도달 예상<Text style={{ color: '#e051ff' }}>0개월</Text></Report.middle_Boxsubtitle>
+           <Report.middle_BoxsubtitleDate>투자원금 회수 완료</Report.middle_BoxsubtitleDate>
+         </View>:
+            <View style={{ alignItems: 'flex-end' }}>
+            <Report.middle_Boxsubtitle>도달 예상<Text style={{ color: '#e051ff' }}>{Perference.getReportMessage()}</Text></Report.middle_Boxsubtitle>
+            <Report.middle_BoxsubtitleDate>{Perference.getReportDate()}</Report.middle_BoxsubtitleDate>
           </View>
+          }
         </Report.middle_topBox>
         <Report.middleContainer>
           <Report.Box>

@@ -236,7 +236,8 @@ export const Report = {
   middle_BoxsubtitleDate: styled.Text`
     font-size:20px;
     color:#292929;
-    padding-top:1%;`,
+    padding-top:1%;
+    `,
   middleContainer: styled.View`
     flex: 1;
     background-color:#f5f5f5;
