@@ -99,7 +99,7 @@ function HomeScreen({ navigation }) {
             <YAxis
               data={Perference.getDashboard()}
               style={{}}
-              contentInset={{ top: 10, bottom: 10 }}
+              contentInset={{ top: 10, bottom: 30 }}
               svg={{ fontSize: 13, fill: '#909090' }}
             />
             <ScrollView horizontal={true}>

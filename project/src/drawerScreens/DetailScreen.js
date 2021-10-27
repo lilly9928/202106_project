@@ -71,7 +71,7 @@ function DetailScreen({ navigation }) {
         svg: {
           onPress: () => {
             setselectItem(index);
-            setselectValue((item.real).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + 'KWh');
+            setselectValue((item.real+item.predict).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + 'KWh');
           },
           //날짜데이터 색상변경 
           fill: selectItem === index ? '#000000' : '#385bff'
@@ -82,7 +82,7 @@ function DetailScreen({ navigation }) {
         svg: {
           onPress: () => {
             setselectItem(index);
-            setselectValue((item.predict).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + 'KWh');
+            setselectValue((item.real+item.predict).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + 'KWh');
           },
           //날짜데이터 색상변경 
           fill: selectItem === index ? '#000000' : '#ffb851'
@@ -227,8 +227,8 @@ function DetailScreen({ navigation }) {
             <YAxis
               data={newData}
               style={{}}
-              contentInset={{ top: 10, bottom: 10 }}
-              yAccessor={({ item }) => item.real.value + item.predict.value}
+              contentInset={{ top: 10, bottom: 30 }}
+              yAccessor={({ item }) => item.predict.value+item.real.value}
               svg={{ fontSize: 13, fill: '#909090' }}
             />
             <ScrollView horizontal={true}>

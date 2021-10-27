@@ -128,7 +128,7 @@ function ReportScreen({ navigation }) {
             </Report.borderBox>
             <Report.borderBox>
               <Report.Boxtitle>현재까지 누적 수익</Report.Boxtitle>
-              <Report.middlePriceTextBlue>{Perference.getReportTotalRevenue() + '원'}</Report.middlePriceTextBlue>
+              <Report.middlePriceTextBlue>{Perference.getReportTotalRevenue().toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '원'}</Report.middlePriceTextBlue>
               <Report.insideMiddleBoxWrap>
                 <Report.insideMiddleBox>
                   <Report.bordersubText>투자원금: </Report.bordersubText>
@@ -145,7 +145,7 @@ function ReportScreen({ navigation }) {
         </Report.topContainerWrap>
         <Report.middle_topBox>
           <Report.middle_Boxtitle>손익분기점 그래프</Report.middle_Boxtitle>
-          {Number(Perference.getReportActualRevenue()[0])>Number(Perference.getMoney())?
+          {Number(Perference.getReportTotalRevenue())>Number(Perference.getMoney())?
            <View style={{ alignItems: 'flex-end' }}>
            <Report.middle_Boxsubtitle>도달 예상<Text style={{ color: '#e051ff' }}>0개월</Text></Report.middle_Boxsubtitle>
            <Report.middle_BoxsubtitleDate>투자원금 회수 완료</Report.middle_BoxsubtitleDate>
@@ -161,7 +161,7 @@ function ReportScreen({ navigation }) {
             <YAxis
               data={Perference.getReportData()}
               style={{}}
-              contentInset={{ top: 10, bottom: 10 }}
+              contentInset={{ top: 10, bottom: 30 }}
               svg={{ fontSize: 13, fill: '#909090' }}
             />
             <ScrollView horizontal={true}>

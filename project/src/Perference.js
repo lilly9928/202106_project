@@ -215,7 +215,7 @@ var object = {
         return ReportTotalRevenue
     },
     setReportTotalRevenue: function (item) {
-        ReportTotalRevenue = item.toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+        ReportTotalRevenue = item.toFixed(0)
     },
     getReportActualRevenue: function () {
         return ReportActualRevenue
@@ -256,8 +256,13 @@ var object = {
         return ReportMessage
     },
     getReportDate:function(){
-        var result =ReportDataTable[ReportIndexUserInvestment][0].split('-');
-        ReportDate= result[0]+'년'+result[1]+'월';
+        if(ReportIndexUserInvestment-Today.getMonth()<0){
+            ReportDate='-';
+        }
+        else{
+            var result =ReportDataTable[ReportIndexUserInvestment][0].split('-');
+            ReportDate= result[0]+'년'+result[1]+'월';
+        }
         return ReportDate
     },
     getReportCountReal: function () {
