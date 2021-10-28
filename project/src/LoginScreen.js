@@ -10,7 +10,8 @@ import Perference from './Perference';
 import React, { useState, createRef } from 'react';
 import {
   StyleSheet,
-  View,
+  TouchableWithoutFeedback,
+  View,Keyboard
 } from 'react-native';
 
 import { Login } from './styles/styles'
@@ -159,8 +160,8 @@ const LoginScreen = ({ navigation }) => {
       .then(response => response.json()); // parses JSON response into native JavaScript objects
   }
   return (
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
     <Login.container>
-
       <Login.topArea>
         <Login.titleArea>
           <Login.logo
@@ -212,6 +213,7 @@ const LoginScreen = ({ navigation }) => {
 
       <View style={{ height: hp(20) }} />
     </Login.container>
+    </TouchableWithoutFeedback>
   );
 };
 
