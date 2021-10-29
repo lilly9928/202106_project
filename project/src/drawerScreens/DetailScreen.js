@@ -232,7 +232,7 @@ function DetailScreen({ navigation }) {
               svg={{ fontSize: 13, fill: '#909090' }}
             />
             <ScrollView horizontal={true}>
-              <View style={{ width: 1200, height: 250 }}>
+              <View style={{ width: 1200, height: 220 }}>
                 <StackedBarChart
                   style={{ flex: 1 }}
                   keys={keys}
