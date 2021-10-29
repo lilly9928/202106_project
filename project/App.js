@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { SafeAreaView, StyleSheet, View, TouchableOpacity, Text, Image } from 'react-native';
+import { SafeAreaView, StyleSheet, View, TouchableOpacity, Text, Image,StatusBar } from 'react-native';
 import LoginScreen from './src/LoginScreen';
 import SplashScreen from './src/SplashScreen';
 import HomeScreen from './src/drawerScreens/HomeScreen';
@@ -107,6 +107,7 @@ const AppWrapper = () => {
 const App = ({ navigation }) => {
   return (
     <NavigationContainer>
+         <StatusBar barStyle="light-content"/>
       <Stack.Navigator initialRouteName="SplashScreen">
         <Stack.Screen
           name="Splash"
