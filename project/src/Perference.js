@@ -1,7 +1,7 @@
 //데이터 
 let Users = [];
 //날짜 데이터 
-const Time = new Date();
+var Time = new Date();
 
 let Today = new Date(2020, 5, 20, Time.getHours() + 9, Time.getMinutes());
 
@@ -45,6 +45,10 @@ let TodayConvert = Today.toISOString().split('.')[0];
 TodayConvert = TodayConvert.split('T')[0] + ' ' + TodayConvert.split('T')[1]
 
 var object = {
+
+    setTime :function(item){
+        Time = item
+    },
 
     getToday: function () {
         return Today

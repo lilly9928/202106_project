@@ -90,7 +90,8 @@ function ReportScreen({ navigation }) {
 
   const reloadLines = React.useCallback(() => {
     setRefreshing(true)
-
+    Perference.setTime(new Date());
+    
     wait(2000).then(() => {
       setRefreshing(false)
 
