@@ -232,7 +232,7 @@ function DetailScreen({ navigation }) {
               svg={{ fontSize: 13, fill: '#909090' }}
             />
             <ScrollView horizontal={true}>
-              <View style={{ width: 1200, height: 220 }}>
+              <View style={{ width: 900, height: 220 }}>
                 <StackedBarChart
                   style={{ flex: 1 }}
                   keys={keys}
@@ -241,8 +241,8 @@ function DetailScreen({ navigation }) {
                   showGrid={true}
                   valueAccessor={({ item, key }) => item[key].value}
                   contentInset={{ top: 10, bottom: 10 }}
-                  spacingInner={0.03}
-                  spacingOuter={0.3}
+                  spacingInner={0.1}
+                  spacingOuter={0.1}
                   gridMin={1}
                 >
                   <Grid direction={Grid.Direction.HORIZONTAL} />

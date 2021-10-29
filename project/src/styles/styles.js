@@ -222,16 +222,25 @@ export const Report = {
     background-color: #ffffff;
     border-bottom-right-radius:30px;
     border-bottom-left-radius:30px;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-between;
     padding:5%;`,
   middle_Boxtitle: styled.Text`
     color:black;
-    font-size:20px;`,
+    font-size:20px;
+    `,
   middle_Boxsubtitle: styled.Text`
     color:#000000;
     font-weight:bold;
     font-size:20px;
+    text-align:right;
+    `,
+    middle_BoxsubtitleLong:styled.Text`
+    color:#000000;
+    font-weight:bold;
+    font-size:15px;
+    margin-top:10px;
+    text-align:center;
     `,
   middle_BoxsubtitleDate: styled.Text`
     font-size:20px;

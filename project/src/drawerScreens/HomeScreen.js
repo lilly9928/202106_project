@@ -103,15 +103,15 @@ function HomeScreen({ navigation }) {
               svg={{ fontSize: 13, fill: '#909090' }}
             />
             <ScrollView horizontal={true}>
-              <View style={{ width: 1200, height: 250, backgroundColor: '#f5f5f5' }}>
+              <View style={{ width: 900, height: 250, backgroundColor: '#f5f5f5' }}>
                 <BarChart
                   style={{ flex: 1 }}
                   data={newData}
                   // svg={{fill: this.state.color,}}
                   yAccessor={({ item }) => item.y}
                   contentInset={{ top: 10, bottom: 10 }}
-                  spacingInner={0.03}
-                  spacingOuter={0.3}
+                  spacingInner={0.1}
+                  spacingOuter={0.1}
                   gridMin={1}
                 >
                   <Grid direction={Grid.Direction.HORIZONTAL} />

@@ -144,16 +144,18 @@ function ReportScreen({ navigation }) {
           <Report.dateText>{dataDate}</Report.dateText>
         </Report.topContainerWrap>
         <Report.middle_topBox>
-          <Report.middle_Boxtitle>손익분기점 그래프</Report.middle_Boxtitle>
           {Number(Perference.getReportTotalRevenue())>Number(Perference.getMoney())?
-           <View style={{ alignItems: 'flex-end' }}>
+          <><View style={{flexDirection:"row",justifyContent:"space-between"}}>
+             <Report.middle_Boxtitle>손익분기점 그래프</Report.middle_Boxtitle>
            <Report.middle_Boxsubtitle>도달 예상<Text style={{ color: '#e051ff' }}>0개월</Text></Report.middle_Boxsubtitle>
-           <Report.middle_BoxsubtitleDate>투자원금 회수 완료</Report.middle_BoxsubtitleDate>
-         </View>:
-            <View style={{ alignItems: 'flex-end' }}>
+         </View>
+          <Report.middle_BoxsubtitleLong>현재 투자원금을 모두 회수하여 이익을 실현 중입니다.</Report.middle_BoxsubtitleLong></>
+         :
+         <><View style={{flexDirection:"row",justifyContent:"space-between"}}>
+         <Report.middle_Boxtitle>손익분기점 그래프</Report.middle_Boxtitle>
             <Report.middle_Boxsubtitle>도달 예상<Text style={{ color: '#e051ff' }}>{Perference.getReportMessage()}</Text></Report.middle_Boxsubtitle>
-            <Report.middle_BoxsubtitleDate>{Perference.getReportDate()}</Report.middle_BoxsubtitleDate>
           </View>
+          <Report.middle_BoxsubtitleDate>{Perference.getReportDate()}</Report.middle_BoxsubtitleDate></>
           }
         </Report.middle_topBox>
         <Report.middleContainer>
