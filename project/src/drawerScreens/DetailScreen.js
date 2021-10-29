@@ -204,8 +204,7 @@ function DetailScreen({ navigation }) {
             <Detail.topRoundBtn onPress={() => BtnClick(0)}>
               <Detail.topRoundBtnText> 일 </Detail.topRoundBtnText>
             </Detail.topRoundBtn>
-            {/* <Detail.topRoundBtn onPress={()=>BtnClick(1)}> */}
-            <Detail.topRoundBtn>
+            <Detail.topRoundBtn onPress={()=>BtnClick(1)}>
               <Detail.topRoundBtnText> 주 </Detail.topRoundBtnText>
             </Detail.topRoundBtn>
             <Detail.topRoundBtn onPress={() => BtnClick(2)}>
