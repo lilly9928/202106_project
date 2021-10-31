@@ -168,7 +168,7 @@ function DetailScreen({ navigation }) {
   const reloadLines = React.useCallback(() => {
     setRefreshing(true)
     Perference.setTime(new Date());
-    wait(2000).then(() => {
+    wait(7000).then(() => {
       setRefreshing(false)
 
     })
@@ -210,9 +210,9 @@ function DetailScreen({ navigation }) {
             <Detail.topRoundBtn onPress={() => BtnClick(2)}>
               <Detail.topRoundBtnText> 월 </Detail.topRoundBtnText>
             </Detail.topRoundBtn>
-            <Detail.topRoundBtn onPress={() => BtnClick(3)}>
+            {/* <Detail.topRoundBtn onPress={() => BtnClick(3)}>
               <Detail.topRoundBtnText> 년 </Detail.topRoundBtnText>
-            </Detail.topRoundBtn>
+            </Detail.topRoundBtn> */}
           </Detail.topBox>
         </Detail.topContainer>
 
@@ -231,7 +231,7 @@ function DetailScreen({ navigation }) {
               svg={{ fontSize: 13, fill: '#909090' }}
             />
             <ScrollView horizontal={true}>
-              <View style={{ width: 900, height: 220 }}>
+              <View style={{ width: 500, height: 220 }}>
                 <StackedBarChart
                   style={{ flex: 1 }}
                   keys={keys}
@@ -251,7 +251,7 @@ function DetailScreen({ navigation }) {
                   data={newData}
                   svg={{
                     fill: "#000000",
-                    fontSize: 15,
+                    fontSize: 10,
                     fontWeight: "bold",
                   }}
                   scale={scale.scaleBand}

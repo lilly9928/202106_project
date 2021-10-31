@@ -19,8 +19,20 @@ function DetailAPI(userEmail, TodayConvert, periodType) {
             Perference.setPredictData(res.predictedPowerGraph)
             Perference.setDataTable(res.revenueFromPowerList)
             Perference.setDataCountReal(res.realPowerGraph.Y)
+            Perference.setDetailButton("day");
         })
 
+}
+
+function SettingAPI(userEmail){
+    let params = { "plantId_subId": userEmail};
+        let url = 'http://118.131.6.218:8000/user/charge?'+ query(params);
+        fetch(url)
+          .then(res => res.json())
+          .then(res => {
+            Perference.setSettingCharge(res.chargeList)
+          })
+      
 }
 
 function DashboardAPI(userEmail, TodayConvert) {
@@ -56,6 +68,7 @@ function ReportAPI(userEmail, TodayConvert) {
             Perference.setReportActualRevenue(res.actualRevenue);
             Perference.setMoney(res.userInvestment);
             Perference.setReportCountReal(res.accumulatedRevenueGraph.Real_Y);
+            Perference.setReportXData(res.accumulatedRevenueGraph.Real_X.concat(res.accumulatedRevenueGraph.Pred_X));
         })
 }
 function* GetData(action) {
@@ -79,6 +92,7 @@ function* GetLoginData(action) {
         yield call(DashboardAPI, action.data.userEmail, action.data.TodayConvert);
         yield call(ReportAPI, action.data.userEmail, action.data.TodayConvert);
         yield call(DetailAPI, action.data.userEmail, action.data.TodayConvert, "day");
+        yield call(SettingAPI, action.data.userEmail);
         yield put({
             type: GET_LOGINSUCCESS,
         });

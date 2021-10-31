@@ -92,7 +92,7 @@ function ReportScreen({ navigation }) {
     setRefreshing(true)
     Perference.setTime(new Date());
     
-    wait(2000).then(() => {
+    wait(3000).then(() => {
       setRefreshing(false)
 
     })
@@ -166,9 +166,12 @@ function ReportScreen({ navigation }) {
               style={{}}
               contentInset={{ top: 10, bottom: 30 }}
               svg={{ fontSize: 13, fill: '#909090' }}
+              formatLabel={ value => 
+                value>100000?`${value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",").split(',')[0]}m`:
+                 value>1000?`${value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",").split(',')[0]}k`:`${value}`}
             />
             <ScrollView horizontal={true}>
-              <View style={{ width: 1200, height: 250 }}>
+              <View style={{ width: 330, height: 250 }}>
                 <LineChart
                   style={{ flex: 1 }}
                   data={Perference.getReportData()}
@@ -190,15 +193,19 @@ function ReportScreen({ navigation }) {
                   data={Perference.getReportData()}
                   svg={{
                     fill: "#000000",
-                    fontSize: 15,
+                    fontSize: 5,
                     fontWeight: "bold",
                   }}
                   scale={scale.scaleBand}
-                  formatLabel={(value, index) => index == 0 ? 1 + '월'
-                    :
-                    (index + 1) % 12 == 0 ? 12 + '월'
-                      :
-                      (index + 1) % 12 + '월'}
+                  formatLabel={(value, index) => 
+                    index%3!=0?'':
+                    Perference.getRealXData()[index]}
+                    // index%3!=0?'':
+                    // index == 0 ? 1 + '월'
+                    // :
+                    // (index + 1) % 12 == 0 ? 12 + '월'
+                    // :
+                    //   (index + 1) % 12 + '월'}
                 />
               </View>
             </ScrollView>

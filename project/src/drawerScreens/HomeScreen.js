@@ -29,7 +29,7 @@ function HomeScreen({ navigation }) {
   //그래프 데이터 디자인 
   const newData = Perference.getDashboard().map(
     (item, index) => ({
-      x: index + '시',
+      x: index ,
       y: item,
       svg: {
         onPressIn: () => {
@@ -55,7 +55,7 @@ function HomeScreen({ navigation }) {
   const reloadLines = React.useCallback(() => {
     setRefreshing(true)
     Perference.setTime(new Date());
-    wait(2000).then(() => {
+    wait(5000).then(() => {
       setRefreshing(false)
 
     })
@@ -101,9 +101,12 @@ function HomeScreen({ navigation }) {
               style={{}}
               contentInset={{ top: 10, bottom: 30 }}
               svg={{ fontSize: 13, fill: '#909090' }}
+              formatLabel={ value => 
+                value>100000?`${value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",").split(',')[0]}m`:
+                 value>1000?`${value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",").split(',')[0]}k`:`${value}`}
             />
             <ScrollView horizontal={true}>
-              <View style={{ width: 900, height: 250, backgroundColor: '#f5f5f5' }}>
+              <View style={{ width: 350, height: 250, backgroundColor: '#f5f5f5' }}>
                 <BarChart
                   style={{ flex: 1 }}
                   data={newData}
@@ -121,12 +124,14 @@ function HomeScreen({ navigation }) {
                   data={newData}
                   svg={{
                     fill: "#000000",
-                    fontSize: 15,
+                    fontSize: 7,
                     fontWeight: "bold",
                   }}
                   scale={scale.scaleBand}
                   xAccessor={({ item }) => item.x}
-                  formatLabel={(value) => value}
+                  formatLabel={(value) => 
+                    value%3!=0?'':value+'시'
+                  }
                 />
               </View>
             </ScrollView>

@@ -25,6 +25,7 @@ var ReportIndexUserInvestment = 0;
 var ReportDate='';
 var ReportMessage='';
 var ReportCountReal=0;
+var ReportXData=[];
 
 //디테일 데이터 
 var DataResult = [];
@@ -43,6 +44,9 @@ DetailTodayConvert = DetailTodayConvert.split('T')[0] + ' ' + DetailTodayConvert
 //서버 날짜 값 수정
 let TodayConvert = Today.toISOString().split('.')[0];
 TodayConvert = TodayConvert.split('T')[0] + ' ' + TodayConvert.split('T')[1]
+
+//setting
+var setting_charge =[];
 
 var object = {
 
@@ -106,6 +110,10 @@ var object = {
     },
     setRealData: function (item) {
         const itemY = item.Y
+         console.log(typeof item.X)
+        if(typeof item.X == "string"){
+            item.X = item.X.split();
+        }
         const newData = item.X.map(
             (item, index) => ({
                 predict: 0,
@@ -138,7 +146,8 @@ var object = {
         return DataTable
     },
     setDataTable: function (item) {
-        item = item.map(value => value.map((number,index) => index==1?number.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","):number.toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")));
+        item = item.map(value => value.map((number,index) => 
+        index ==0?number:index==1?number.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","):number.toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")));
         DataTable = item
     },
     getDataCountReal: function () {
@@ -255,7 +264,14 @@ var object = {
             }
             else{
                 var result =ReportDataTable[ReportIndexUserInvestment][0].split('-');
-                ReportMessage =(result[0]-(Today.getFullYear())+'년')+' '+(result[1]-(Today.getMonth()+1)+'개월')
+                if(result[0]-Today.getFullYear()>0){
+                    var temp = result[0]-Today.getFullYear();
+                    temp = temp*12;
+                    ReportMessage =(temp+(result[1]-(Today.getMonth()+1))+'개월')
+                }
+                else{
+                    ReportMessage =(result[1]-(Today.getMonth()+1)+'개월')
+                }
             } 
         return ReportMessage
     },
@@ -274,6 +290,15 @@ var object = {
     },
     setReportCountReal: function (item) {
         ReportCountReal = item.length
+    },
+    setReportXData:function(item){
+        console.log(item);
+        ReportXData = item.map(value => 
+            value.split('T')[0].split('-')[0].split('0')[1]=="2"? "20."+value.split('T')[0].split('-')[1]:
+           value.split('T')[0].split('-')[0].split('0')[1] + '.'+value.split('T')[0].split('-')[1]);
+    },
+    getRealXData:function(){
+        return ReportXData
     },
 
 
@@ -308,5 +333,13 @@ var object = {
     setDashboardCountReal: function (item) {
         DashboardCountReal = item.length
     },
+
+    //setting 
+    getSettingCharge:function(){
+        return setting_charge
+    },
+    setSettingCharge:function(item){
+        setting_charge = item
+    }
 }
 module.exports = object

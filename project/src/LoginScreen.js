@@ -70,6 +70,7 @@ const LoginScreen = ({ navigation }) => {
         Perference.setReportMonthPredicted(res.predictedRevenueThisMonth)
         Perference.setReportMonthAverage(res.compareMonthAverage)
         Perference.setReportLastYearOfMonth(res.compareLastYearOfMonth)
+        Perference.setReportXData(res.accumulatedRevenueGraph.Real_X.concat(res.accumulatedRevenueGraph.Pred_X))
         Perference.setReportData(res.accumulatedRevenueGraph.Real_Y.concat(res.accumulatedRevenueGraph.pred_Y))
         Perference.setReportDataTable(res.cumulativeRevenueList)
         Perference.setReportIndexUserInvestment(res.userInvestment)
@@ -88,6 +89,17 @@ const LoginScreen = ({ navigation }) => {
       .then(res => {
         console.log(res.subUserList);
         Perference.setUsers(res.subUserList)
+      })
+  }
+
+  const Setting = () => {
+    let params = { "plantId_subId": userEmail};
+    let url = 'http://118.131.6.218:8000/user/charge?'+ query(params);
+    fetch(url)
+      .then(res => res.json())
+      .then(res => {
+        console.log(res.chargeList)
+        Perference.setSettingCharge(res.chargeList)
       })
   }
 
@@ -128,6 +140,7 @@ const LoginScreen = ({ navigation }) => {
           Detail();
           Report();
           Users();
+          Setting();
           navigation.navigate('이전');
           return;
         }
