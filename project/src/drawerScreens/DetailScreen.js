@@ -139,7 +139,7 @@ function DetailScreen({ navigation }) {
   const BtnClick = (num) => {
     let btn;
     setHeadTable([]);
-    switch (num) {
+    switch (num) { 
       case 0:
         btn = 'day';
         setHeadTable(['시간', '발전량', '수익', '누적수익']);
