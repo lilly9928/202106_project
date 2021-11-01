@@ -267,10 +267,10 @@ var object = {
                 if(result[0]-Today.getFullYear()>0){
                     var temp = result[0]-Today.getFullYear();
                     temp = temp*12;
-                    ReportMessage =(temp+(result[1]-(Today.getMonth()+1))+'개월')
+                    ReportMessage =(temp+(result[1]-(Today.getMonth()+1))+'개월 남음')
                 }
                 else{
-                    ReportMessage =(result[1]-(Today.getMonth()+1)+'개월')
+                    ReportMessage =(result[1]-(Today.getMonth()+1)+'개월 남음')
                 }
             } 
         return ReportMessage

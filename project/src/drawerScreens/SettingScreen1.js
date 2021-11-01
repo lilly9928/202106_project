@@ -5,6 +5,9 @@ import Perference from '../Perference';
 
 import { SettingIn } from '../styles/styles'
 
+import {
+  TouchableWithoutFeedback,Keyboard
+} from 'react-native';
 function SettingScreen({ navigation }) {
 
   const user = Perference.getUser();
@@ -40,6 +43,7 @@ function SettingScreen({ navigation }) {
     navigation.reset({ index: 0, routes: [{ name: '이전' }], });
   };
   return (
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
     <SettingIn.ContainerWrap>
       <SettingIn.roundHead />
       <SettingIn.container>
@@ -64,6 +68,7 @@ function SettingScreen({ navigation }) {
         <SettingIn.btnText>저장</SettingIn.btnText>
       </SettingIn.btn>
     </SettingIn.ContainerWrap>
+    </TouchableWithoutFeedback>
   );
 }
 

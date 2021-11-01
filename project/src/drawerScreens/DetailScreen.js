@@ -231,7 +231,7 @@ function DetailScreen({ navigation }) {
               svg={{ fontSize: 13, fill: '#909090' }}
             />
             <ScrollView horizontal={true}>
-              <View style={{ width: 500, height: 220 }}>
+              <View style={{ width: Perference.getDetailButton()=="week"?350:500, height: 210 }}>
                 <StackedBarChart
                   style={{ flex: 1 }}
                   keys={keys}
