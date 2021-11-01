@@ -6,11 +6,14 @@ import {
   ScrollView,
 } from 'react-native';
 
-import { SettingIn } from '../styles/styles'
+import { SettingIn } from '../styles/styles';
+import { useDispatch } from 'react-redux';
+import { LoginRequestAction } from '../reducers/user';
 
 function SettingScreen({ navigation }) {
 
   const [data, setData] = useState(Perference.getSettingCharge());
+  const dispatch = useDispatch();
 
   const onlyNumber = (str, changeindex) => {
     var num = str.replace(/[^0-9.]/g, "").replace(/(\.*)\./g, "$1");
@@ -37,7 +40,8 @@ function SettingScreen({ navigation }) {
       }),
     })
       .then((response) => response.json())
-      .then((data) => console.log(data));
+      .then((data) => console.log(data))
+      .then(dispatch(LoginRequestAction({userEmail:Perference.getUser(),TodayConvert:Perference.getConvertToday()})));
     alert('저장되었습니다.');
     Perference.setSettingCharge(data);
     navigation.reset({ index: 0, routes: [{ name: '이전' }], });

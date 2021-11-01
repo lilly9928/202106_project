@@ -8,8 +8,12 @@ import { SettingIn } from '../styles/styles'
 import {
   TouchableWithoutFeedback,Keyboard
 } from 'react-native';
-function SettingScreen({ navigation }) {
 
+import { useDispatch } from 'react-redux';
+import { LoginRequestAction } from '../reducers/user';
+
+function SettingScreen({ navigation }) {
+  const dispatch = useDispatch();
   const user = Perference.getUser();
   const [price, setPrice] = useState(Perference.getMoney());
   const [Errortext, setErrortext] = useState('오류');
@@ -35,10 +39,10 @@ function SettingScreen({ navigation }) {
       }),
     })
       .then((response) => response.json())
-      .then((data) => console.log(data));
+      .then((data) => console.log(data))
+      .then(dispatch(LoginRequestAction({userEmail:Perference.getUser(),TodayConvert:Perference.getConvertToday()})));
     Perference.setMoney(price);
     Perference.setReportIndexUserInvestment(price);
-
     alert('저장되었습니다.');
     navigation.reset({ index: 0, routes: [{ name: '이전' }], });
   };
