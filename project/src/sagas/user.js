@@ -19,7 +19,6 @@ function DetailAPI(userEmail, TodayConvert, periodType) {
             Perference.setPredictData(res.predictedPowerGraph)
             Perference.setDataTable(res.revenueFromPowerList)
             Perference.setDataCountReal(res.realPowerGraph.Y)
-            Perference.setDetailButton("day");
         })
 
 }
